@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/container_username"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/txt_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نام کاربری"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="18dp"/>
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:hint="ali1234"
+            android:textColorHint="@color/grey"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_below="@id/txt_username"
+            android:fontFamily="@font/montserrat_medium"
+            android:background="@drawable/login_edit_text"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/container_password"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/container_username"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/txt_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="رمز عبور"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="18dp"/>
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:hint="123456789"
+            android:textColorHint="@color/grey"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_below="@id/txt_password"
+            android:fontFamily="@font/montserrat_medium"
+            android:background="@drawable/login_edit_text"
+            />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:background="@drawable/login_button"
+        android:layout_below="@id/container_password"
+        android:text="ورود"
+        android:fontFamily="@font/iransansmobile_medium"
+        android:textSize="18dp"
+        android:elevation="8dp"
+        android:textColor="@drawable/login_button_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+
+
+
+</RelativeLayout>

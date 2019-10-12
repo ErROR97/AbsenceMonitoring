@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".EmployeeActivity">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:elevation="32dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="علی ارجمندی"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_map"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@id/header"
+        android:layout_marginTop="-25dp"
+        app:cardCornerRadius="25dp"
+        >
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/furlough"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_map"
+        app:cardCornerRadius="24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp"
+         >
+
+        <RelativeLayout
+            android:id="@+id/btn_furlough"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/background_furlough_button"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_writing" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="مرخصی دادن"
+                android:textColor="@color/white"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <RelativeLayout
+        android:id="@+id/container_date_and_time_left"
+        android:layout_width="340dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/furlough">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_time_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/container_date"
+            android:background="@color/pure_white"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="20dp"
+            app:cardCornerRadius="15dp">
+
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                >
+
+                <TextView
+                    android:id="@+id/txt_time_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="زمان باقیمانده"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="10dp"
+                    android:fontFamily="@font/iransansmobile_medium"/>
+
+                <TextView
+                    android:id="@+id/txt_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="۰۲ : ۴۵ : ۱۳"
+                    android:textSize="24dp"
+                    android:layout_marginTop="-8dp"
+                    android:fontFamily="@font/iransansmobile_light"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/txt_time_left"
+                    android:layout_centerHorizontal="true"
+                    />
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/pure_white"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            >
+
+            <TextView
+                android:id="@+id/txt__label_date"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="تاریخ"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="10dp"
+                android:fontFamily="@font/iransansmobile_medium"/>
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="۱۳۹۶/۰۵/۲۷"
+                android:textSize="24dp"
+                android:layout_marginTop="-8dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:textColor="@color/black"
+                android:layout_below="@id/txt__label_date"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                />
+
+
+        </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/container_start_time"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background_start_time_employee"
+        android:layout_below="@id/container_date_and_time_left"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="شروع مرخصی"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="۰۹:۳۵:۰۰"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:fontFamily="@font/iransansmobile_medium"/>
+
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/container_end_time"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background_end_time_employee"
+        android:layout_below="@id/container_start_time"
+        android:layout_marginTop="8dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="پایان مرخصی"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="۱۲:۲۵:۰۰"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:fontFamily="@font/iransansmobile_medium"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        >
+        <TextView
+            android:id="@+id/txt_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="بایگانی"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_record"
+            android:background="@drawable/background_dash"
+            />
+    </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>
