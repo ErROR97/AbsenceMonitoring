@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Employee("علی ارجمندی", "کارمند", false));
 
 
-        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.rv_employee);
         adapter = new EmployeeAdapter(this, list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);

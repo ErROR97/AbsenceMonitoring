@@ -8,13 +8,14 @@
     tools:context=".MainActivity">
 
     <RelativeLayout
-        android:id="@+id/header"
+        android:id="@+id/container_header"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="80dp"
         >
 
         <ImageView
+            android:id="@+id/img_menu_bar"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:paddingTop="4dp"
@@ -25,6 +26,7 @@
             android:src="@drawable/ic_humberger_menu"/>
 
         <ImageView
+            android:id="@+id/img_search_bar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="8dp"
@@ -48,12 +50,12 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/rv_employee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@color/white"
-        android:layout_below="@id/header"/>
+        android:layout_below="@id/container_header"/>
 
 
     
