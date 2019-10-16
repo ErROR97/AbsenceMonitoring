@@ -15,22 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MasterFurloughActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EmployeeActivity">
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity">
+
         </activity>
+        <activity android:name=".EmployeeActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD6Xu0ql5wE2OEyjzcNyAtRr28ZqyI9F4s" />
 
-        <activity android:name=".FurloughActivity"></activity>
+        <activity android:name=".EmployeeFurloughActivity" />
     </application>
 
 </manifest>

@@ -54,7 +54,7 @@ public class EmployeeActivity extends AppCompatActivity implements OnMapReadyCal
         furloughBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EmployeeActivity.this, FurloughActivity.class));
+                startActivity(new Intent(EmployeeActivity.this, EmployeeFurloughActivity.class));
             }
         });
 
