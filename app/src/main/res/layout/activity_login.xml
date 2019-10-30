@@ -3,36 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <RelativeLayout
-        android:id="@+id/container_username"
+        android:id="@+id/container_personal_code"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true">
 
         <TextView
-            android:id="@+id/txt_username"
+            android:id="@+id/lbl_personal_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="نام کاربری"
+            android:text="کد پرسنلی"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
             android:fontFamily="@font/iransansmobile_medium"
             android:textSize="18dp"/>
 
         <EditText
-            android:id="@+id/et_username"
+            android:id="@+id/et_personal_code"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            android:hint="ali1234"
+            android:hint="1234"
             android:textColorHint="@color/grey"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_below="@id/txt_username"
+            android:layout_below="@id/lbl_personal_code"
             android:fontFamily="@font/montserrat_medium"
             android:background="@drawable/login_edit_text"
             />
@@ -45,11 +46,11 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_below="@id/container_username"
+        android:layout_below="@id/container_personal_code"
         android:layout_centerHorizontal="true">
 
         <TextView
-            android:id="@+id/txt_password"
+            android:id="@+id/lb_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="رمز عبور"
@@ -67,28 +68,49 @@
             android:textColorHint="@color/grey"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_below="@id/txt_password"
+            android:layout_below="@id/lb_password"
             android:fontFamily="@font/montserrat_medium"
             android:background="@drawable/login_edit_text"
             />
 
     </RelativeLayout>
 
-    <Button
+
+
+    <TextView
         android:id="@+id/btn_login"
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:background="@drawable/login_button"
-        android:layout_below="@id/container_password"
+        android:background="@drawable/background_ripple_button"
         android:text="ورود"
+        android:gravity="center"
+        android:layout_below="@id/container_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/iransansmobile_medium"
         android:textSize="18dp"
-        android:elevation="8dp"
-        android:textColor="@drawable/login_button_text"
+        android:textColor="@color/white"
+        />
+
+
+    <TextView
+        android:id="@+id/btn_recovery_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="بازیابی رمز عبور"
+        android:layout_below="@id/btn_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:textColor="@color/dark_green"
+        android:textSize="18dp"
+        android:fontFamily="@font/iransansmobile_medium"/>
 
-
+    <FrameLayout
+        android:id="@+id/container_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="@color/white"/>
 
 
 </RelativeLayout>

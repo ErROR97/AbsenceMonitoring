@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:srcCompat="@drawable/ic_back_arrow"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <RelativeLayout
+        android:id="@+id/container_personal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/lbl_personal_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="کد پرسنلی"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="18dp"/>
+
+        <EditText
+            android:id="@+id/et_personal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:hint="1234"
+            android:textColorHint="@color/grey"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_below="@id/lbl_personal_code"
+            android:fontFamily="@font/montserrat_medium"
+            android:background="@drawable/login_edit_text"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ارسال کد بازیابی از طریق پیامک"
+        android:textColor="@color/grey"
+        android:textSize="16dp"
+        android:fontFamily="@font/iransansmobile_light"
+        android:layout_below="@id/btn_recovery_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_recovery_password"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/container_personal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        app:cardCornerRadius="12dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ارسال کد"
+            android:gravity="center"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="18dp"
+            android:background="@drawable/login_button"
+            android:textColor="@color/blue"
+            />
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

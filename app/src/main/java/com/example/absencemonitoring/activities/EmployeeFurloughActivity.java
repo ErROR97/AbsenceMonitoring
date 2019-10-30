@@ -1,7 +1,9 @@
-package com.example.absencemonitoring;
+package com.example.absencemonitoring.activities;
 
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.absencemonitoring.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 

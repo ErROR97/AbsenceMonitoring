@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    android:background="@color/white"
+    tools:context=".activities.MasterDashboardActivity">
+
+    <RelativeLayout
+        android:id="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:elevation="10dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            app:srcCompat="@drawable/ic_green_energy" />
+
+
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="متین براهویی"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="مدیر کل"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/txt_name"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/iransansmobile_light" />
+
+        <TextView
+            android:id="@+id/lbl_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اداره کل برق"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="استان سیستان و بلوچستان"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_below="@id/lbl_brand"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/container_menu"
+        android:layout_below="@id/container_header"
+        android:background="@color/white"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_menu"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:backgroundTint="@color/black"
+        app:cardCornerRadius="10dp"
+        android:layout_marginRight="-10dp"
+        android:layout_below="@id/container_header"
+        android:layout_marginTop="16dp"
+        >
+
+
+        <RelativeLayout
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:id="@+id/container_home"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                >
+
+                <ImageView
+                    android:id="@+id/img_home"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:srcCompat="@drawable/ic_home"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="خانه"
+                    android:layout_below="@id/img_home"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/container_home"/>
+
+
+            <RelativeLayout
+                android:id="@+id/container_profile"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/container_home"
+                android:layout_alignParentRight="true"
+                >
+
+                <ImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:srcCompat="@drawable/ic_user"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="پروفایل"
+                    android:layout_below="@id/img_profile"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/container_profile"/>
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/container_request"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/container_profile"
+                >
+
+                <ImageView
+                    android:id="@+id/img_request"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:srcCompat="@drawable/ic_request"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="درخواست"
+                    android:layout_below="@id/img_request"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    />
+
+
+            </RelativeLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/container_request"/>
+
+
+
+            <RelativeLayout
+                android:id="@+id/container_notice"
+                android:layout_width="80dp"
+                android:layout_below="@id/container_request"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:id="@+id/img_notice"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:srcCompat="@drawable/ic_notification"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="اعلان ها"
+                    android:layout_below="@id/img_notice"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/container_notice"/>
+
+            <RelativeLayout
+                android:id="@+id/container_archive"
+                android:layout_width="80dp"
+                android:layout_below="@id/container_notice"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:id="@+id/img_archive"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:srcCompat="@drawable/ic_archive"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="بایگانی"
+                    android:layout_below="@id/img_archive"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/container_archive"/>
+
+
+            <RelativeLayout
+                android:id="@+id/container_controling"
+                android:layout_width="80dp"
+                android:layout_below="@id/container_archive"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:id="@+id/img_controling"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/ic_control" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="کنترل مرخصی"
+                    android:layout_below="@id/img_controling"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginRight="18dp"
+                android:layout_marginLeft="8dp"
+                android:layout_below="@id/container_controling"/>
+
+            <RelativeLayout
+                android:id="@+id/container_logout"
+                android:layout_width="80dp"
+                android:layout_below="@id/container_controling"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="80dp">
+
+                <ImageView
+                    android:id="@+id/img_logout"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/ic_logout" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="خروج"
+                    android:layout_below="@id/img_logout"
+                    android:textColor="@color/yellow"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_request_details"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:layout_toLeftOf="@id/container_menu"
+        android:visibility="invisible"
+        android:layout_marginRight="-10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="96dp"
+        android:layout_below="@id/container_header"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_request_furough"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="مرخصی"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/txt_request_furough"
+                />
+
+            <TextView
+                android:id="@+id/txt_request_sport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="سالن ورزشی"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_request_furough"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/txt_request_sport"
+                />
+
+            <TextView
+                android:id="@+id/txt_request_transport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="سرویس"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_request_sport"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_notice_details"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:visibility="invisible"
+        android:layout_marginRight="-10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_toLeftOf="@id/container_menu"
+        android:layout_below="@id/container_header"
+        android:layout_marginTop="177dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_notice_furough"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="مرخصی"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/txt_notice_furough"
+                />
+
+            <TextView
+                android:id="@+id/txt_notice_sport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="سالن ورزشی"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_notice_furough"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/txt_notice_sport"
+                />
+
+            <TextView
+                android:id="@+id/txt_notice_transport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="سرویس"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_notice_sport"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_archive_details"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:visibility="invisible"
+        android:layout_marginRight="-10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_toLeftOf="@id/container_menu"
+        android:layout_below="@id/container_header"
+        android:layout_marginTop="259dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_archive_furlough"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="مرخصی"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/yellow"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/txt_archive_furlough"
+                />
+
+            <TextView
+                android:id="@+id/txt_archive_sport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ورزشی"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_archive_furlough"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

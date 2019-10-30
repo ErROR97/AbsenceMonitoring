@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".EmployeeFurloughActivity">
+    tools:context=".activities.EmployeeFurloughActivity">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="۱۳۹۷/۰۵/۲۷"
             android:textSize="14dp"
-            android:textColor="@color/green"
+            android:textColor="@color/dark_green"
             android:fontFamily="@font/iransansmobile_light"
             android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"/>
@@ -75,7 +75,7 @@
                         android:id="@+id/txt_employee_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="علی ارجمندی"
+                        android:text="متین براهویی"
                         android:layout_marginRight="8dp"
                         android:textColor="@color/black"
                         android:textSize="18dp"
@@ -683,9 +683,9 @@
         android:layout_width="150dp"
         android:layout_height="40dp"
         app:cardCornerRadius="20dp"
+        android:backgroundTint="@color/blue"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:cardBackgroundColor="@color/blue"
         android:layout_marginBottom="8dp">
 
         <TextView

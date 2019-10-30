@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_search_bar"
+            android:textSize="14dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/black"
+            android:hint="جست و جو بر اساس نام"
+            android:textColorHint="@color/grey"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:paddingLeft="40dp"
+            android:paddingRight="8dp"/>
+
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            app:srcCompat="@drawable/ic_search_bar"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="5dp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_archive_furlough"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_search_bar" />
+
+
+
+</RelativeLayout>
