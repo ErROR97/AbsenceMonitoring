@@ -15,24 +15,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MasterFurloughActivity">
+        <activity android:name=".activities.ProfileActivity"></activity>
+        <activity android:name=".activities.EmployeeTransportationReserveActivity" />
+        <activity android:name=".activities.EmployeeSportReserveActivity" />
+        <activity android:name=".activities.MasterDashboardActivity"></activity>
+        <activity android:name=".activities.MasterFurloughActivity" />
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".EmployeeActivity"></activity>
+        <activity android:name=".activities.FurloughDetailsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD6Xu0ql5wE2OEyjzcNyAtRr28ZqyI9F4s" />
 
-        <activity android:name=".EmployeeFurloughActivity" />
+        <activity android:name=".activities.EmployeeFurloughActivity" />
     </application>
 
 </manifest>

@@ -1,8 +1,10 @@
-package com.example.absencemonitoring;
+package com.example.absencemonitoring.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.absencemonitoring.R;
 
 public class MasterFurloughActivity extends AppCompatActivity {
 

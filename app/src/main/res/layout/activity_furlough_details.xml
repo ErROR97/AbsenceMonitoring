@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.FurloughDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="32dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"/>
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="متین براهویی"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/txt_personal_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="۹۵۲۵۴۶۳"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="12dp"
+            android:layout_below="@id/txt_name"
+            android:textColor="@color/grey"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/txt_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="کارمند"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            />
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_map"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@id/header"
+        android:layout_marginTop="-25dp"
+        app:cardCornerRadius="25dp"
+        >
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_map">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/container_txt_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/yellow"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                app:cardCornerRadius="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="استعلاجی"
+                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:id="@+id/container_remainder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/container_txt_type"
+                android:layout_margin="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:background="@drawable/border_remaidner_time_furlough_details"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:id="@+id/lbl_remainder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="زمان باقیمانده"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/lbl_remainder">
+
+                    <TextView
+                        android:id="@+id/txt_remainder_day"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:text="۰۶"
+                        android:gravity="center"
+                        android:textSize="24dp"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/orange"
+                        />
+
+                    <TextView
+                        android:id="@+id/txt_remainder_hour"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:text="۰۸"
+                        android:gravity="center"
+                        android:textSize="24dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_toRightOf="@id/txt_remainder_day"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/orange"
+                        />
+
+                    <TextView
+                        android:id="@+id/colon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:layout_toRightOf="@id/txt_remainder_hour"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/orange"
+                        android:textSize="24dp"/>
+
+                    <TextView
+                        android:id="@+id/txt_remainder_minutes"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:text="۲۷"
+                        android:gravity="center"
+                        android:textSize="24dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_toRightOf="@id/colon"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/orange"
+                        />
+
+                    <TextView
+                        android:id="@+id/lbl_day"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:text="روز"
+                        android:layout_below="@id/txt_remainder_day"
+                        android:textSize="10dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/grey"
+                        />
+
+                    <TextView
+                        android:id="@+id/lbl_hour"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:text="ساعت"
+                        android:layout_toRightOf="@id/lbl_day"
+                        android:layout_below="@id/txt_remainder_day"
+                        android:textSize="10dp"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/grey"
+                        />
+
+                    <TextView
+                        android:id="@+id/lbl_minute"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:text="دقیقه"
+                        android:layout_toRightOf="@id/lbl_hour"
+                        android:layout_below="@id/txt_remainder_day"
+                        android:textSize="10dp"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/grey"
+                        />
+
+
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_start"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
+                android:layoutDirection="rtl"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:background="@drawable/border_start_time_furlough_details"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/container_remainder">
+
+                <TextView
+                    android:id="@+id/lbl_start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="از تاریخ"
+                    android:textSize="16dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/iransansmobile_light"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_start_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="۹۸/۰۸/۰۱"
+                    android:textSize="24dp"
+                    android:layout_toLeftOf="@id/lbl_start_date"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/lbl_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="از ساعت"
+                    android:textSize="16dp"
+                    android:layout_toLeftOf="@id/txt_start_date"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/iransansmobile_light"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="۰۷:۰۰"
+                    android:textSize="24dp"
+                    android:layout_toLeftOf="@id/lbl_start_time"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textColor="@color/black"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_end"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
+                android:layoutDirection="rtl"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:background="@drawable/border_end_time_furlough_details"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/container_start">
+
+                <TextView
+                    android:id="@+id/lbl_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تا تاریخ"
+                    android:textSize="16dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/iransansmobile_light"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="۹۸/۰۸/۰۲"
+                    android:textSize="24dp"
+                    android:layout_toLeftOf="@id/lbl_end_date"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/lbl_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تا ساعت"
+                    android:textSize="16dp"
+                    android:layout_toLeftOf="@id/txt_end_date"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/iransansmobile_light"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="۰۷:۰۰"
+                    android:textSize="24dp"
+                    android:layout_toLeftOf="@id/lbl_end_time"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:textColor="@color/black"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.absencemonitoring;
+package com.example.absencemonitoring.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 
+import com.example.absencemonitoring.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,31 +33,22 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-public class EmployeeActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+public class FurloughDetailsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
     SupportMapFragment mapFragment;
     GoogleMap googleMap;
-    RelativeLayout furloughBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employee);
+        setContentView(R.layout.activity_furlough_details);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-        furloughBtn = findViewById(R.id.btn_furlough);
 
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        furloughBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EmployeeActivity.this, EmployeeFurloughActivity.class));
-            }
-        });
 
 
     }
