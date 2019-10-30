@@ -15,10 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.ProfileActivity"></activity>
+        <activity android:name=".activities.GuardDashboard"></activity>
+        <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.EmployeeTransportationReserveActivity" />
         <activity android:name=".activities.EmployeeSportReserveActivity" />
-        <activity android:name=".activities.MasterDashboardActivity"></activity>
+        <activity android:name=".activities.MasterDashboardActivity" />
         <activity android:name=".activities.MasterFurloughActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
