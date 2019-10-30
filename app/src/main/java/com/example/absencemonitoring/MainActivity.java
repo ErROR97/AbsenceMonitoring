@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
 
 
-
         list = new ArrayList<>();
         list1 = new ArrayList<>();
         list.add(new Employee("علی ارجمندی", "کارمند", true));

@@ -35,6 +35,7 @@ import androidx.core.content.ContextCompat;
 public class EmployeeActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
     SupportMapFragment mapFragment;
     GoogleMap googleMap;
+
     RelativeLayout furloughBtn;
 
 
