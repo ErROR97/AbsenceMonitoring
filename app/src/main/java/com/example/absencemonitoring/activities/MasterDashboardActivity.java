@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,12 +22,17 @@ import com.example.absencemonitoring.fragments.NoticeTransportFragment;
 public class MasterDashboardActivity extends AppCompatActivity {
 
     CardView menuContainer;
-    RelativeLayout requestContainer, profileContainer, noticeContainer, archiveContainer, controlingContainer;
+    RelativeLayout homeContainer, requestContainer, profileContainer, noticeContainer, archiveContainer, controlingContainer, logoutContainer;
     CardView requestDetailsContainer, noticeDetailsContainer, archiveDetailsContainer;
-    TextView requestFurlougTxt, requestSportTxt, requestTransportTxt;
-    TextView noticeFurloughTxt, noticeSportTxt, noticeTransportTxt;
-    TextView archiveFurloughTxt, archiveSportTxt;
+    TextView requestFurlougTxt, requestSportTxt;
+    TextView noticeFurloughTxt, noticeSportTxt;
+    TextView archiveFurloughTxt;
+    TextView homeTxt, noticeTxt, archiveTxt, controlTxt;
+    ImageView homeImg, noticeImg, archiveImg, controlImg;
     String checkFragment = "";
+    TextView previousSelectedTxt;
+    ImageView previousSelectedImg;
+    int previousSelectedDrawable;
 
 
     public void init() {
@@ -34,11 +40,13 @@ public class MasterDashboardActivity extends AppCompatActivity {
         menuContainer = findViewById(R.id.container_menu);
         menuContainer.bringToFront();
 
+        homeContainer = findViewById(R.id.container_home);
         profileContainer = findViewById(R.id.container_profile);
         requestContainer = findViewById(R.id.container_request);
         noticeContainer = findViewById(R.id.container_notice);
         archiveContainer = findViewById(R.id.container_archive);
         controlingContainer = findViewById(R.id.container_controling);
+        logoutContainer = findViewById(R.id.container_logout);
 
 
         requestDetailsContainer = findViewById(R.id.container_request_details);
@@ -47,14 +55,21 @@ public class MasterDashboardActivity extends AppCompatActivity {
 
         requestFurlougTxt = findViewById(R.id.txt_request_furough);
         requestSportTxt = findViewById(R.id.txt_request_sport);
-        requestTransportTxt = findViewById(R.id.txt_request_transport);
 
         noticeFurloughTxt = findViewById(R.id.txt_notice_furough);
         noticeSportTxt = findViewById(R.id.txt_notice_sport);
-        noticeTransportTxt = findViewById(R.id.txt_notice_transport);
 
         archiveFurloughTxt = findViewById(R.id.txt_archive_furlough);
-        archiveSportTxt = findViewById(R.id.txt_archive_sport);
+
+        homeTxt = findViewById(R.id.txt_home);
+        noticeTxt = findViewById(R.id.txt_notice);
+        archiveTxt = findViewById(R.id.txt_archive);
+        controlTxt = findViewById(R.id.txt_controling);
+
+        homeImg = findViewById(R.id.img_home);
+        noticeImg = findViewById(R.id.img_notice);
+        archiveImg = findViewById(R.id.img_archive);
+        controlImg = findViewById(R.id.img_controling);
     }
 
 
@@ -65,6 +80,36 @@ public class MasterDashboardActivity extends AppCompatActivity {
 
         init();
 
+        homeTxt.setTextColor(getResources().getColor(R.color.red));
+        homeImg.setImageResource(R.drawable.ic_home_selected);
+        previousSelectedTxt = homeTxt;
+        previousSelectedImg = homeImg;
+        previousSelectedDrawable = R.drawable.ic_home;
+
+
+
+        homeContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!checkFragment.equals("homeFragment")) {
+                    checkFragment = "homeFragment";
+
+                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
+                    requestDetailsContainer.setVisibility(View.INVISIBLE);
+                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
+
+
+                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
+                    previousSelectedImg.setImageResource(previousSelectedDrawable);
+
+                    homeTxt.setTextColor(getResources().getColor(R.color.red));
+                    homeImg.setImageResource(R.drawable.ic_home_selected);
+                    previousSelectedTxt = homeTxt;
+                    previousSelectedImg = homeImg;
+                    previousSelectedDrawable = R.drawable.ic_home;
+                }
+            }
+        });
 
         profileContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +164,29 @@ public class MasterDashboardActivity extends AppCompatActivity {
                 if(!checkFragment.equals("control")) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new ControlFragment()).commit();
                     checkFragment = "control";
+
+                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
+                    requestDetailsContainer.setVisibility(View.INVISIBLE);
+                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
+
+                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
+                    previousSelectedImg.setImageResource(previousSelectedDrawable);
+
+                    controlTxt.setTextColor(getResources().getColor(R.color.red));
+                    controlImg.setImageResource(R.drawable.ic_control_selected);
+
+                    previousSelectedTxt = controlTxt;
+                    previousSelectedImg = controlImg;
+                    previousSelectedDrawable = R.drawable.ic_control;
                 }
+            }
+        });
+
+        logoutContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MasterDashboardActivity.this, LoginActivity.class));
+                finish();
             }
         });
 
@@ -128,7 +195,7 @@ public class MasterDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MasterDashboardActivity.this, EmployeeFurloughActivity.class));
-                Log.i("shitman", "onClick: " + "its bullshit");
+                requestDetailsContainer.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -137,15 +204,7 @@ public class MasterDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MasterDashboardActivity.this, EmployeeSportReserveActivity.class));
-
-            }
-        });
-
-
-        requestTransportTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MasterDashboardActivity.this, EmployeeTransportationReserveActivity.class));
+                requestDetailsContainer.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -156,6 +215,19 @@ public class MasterDashboardActivity extends AppCompatActivity {
                 if (!checkFragment.equals("noticeFurlough")) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeFurloughFragment()).commit();
                     checkFragment = "noticeFurlough";
+
+                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
+
+                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
+                    previousSelectedImg.setImageResource(previousSelectedDrawable);
+
+                    noticeTxt.setTextColor(getResources().getColor(R.color.red));
+                    noticeImg.setImageResource(R.drawable.ic_notification_selected);
+
+                    previousSelectedTxt = noticeTxt;
+                    previousSelectedImg = noticeImg;
+                    previousSelectedDrawable = R.drawable.ic_notification;
+
                 }
             }
         });
@@ -167,19 +239,22 @@ public class MasterDashboardActivity extends AppCompatActivity {
                 if (!checkFragment.equals("noticeSport")) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeSportFragment()).commit();
                     checkFragment = "noticeSport";
+
+                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
+
+                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
+                    previousSelectedImg.setImageResource(previousSelectedDrawable);
+
+                    noticeTxt.setTextColor(getResources().getColor(R.color.red));
+                    noticeImg.setImageResource(R.drawable.ic_notification_selected);
+
+                    previousSelectedTxt = noticeTxt;
+                    previousSelectedImg = noticeImg;
+                    previousSelectedDrawable = R.drawable.ic_notification;
                 }
             }
         });
 
-        noticeTransportTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checkFragment.equals("noticeTransport")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeTransportFragment()).commit();
-                    checkFragment = "noticeTransport";
-                }
-            }
-        });
 
         archiveFurloughTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,18 +262,23 @@ public class MasterDashboardActivity extends AppCompatActivity {
                 if (!checkFragment.equals("archiveFurlough")) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new ArchiveFurloughFragment()).commit();
                     checkFragment = "archiveFurlough";
+
+                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
+
+                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
+                    previousSelectedImg.setImageResource(previousSelectedDrawable);
+
+                    archiveTxt.setTextColor(getResources().getColor(R.color.red));
+                    archiveImg.setImageResource(R.drawable.ic_archive_selected);
+
+                    previousSelectedTxt = archiveTxt;
+                    previousSelectedImg = archiveImg;
+                    previousSelectedDrawable = R.drawable.ic_archive;
                 }
             }
         });
 
-        archiveSportTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checkFragment.equals("archiveSport")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new ArchiveSportFragment()).commit();
-                    checkFragment = "archiveSport";
-                }
-            }
-        });
+
+
     }
 }

@@ -15,6 +15,7 @@
         android:background="@color/white">
 
         <ImageView
+            android:id="@+id/img_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
             app:srcCompat="@drawable/ic_back_arrow"
@@ -264,7 +265,7 @@
         android:layout_below="@id/container_furlough_status"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="16dp">
 
 
         <RelativeLayout
@@ -287,7 +288,7 @@
                 android:textSize="16dp"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/iransansmobile_light"
-                android:textColor="@color/yellow" />
+                android:textColor="@color/light_yellow" />
 
 
         </RelativeLayout>

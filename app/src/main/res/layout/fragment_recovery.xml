@@ -65,7 +65,8 @@
         android:layout_below="@id/container_personal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        app:cardCornerRadius="12dp"
+        android:backgroundTint="@color/black"
+        app:cardCornerRadius="16dp"
         >
 
         <TextView
@@ -75,8 +76,7 @@
             android:gravity="center"
             android:fontFamily="@font/iransansmobile_medium"
             android:textSize="18dp"
-            android:background="@drawable/login_button"
-            android:textColor="@color/blue"
+            android:textColor="@color/light_yellow"
             />
 
 

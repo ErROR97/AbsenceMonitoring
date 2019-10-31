@@ -38,7 +38,7 @@ public class ArchiveSportFragment extends Fragment {
 
         init();
 
-        list.add(new Sport("والیبال", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.yellow), R.drawable.ic_volleyball));
+        list.add(new Sport("والیبال", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.light_yellow), R.drawable.ic_volleyball));
         list.add(new Sport("فوتبال", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.green), R.drawable.ic_football));
         list.add(new Sport("استخر", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.light_blue), R.drawable.ic_swimming));
 

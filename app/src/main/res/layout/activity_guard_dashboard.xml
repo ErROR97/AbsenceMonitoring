@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.GuardDashboard">
+    tools:context=".activities.GuardDashboardActivity">
 
     <RelativeLayout
         android:id="@+id/container_header"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:background="@color/white"
         android:elevation="10dp">
 
@@ -38,11 +38,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="مسئول نگهبانی"
-            android:textSize="14dp"
+            android:textSize="12dp"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
             android:layout_below="@id/txt_name"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="8dp"
             android:fontFamily="@font/iransansmobile_light" />
 
         <TextView
@@ -69,7 +69,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_header"
+        android:id="@+id/rv_guard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/container_header" />

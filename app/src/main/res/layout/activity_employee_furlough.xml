@@ -15,8 +15,9 @@
         android:layout_height="50dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/img_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/ic_back_arrow"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -682,8 +683,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="150dp"
         android:layout_height="40dp"
-        app:cardCornerRadius="20dp"
-        android:backgroundTint="@color/blue"
+        app:cardCornerRadius="16dp"
+        android:backgroundTint="@color/black"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp">
@@ -692,7 +693,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ثبت"
-            android:textColor="@color/white"
+            android:textColor="@color/light_yellow"
             android:textSize="20dp"
             android:fontFamily="@font/iransansmobile_medium"
             android:layout_gravity="center"/>

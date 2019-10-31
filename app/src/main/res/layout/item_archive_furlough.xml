@@ -9,7 +9,7 @@
     android:layout_marginBottom="4dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:backgroundTint="@color/light_grey"
+    android:backgroundTint="@color/green"
     app:cardCornerRadius="10dp"
     >
 
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             tools:text="متین براهویی"
             android:textSize="16dp"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
             android:textColor="@color/black"
             android:fontFamily="@font/iransansmobile_medium"
             android:layout_marginRight="16dp"
@@ -37,7 +37,6 @@
             tools:text="۹۸/۰۵/۰۸"
             android:textSize="14dp"
             android:textColor="@color/black"
-            android:layout_below="@id/txt_name"
             android:fontFamily="@font/iransansmobile_light"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"/>
@@ -62,11 +61,11 @@
             android:layout_height="wrap_content"
             tools:text="۴ روز"
             android:textSize="18dp"
-            android:textColor="@color/blue"
+            android:textColor="@color/yellow"
             android:fontFamily="@font/iransansmobile_light"
             android:layout_below="@id/txt_name"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
             />
 
 
