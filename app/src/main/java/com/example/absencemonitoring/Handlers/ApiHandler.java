@@ -1,8 +1,7 @@
 package com.example.absencemonitoring.Handlers;
 
 import android.app.Activity;
-import android.provider.Settings;
-import android.util.Log;
+
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
