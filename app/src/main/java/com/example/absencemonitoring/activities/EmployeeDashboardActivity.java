@@ -3,21 +3,28 @@ package com.example.absencemonitoring.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.absencemonitoring.Handlers.ApiHandler;
+import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.fragments.ArchiveFurloughFragment;
 import com.example.absencemonitoring.fragments.ControlFragment;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.fragments.NoticeSportFragment;
 
+import org.json.JSONException;
+
 public class EmployeeDashboardActivity extends AppCompatActivity {
 
+    Activity activity;
     CardView menuContainer;
     RelativeLayout homeContainer, requestContainer, profileContainer, noticeContainer, archiveContainer, logoutContainer;
     CardView requestDetailsContainer, noticeDetailsContainer, archiveDetailsContainer;
@@ -31,8 +38,15 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     ImageView previousSelectedImg;
     int previousSelectedDrawable;
 
+    TextView nameTxt, roleTxt;
+    UserDetails userDetails;
+    ApiHandler apiHandler;
+
 
     public void init() {
+
+        userDetails = new UserDetails(activity);
+        apiHandler = new ApiHandler(activity);
 
         menuContainer = findViewById(R.id.container_menu);
         menuContainer.bringToFront();
@@ -57,6 +71,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
 
         archiveFurloughTxt = findViewById(R.id.txt_archive_furlough);
 
+        nameTxt = findViewById(R.id.txt_name);
+        roleTxt = findViewById(R.id.txt_role);
         homeTxt = findViewById(R.id.txt_home);
         noticeTxt = findViewById(R.id.txt_notice);
         archiveTxt = findViewById(R.id.txt_archive);
@@ -66,13 +82,31 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         noticeImg = findViewById(R.id.img_notice);
         archiveImg = findViewById(R.id.img_archive);
         controlImg = findViewById(R.id.img_controling);
+
+        apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
+            @Override
+            public void onRecived(String response) {
+                if(response.trim().equals("Success")){
+                    try {
+                        nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
+                        String role = userDetails.getUserInfo().getString("role");
+                        Log.i("boz", "onRecived: " + role);
+                        if (role.trim().equals("employee"))
+                            roleTxt.setText("کارمند");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_master_dashboard);
+        setContentView(R.layout.activity_employee_dashboard);
+        activity = this;
 
         init();
 
@@ -158,6 +192,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         logoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userDetails.deleteUser();
                 startActivity(new Intent(EmployeeDashboardActivity.this, LoginActivity.class));
                 finish();
             }

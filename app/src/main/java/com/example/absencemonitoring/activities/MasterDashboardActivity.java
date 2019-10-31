@@ -3,14 +3,18 @@ package com.example.absencemonitoring.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.absencemonitoring.Handlers.ApiHandler;
+import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.fragments.ArchiveFurloughFragment;
 import com.example.absencemonitoring.fragments.ArchiveSportFragment;
@@ -18,6 +22,8 @@ import com.example.absencemonitoring.fragments.ControlFragment;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.fragments.NoticeSportFragment;
 import com.example.absencemonitoring.fragments.NoticeTransportFragment;
+
+import org.json.JSONException;
 
 public class MasterDashboardActivity extends AppCompatActivity {
 
@@ -28,14 +34,20 @@ public class MasterDashboardActivity extends AppCompatActivity {
     TextView noticeFurloughTxt, noticeSportTxt;
     TextView archiveFurloughTxt;
     TextView homeTxt, noticeTxt, archiveTxt, controlTxt;
+    TextView nameTxt, roleTxt;
     ImageView homeImg, noticeImg, archiveImg, controlImg;
     String checkFragment = "";
     TextView previousSelectedTxt;
     ImageView previousSelectedImg;
+
+    UserDetails userDetails;
+    Activity activity;
     int previousSelectedDrawable;
 
 
     public void init() {
+        userDetails = new UserDetails(activity);
+        ApiHandler apiHandler = new ApiHandler(activity);
 
         menuContainer = findViewById(R.id.container_menu);
         menuContainer.bringToFront();
@@ -61,6 +73,8 @@ public class MasterDashboardActivity extends AppCompatActivity {
 
         archiveFurloughTxt = findViewById(R.id.txt_archive_furlough);
 
+        nameTxt = findViewById(R.id.txt_name);
+        roleTxt = findViewById(R.id.txt_role);
         homeTxt = findViewById(R.id.txt_home);
         noticeTxt = findViewById(R.id.txt_notice);
         archiveTxt = findViewById(R.id.txt_archive);
@@ -70,6 +84,24 @@ public class MasterDashboardActivity extends AppCompatActivity {
         noticeImg = findViewById(R.id.img_notice);
         archiveImg = findViewById(R.id.img_archive);
         controlImg = findViewById(R.id.img_controling);
+
+
+        apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
+            @Override
+            public void onRecived(String response) {
+                if(response.trim().equals("Success")){
+                    try {
+                        nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
+                        String role = userDetails.getUserInfo().getString("role");
+                        if (role.trim().equals("master"))
+                            roleTxt.setText("مدیر");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 
@@ -77,7 +109,7 @@ public class MasterDashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_dashboard);
-
+        activity = this;
         init();
 
         homeTxt.setTextColor(getResources().getColor(R.color.red));
@@ -185,6 +217,7 @@ public class MasterDashboardActivity extends AppCompatActivity {
         logoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userDetails.deleteUser();
                 startActivity(new Intent(MasterDashboardActivity.this, LoginActivity.class));
                 finish();
             }

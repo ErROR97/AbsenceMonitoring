@@ -15,6 +15,8 @@ import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.fragments.RecoveryFragment;
 
+import org.json.JSONException;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,11 +36,31 @@ public class LoginActivity extends AppCompatActivity {
         userDetails = new UserDetails(this);
         apiHandler = new ApiHandler(activity);
 
-        if (userDetails.getUserLogin()) {
-            startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
-            apiHandler = new ApiHandler(activity);
-            finish();
-        }
+        apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
+            @Override
+            public void onRecived(String response) {
+                if (userDetails.getUserLogin() && response.trim().equals("Success")) {
+                    String role = null;
+                    try {
+                        role = userDetails.getUserInfo().getString("role");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (role.trim().equals("master")) {
+                        startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
+                    }
+                    else if (role.trim().equals("employee")){
+                        startActivity(new Intent(LoginActivity.this, EmployeeDashboardActivity.class));
+                    }
+                    else if (role.trim().equals("guard")){
+                        startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
+                    }
+
+                    apiHandler = new ApiHandler(activity);
+                    finish();
+                }
+            }
+        });
 
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btn_login);
@@ -57,8 +79,17 @@ public class LoginActivity extends AppCompatActivity {
                 apiHandler.logIn(personalId.getText().toString(), passWord.getText().toString(), new ApiHandler.responseListenerLogin() {
                     @Override
                     public void onRecived(String response) {
-                        if (response.trim().equals("loginSuccess")) {
-                            startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
+                        if (response.trim().split("_")[0].equals("loginSuccess")) {
+                            if (response.trim().split("_")[1].equals("master")) {
+                                startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
+                            }
+                            else if (response.trim().split("_")[1].equals("employee")){
+                                startActivity(new Intent(LoginActivity.this, EmployeeDashboardActivity.class));
+                            }
+                            else if (response.trim().split("_")[1].equals("guard")){
+                                startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
+                            }
+
                             apiHandler = new ApiHandler(activity);
                             finish();
                         } else {
