@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.instances.Sport;
+import com.example.absencemonitoring.instances.NoticeSport;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NoticeSportAdapter extends RecyclerView.Adapter<NoticeSportAdapter.MyViewHolder> {
 
     Activity activity;
-    List<Sport> list;
+    List<NoticeSport> list;
 
-    public NoticeSportAdapter(Activity activity, List<Sport> list) {
+    public NoticeSportAdapter(Activity activity, List<NoticeSport> list) {
         this.activity = activity;
         this.list = list;
     }

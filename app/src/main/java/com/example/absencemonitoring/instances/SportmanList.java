@@ -1,19 +1,15 @@
 package com.example.absencemonitoring.instances;
 
-import android.graphics.drawable.Drawable;
-
-public class Sport {
+public class SportmanList {
     private String type;
-    private String date;
     private String startTime;
     private String endTime;
     private String Number;
     private int color;
     private int icon;
 
-    public Sport(String type, String date, String startTime, String endTime, String number, int color, int icon) {
+    public SportmanList(String type, String startTime, String endTime, String number, int color, int icon) {
         this.type = type;
-        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.Number = number;
@@ -27,9 +23,6 @@ public class Sport {
         return type;
     }
 
-    public String getDate() {
-        return date;
-    }
 
     public String getStartTime() {
         return startTime;
@@ -55,9 +48,6 @@ public class Sport {
         this.type = type;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;

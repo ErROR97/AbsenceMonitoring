@@ -3,7 +3,6 @@ package com.example.absencemonitoring.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,11 +13,8 @@ import com.example.absencemonitoring.DateTime;
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.notifReqLeave;
 
 import org.json.JSONException;
-
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -116,12 +112,6 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
                                                                     }
                                                                 }
                                                         );
-                                                        apiHandler.getNotifReqLeave("9537063", new ApiHandler.responseListenerNotifReqLeave() {
-                                                            @Override
-                                                            public void onRevived(List<notifReqLeave> notifReqLeaveList) {
-
-                                                            }
-                                                        });
                                                     }
                                                 }
                                             }

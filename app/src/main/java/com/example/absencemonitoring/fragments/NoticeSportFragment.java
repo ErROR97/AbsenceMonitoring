@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.NoticeSportAdapter;
-import com.example.absencemonitoring.instances.Sport;
+import com.example.absencemonitoring.instances.NoticeSport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NoticeSportFragment extends Fragment {
     View view;
     RecyclerView rv;
-    List<Sport> list;
+    List<NoticeSport> list;
     NoticeSportAdapter noticeSportAdapter;
 
     public void init() {
@@ -38,8 +38,8 @@ public class NoticeSportFragment extends Fragment {
 
         init();
 
-        list.add(new Sport("والیبال", "۹۸/۰۸/۰۳", "۲۱:۰۰", "۲۳:۰۰", "۱۹", 1, R.drawable.ic_volleyball));
-        list.add(new Sport("والیبال", "۹۸/۰۸/۰۳", "۲۱:۰۰", "۲۳:۰۰", "۱۹", 1, R.drawable.ic_volleyball));
+        list.add(new NoticeSport("والیبال", "۹۸/۰۸/۰۳", "۲۱:۰۰", "۲۳:۰۰", "۱۹", 1, R.drawable.ic_volleyball));
+        list.add(new NoticeSport("والیبال", "۹۸/۰۸/۰۳", "۲۱:۰۰", "۲۳:۰۰", "۱۹", 1, R.drawable.ic_volleyball));
 
         noticeSportAdapter = new NoticeSportAdapter(getActivity(), list);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));

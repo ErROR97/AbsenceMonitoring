@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.SportlistDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:elevation="10dp"
+        android:background="@color/yellow">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/ic_back_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="12dp"
+            />
+
+
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_volleyball"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/img_back"
+            />
+
+
+
+        <TextView
+            android:id="@+id/lbl_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="وقت"
+            android:textSize="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_light" />
+
+
+        <TextView
+            android:id="@+id/txt_time_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="۱۷:۰۰"
+            android:textSize="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_toLeftOf="@id/lbl_time"
+            android:textColor="@color/black"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/iransansmobile_medium" />
+
+        <TextView
+            android:id="@+id/lbl_ta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تا"
+            android:textSize="14dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_toLeftOf="@id/txt_time_start"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/iransansmobile_light" />
+
+        <TextView
+            android:id="@+id/txt_time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="۱۹:۰۰"
+            android:textSize="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_toLeftOf="@id/lbl_ta"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/iransansmobile_medium" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentBottom="true"
+            >
+
+            <TextView
+                android:id="@+id/lbl_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ظرفیت پر شده"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/iransansmobile_light" />
+
+            <TextView
+                android:id="@+id/txt_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="۱۷"
+                android:textSize="28dp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_below="@id/lbl_number" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sportlist_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_header" />
+
+
+</RelativeLayout>

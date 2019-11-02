@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_employee_furlough"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -113,112 +114,143 @@
                 android:layout_marginTop="16dp"
                 android:layout_below="@id/container_employee_name">
 
-
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
                     android:id="@+id/chkbx_sick"
                     android:layout_width="110dp"
                     android:layout_height="44dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/background_checkbox_container_off">
+                    app:cardCornerRadius="10dp"
+                    android:alpha=".7"
+                    android:backgroundTint="@color/black">
 
-                    <ImageView
-                        android:id="@+id/img_chkbx_sick"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:background="@drawable/background_check_box_off"
-                        android:padding="2dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        />
+                    <RelativeLayout
+                        android:layout_width="110dp"
+                        android:layout_height="44dp"
+                        >
 
-                    <TextView
-                        android:id="@+id/lbl_chkbx_sick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="استعلاجی"
-                        android:layout_marginRight="12dp"
-                        android:textSize="16dp"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/iransansmobile_medium"
-                        android:layout_toLeftOf="@id/img_chkbx_sick"
-                        android:textColor="@color/black"/>
+                        <ImageView
+                            android:id="@+id/img_chkbx_sick"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@drawable/background_check_box_off"
+                            android:layout_marginRight="12dp"
+                            android:padding="2dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            />
+
+                        <TextView
+                            android:id="@+id/lbl_chkbx_sick"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:text="استعلاجی"
+                            android:layout_marginRight="12dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/iransansmobile_medium"
+                            android:layout_toLeftOf="@id/img_chkbx_sick"
+                            android:textColor="@color/light_yellow"/>
 
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
 
 
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
+
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/chkbx_personal"
                     android:layout_width="110dp"
                     android:layout_height="44dp"
                     android:layout_marginRight="10dp"
                     android:layout_toRightOf="@id/chkbx_sick"
-                    android:background="@drawable/background_checkbox_container_off">
-                    <ImageView
-                        android:id="@+id/img_chkbx_personal"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:background="@drawable/background_check_box_off"
-                        android:padding="2dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        />
+                    android:backgroundTint="@color/black"
+                    app:cardCornerRadius="10dp"
+                    android:alpha=".6"
+                    >
 
-                    <TextView
-                        android:id="@+id/lbl_chkbx_personal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="شخصی"
-                        android:layout_marginRight="12dp"
-                        android:textSize="16dp"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/iransansmobile_medium"
-                        android:layout_toLeftOf="@id/img_chkbx_personal"
-                        android:textColor="@color/black"/>
+                    <RelativeLayout
+                        android:layout_width="110dp"
+                        android:layout_height="44dp"
+                        >
+                        <ImageView
+                            android:id="@+id/img_chkbx_personal"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@drawable/background_check_box_off"
+                            android:padding="2dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/lbl_chkbx_personal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="شخصی"
+                            android:layout_marginRight="12dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/iransansmobile_medium"
+                            android:layout_toLeftOf="@id/img_chkbx_personal"
+                            android:textColor="@color/light_yellow"/>
+
+                    </RelativeLayout>
 
 
-                <RelativeLayout
+                </androidx.cardview.widget.CardView>
+
+
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/chkbx_official"
                     android:layout_width="110dp"
                     android:layout_height="44dp"
                     android:layout_toRightOf="@id/chkbx_personal"
-                    android:background="@drawable/background_checkbox_container_on">
+                    android:backgroundTint="@color/black"
+                    app:cardCornerRadius="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="110dp"
+                        android:layout_height="44dp">
 
 
-                    <ImageView
-                        android:id="@+id/img_chkbx_official"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:background="@drawable/background_check_box_on"
-                        android:src="@drawable/ic_tick"
-                        android:padding="2dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        />
+                        <ImageView
+                            android:id="@+id/img_chkbx_official"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@drawable/background_check_box_on"
+                            android:padding="2dp"
+                            app:srcCompat="@drawable/ic_tick"
+                            android:layout_marginRight="12dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            />
 
-                    <TextView
-                        android:id="@+id/lbl_official"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="اداری"
-                        android:layout_marginRight="12dp"
-                        android:textSize="16dp"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/iransansmobile_medium"
-                        android:layout_toLeftOf="@id/img_chkbx_official"
-                        android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/lbl_official"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="اداری"
+                            android:layout_marginRight="12dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/iransansmobile_medium"
+                            android:layout_toLeftOf="@id/img_chkbx_official"
+                            android:textColor="@color/light_yellow"/>
 
-                </RelativeLayout>
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
 
 
             </RelativeLayout>
@@ -256,13 +288,13 @@
                     android:textColor="@color/black"
                     android:textSize="16dp"
                     android:inputType="number"
-                    android:maxLines="1"
-                    android:maxLength="2"
                     android:textCursorDrawable="@drawable/background_cursor"
                     android:background="@drawable/background_et_start_time"
                     android:layout_toLeftOf="@id/lbl_start_time"
                     android:layout_marginRight="16dp"
                     android:hint="۰۰"
+                    android:maxLength="2"
+                    android:maxLines="1"
                     android:textColorHint="@color/grey"
                     android:layout_below="@id/lbl_min_start_time"
                     android:fontFamily="@font/iransansmobile_medium"
@@ -647,18 +679,17 @@
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/et_subject"
+                android:id="@+id/container_et_subject"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginBottom="60dp"
                 android:layout_marginTop="32dp"
                 android:layout_below="@id/container_start_date">
 
                 <EditText
-                    android:id="@+id/et_description_leave"
+                    android:id="@+id/et_subject"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="شرح مرخصی"
@@ -673,35 +704,33 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_done"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                app:cardCornerRadius="16dp"
+                android:backgroundTint="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/container_et_subject"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ثبت"
+                    android:textColor="@color/light_yellow"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+
         </RelativeLayout>
 
     </ScrollView>
-
-
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btn_done"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        app:cardCornerRadius="16dp"
-        android:backgroundTint="@color/black"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ثبت"
-            android:textColor="@color/light_yellow"
-            android:textSize="20dp"
-            android:fontFamily="@font/iransansmobile_medium"
-            android:layout_gravity="center"/>
-
-    </androidx.cardview.widget.CardView>
-
 
 
 

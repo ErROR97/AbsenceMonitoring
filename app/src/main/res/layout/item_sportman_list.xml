@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_sportman_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="10dp"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/ic_volleyball"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            />
+
+        <TextView
+            android:id="@+id/txt_type"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="والیبال"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_toLeftOf="@id/img_icon"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            />
+
+
+
+        <TextView
+            android:id="@+id/lbl_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="وقت"
+            android:textSize="14dp"
+            android:layout_below="@id/txt_type"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_light" />
+
+
+        <TextView
+            android:id="@+id/txt_time_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="۱۷:۰۰"
+            android:textSize="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/txt_type"
+            android:layout_toLeftOf="@id/lbl_time"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_medium" />
+
+        <TextView
+            android:id="@+id/lbl_ta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تا"
+            android:textSize="14dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/txt_type"
+            android:layout_toLeftOf="@id/txt_time_start"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_light" />
+
+        <TextView
+            android:id="@+id/txt_time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="۱۹:۰۰"
+            android:textSize="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/txt_type"
+            android:layout_toLeftOf="@id/lbl_ta"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_medium" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/lbl_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ظرفیت پر شده"
+                android:textSize="12dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/iransansmobile_light" />
+
+            <TextView
+                android:id="@+id/txt_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="۱۷"
+                android:textSize="24dp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_below="@id/lbl_number" />
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
