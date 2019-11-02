@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.absencemonitoring.Handlers.ApiHandler;
+import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.ArchiveFurloughAdapter;
 import com.example.absencemonitoring.instances.Furlough;
@@ -22,12 +25,26 @@ public class ArchiveFurloughFragment extends Fragment {
     View view;
     RecyclerView rv;
     ArchiveFurloughAdapter archiveFurloughAdapter;
+    UserDetails userDetails;
+    ApiHandler apiHandler;
     List<Furlough> list;
 
 
     private void init() {
         rv = view.findViewById(R.id.rv_archive_furlough);
-        list = new ArrayList<>();
+
+        userDetails = new UserDetails(getActivity());
+        apiHandler = new ApiHandler(getActivity());
+
+
+        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.responseListenerNotifReqLeave() {
+            @Override
+            public void onRevived(List<Furlough> notifReqLeaveList) {
+                archiveFurloughAdapter = new ArchiveFurloughAdapter(getActivity(), notifReqLeaveList);
+                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                rv.setAdapter(archiveFurloughAdapter);
+            }
+        });
     }
 
 
@@ -37,18 +54,6 @@ public class ArchiveFurloughFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_archive_furlough, container, false);
 
         init();
-
-
-        list.add(new Furlough("متین براهویی", "استعلاجی", "۹۸/۰۸/۰۸", "jdl", "۴ روز"));
-        list.add(new Furlough("متین براهویی", "استعلاجی", "۹۸/۰۸/۰۸", "jdl", "۴ روز"));
-        list.add(new Furlough("متین براهویی", "استعلاجی", "۹۸/۰۸/۰۸", "jdl", "۴ روز"));
-        list.add(new Furlough("متین براهویی", "استعلاجی", "۹۸/۰۸/۰۸", "jdl", "۴ روز"));
-        list.add(new Furlough("متین براهویی", "استعلاجی", "۹۸/۰۸/۰۸", "jdl", "۴ روز"));
-
-        archiveFurloughAdapter = new ArchiveFurloughAdapter(getActivity(), list);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        rv.setAdapter(archiveFurloughAdapter);
 
 
         return view;

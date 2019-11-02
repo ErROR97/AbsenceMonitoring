@@ -160,18 +160,21 @@ public class ApiHandler {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("kharkohi", "onResponse: "+response );
                         JSONArray jsonArray = null;
+
                         try {
                             jsonArray = new JSONArray(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                         List<Furlough> FurloughList=new ArrayList<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Furlough furlough = new Furlough();
                             try {
                                 furlough.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
-                                furlough.setTimeLeave(jsonArray.getJSONObject(i).get("fullname").toString());
+                                furlough.setName(jsonArray.getJSONObject(i).get("fullname").toString());
                                 furlough.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
                                 furlough.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
                                 furlough.setPersonalIdemployee(jsonArray.getJSONObject(i).get("personalIdemployee").toString());

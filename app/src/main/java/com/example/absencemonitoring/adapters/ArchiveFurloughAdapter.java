@@ -36,9 +36,9 @@ public class ArchiveFurloughAdapter extends RecyclerView.Adapter<ArchiveFurlough
     @Override
     public void onBindViewHolder(@NonNull ArchiveFurloughAdapter.MyViewHolder holder, int position) {
         holder.nameTxt.setText(list.get(position).getName());
-        holder.typeTxt.setText(list.get(position).getType());
-        holder.amountTxt.setText(list.get(position).getAmountTime());
-        holder.dateTxt.setText(list.get(position).getStartDate());
+        holder.typeTxt.setText(list.get(position).getLeaveType());
+        holder.amountTxt.setText("5 روز");
+//        holder.dateTxt.setText(list.get(position).getStartDate());
 
     }
 
@@ -57,7 +57,7 @@ public class ArchiveFurloughAdapter extends RecyclerView.Adapter<ArchiveFurlough
             nameTxt = itemView.findViewById(R.id.txt_name);
             typeTxt = itemView.findViewById(R.id.txt_type);
             amountTxt = itemView.findViewById(R.id.txt_amount);
-            dateTxt = itemView.findViewById(R.id.txt_date);
+//            dateTxt = itemView.findViewById(R.id.txt_date);
         }
     }
 }

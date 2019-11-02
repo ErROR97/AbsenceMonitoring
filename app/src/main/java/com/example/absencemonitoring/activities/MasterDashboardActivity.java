@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
@@ -246,6 +247,7 @@ public class MasterDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!checkFragment.equals("noticeFurlough")) {
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeFurloughFragment()).commit();
                     checkFragment = "noticeFurlough";
 

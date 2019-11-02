@@ -35,9 +35,9 @@ public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAd
 
     @Override
     public void onBindViewHolder(@NonNull NoticeFurloughAdapter.MyViewHolder holder, int position) {
-        //holder.nameTxt.setText(list.get(position).getName());
-        //holder.typeTxt.setText(list.get(position).getType());
-        //holder.amountTxt.setText(list.get(position).getAmountTime());
+        holder.nameTxt.setText(list.get(position).getName());
+        holder.typeTxt.setText(list.get(position).getLeaveType());
+        holder.amountTxt.setText("3 روز");
 
         holder.noticeFurlough.setOnClickListener(new View.OnClickListener() {
             @Override
