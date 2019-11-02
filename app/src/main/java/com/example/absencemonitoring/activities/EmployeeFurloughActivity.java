@@ -7,12 +7,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.absencemonitoring.DateTime;
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.Utils.DateTime;
 
 import org.json.JSONException;
 
@@ -50,7 +48,6 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
         monthStartDate = findViewById(R.id.et_month_start_date);
         yearStartDate = findViewById(R.id.et_year_start_date);
 
-        descriptionLeave = findViewById(R.id.et_description_leave);
 
         backImg = findViewById(R.id.img_back);
         emplooyeeName = findViewById(R.id.txt_employee_name);
@@ -81,47 +78,6 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!minStartTime.getText().toString().equals("")){
-                    if ((Integer.parseInt(minStartTime.getText().toString()) > 0) && (Integer.parseInt(minStartTime.getText().toString()) < 60)) {
-                        if ((Integer.parseInt(hourStartTime.getText().toString()) > -1) && (Integer.parseInt(hourStartTime.getText().toString()) < 24)) {
-                            if ((Integer.parseInt(minDurationTime.getText().toString()) > 0) && (Integer.parseInt(minDurationTime.getText().toString()) < 60)) {
-                                if ((Integer.parseInt(hourDurationTime.getText().toString()) > -1) && (Integer.parseInt(hourDurationTime.getText().toString()) < 24)) {
-                                    if ((Integer.parseInt(dayDurationTime.getText().toString()) > -1)) {
-                                        if ((Integer.parseInt(dayStartDate.getText().toString()) > 0) && (Integer.parseInt(dayStartDate.getText().toString()) < 32)) {
-                                            if ((Integer.parseInt(monthStartDate.getText().toString()) > 0) && (Integer.parseInt(monthStartDate.getText().toString()) < 13)){
-                                                if ((Integer.parseInt(yearStartDate.getText().toString()) > -1)) {
-                                                    if (!descriptionLeave.getText().toString().equals(""))
-                                                    {
-                                                        apiHandler.reqLeave(userDetails.getUserDetails(),
-                                                                "9537063",
-                                                                "مرخصی اداری",
-                                                                DateTime.timeToString(0, Integer.parseInt(hourStartTime.getText().toString()), Integer.parseInt(minStartTime.getText().toString())),
-                                                                DateTime.timeToString(Integer.parseInt(dayDurationTime.getText().toString()), Integer.parseInt(hourDurationTime.getText().toString()), Integer.parseInt(minDurationTime.getText().toString())),
-                                                                DateTime.dateToString(Integer.parseInt(yearStartDate.getText().toString()), Integer.parseInt(monthStartDate.getText().toString()), Integer.parseInt(dayStartDate.getText().toString())), descriptionLeave.getText().toString(),
-                                                                new ApiHandler.responseListenerReqLeave() {
-                                                                    @Override
-                                                                    public void onRecived(String response) {
-                                                                        if (response.trim().equals("Success"))
-                                                                            Toast.makeText(activity, "Success",Toast.LENGTH_LONG).show();
-                                                                    }
-                                                                }
-                                                        );
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
         });
 
