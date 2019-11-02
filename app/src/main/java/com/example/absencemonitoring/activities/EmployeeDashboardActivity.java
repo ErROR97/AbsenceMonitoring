@@ -90,7 +90,6 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
                     try {
                         nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
                         String role = userDetails.getUserInfo().getString("role");
-                        Log.i("boz", "onRecived: " + role);
                         if (role.trim().equals("employee"))
                             roleTxt.setText("کارمند");
                     } catch (JSONException e) {

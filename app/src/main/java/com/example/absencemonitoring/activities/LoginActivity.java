@@ -33,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
-        userDetails = new UserDetails(this);
+        userDetails = new UserDetails(activity);
+
         apiHandler = new ApiHandler(activity);
 
         apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {

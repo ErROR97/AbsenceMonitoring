@@ -14,8 +14,9 @@ public class UserDetails {
         preference=context.getSharedPreferences(preferenceName, context.MODE_PRIVATE);
     }
 
-    public void saveUserInfo(String firstName , String lastName , String nationalId ,String phoneNumber ,String email ,String role ,String address){
+    public void saveUserInfo(String personalId,String firstName , String lastName , String nationalId ,String phoneNumber ,String email ,String role ,String address){
         SharedPreferences.Editor editor = preference.edit();
+        editor.putString("personalId",personalId);
         editor.putString("firstName",firstName);
         editor.putString("lastName",lastName);
         editor.putString("nationalId",nationalId);
@@ -46,6 +47,7 @@ public class UserDetails {
     public JSONObject getUserInfo() {
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("personalId",preference.getString("personalId", "not found"));
             jsonObject.put("firstName",preference.getString("firstName", "not found"));
             jsonObject.put("lastName",preference.getString("lastName", "not found"));
             jsonObject.put("nationalId",preference.getString("nationalId", "not found"));

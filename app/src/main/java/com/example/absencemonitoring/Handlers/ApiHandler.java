@@ -21,6 +21,7 @@ public class ApiHandler {
     private Activity activity;
     private UserDetails userDetails;
     private String urlLogin = "http://matingrimes.ir/office/login.php";
+    private String urlReqLeave = "http://matingrimes.ir/office/reqLeave.php";
     private String urlgetUserInfo = "http://matingrimes.ir/office/getUserInfo.php";
 
     public ApiHandler(Activity activity) {
@@ -71,7 +72,7 @@ public class ApiHandler {
 
     }
 
-    public void getUserInfo(final String personalId,final responseListenerGetInfo responseListenerGetInfo){
+    public void getUserInfo(final String personalId, final responseListenerGetInfo responseListenerGetInfo){
         final StringRequest request = new StringRequest(Request.Method.POST, urlgetUserInfo,
                 new Response.Listener<String>() {
                     @Override
@@ -79,7 +80,7 @@ public class ApiHandler {
                         Log.i("khar", "onResponse: " + response);
                         if (response.trim().split("_")[0].equals("Success")) {
                             userDetails = new UserDetails(activity);
-                            userDetails.saveUserInfo(response.trim().split("_")[1],response.trim().split("_")[2],response.trim().split("_")[3],response.trim().split("_")[4],response.trim().split("_")[5],response.trim().split("_")[6],response.trim().split("_")[7]);
+                            userDetails.saveUserInfo(personalId,response.trim().split("_")[1],response.trim().split("_")[2],response.trim().split("_")[3],response.trim().split("_")[4],response.trim().split("_")[5],response.trim().split("_")[6],response.trim().split("_")[7]);
                             responseListenerGetInfo.onRecived("Success");
                         } else {
                             responseListenerGetInfo.onRecived("Error");
@@ -107,11 +108,53 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
+    public void reqLeave(final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave, final responseListenerReqLeave responseListenerReqLeave) {
+        final StringRequest request = new StringRequest(Request.Method.POST, urlReqLeave,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.trim().split("_")[0].equals("Success")) {
+                            responseListenerReqLeave.onRecived("Success");
+                        } else {
+                            responseListenerReqLeave.onRecived("Error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerReqLeave.onRecived("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalId", personalId.trim());
+                params.put("personalIdmaster", personalIdmaster.trim());
+                params.put("leavetype", leavetype.trim());
+                params.put("startTime", startTime.trim());
+                params.put("timeLeave", timeLeave.trim());
+                params.put("startDate", startDate.trim());
+                params.put("descriptionLeave", descriptionLeave.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
     public interface responseListenerLogin {
         void onRecived(String response);
     }
 
     public interface responseListenerGetInfo {
+        void onRecived(String response);
+    }
+
+    public interface responseListenerReqLeave {
         void onRecived(String response);
     }
 
