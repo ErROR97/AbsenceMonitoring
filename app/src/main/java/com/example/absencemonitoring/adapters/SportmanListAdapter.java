@@ -1,6 +1,7 @@
 package com.example.absencemonitoring.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.activities.SportlistDetailsActivity;
 import com.example.absencemonitoring.instances.NoticeSport;
+import com.example.absencemonitoring.instances.SportmanList;
 
 import java.util.List;
 
@@ -16,30 +19,38 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ArchiveSportAdapter extends RecyclerView.Adapter<ArchiveSportAdapter.MyViewHolder> {
+public class SportmanListAdapter extends RecyclerView.Adapter<SportmanListAdapter.MyViewHolder> {
 
     Activity activity;
-    List<NoticeSport> list;
+    List<SportmanList> list;
 
-    public ArchiveSportAdapter(Activity activity, List<NoticeSport> list) {
+    public SportmanListAdapter(Activity activity, List<SportmanList> list) {
         this.activity = activity;
         this.list = list;
     }
 
     @NonNull
     @Override
-    public ArchiveSportAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ArchiveSportAdapter.MyViewHolder(LayoutInflater.from(activity).inflate(R.layout.item_archive_sport, parent, false));
+    public SportmanListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new SportmanListAdapter.MyViewHolder(LayoutInflater.from(activity).inflate(R.layout.item_sportman_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArchiveSportAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SportmanListAdapter.MyViewHolder holder, int position) {
         holder.typeTxt.setText(list.get(position).getType());
-        holder.dateTxt.setText(list.get(position).getDate());
         holder.startTxt.setText(list.get(position).getStartTime());
         holder.endTxt.setText(list.get(position).getEndTime());
+        holder.numberTxt.setText(list.get(position).getNumber());
+        holder.sportmanListItem.setCardBackgroundColor(activity.getResources().getColor(list.get(position).getColor()));
         holder.iconImg.setImageResource(list.get(position).getIcon());
-        holder.archiveSportItem.setCardBackgroundColor(list.get(position).getColor());
+
+        holder.sportmanListItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.startActivity(new Intent(activity, SportlistDetailsActivity.class));
+
+            }
+        });
     }
 
 
@@ -49,17 +60,17 @@ public class ArchiveSportAdapter extends RecyclerView.Adapter<ArchiveSportAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView typeTxt, dateTxt, startTxt, endTxt;
+        TextView typeTxt, startTxt, endTxt, numberTxt;
+        CardView sportmanListItem;
         ImageView iconImg;
-        CardView archiveSportItem;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            archiveSportItem = itemView.findViewById(R.id.item_archive_sport);
+            sportmanListItem = itemView.findViewById(R.id.item_sportman_list);
             typeTxt = itemView.findViewById(R.id.txt_type);
-            dateTxt = itemView.findViewById(R.id.txt_date);
             startTxt = itemView.findViewById(R.id.txt_time_start);
             endTxt = itemView.findViewById(R.id.txt_time_end);
+            numberTxt = itemView.findViewById(R.id.txt_number);
             iconImg = itemView.findViewById(R.id.img_icon);
         }
     }

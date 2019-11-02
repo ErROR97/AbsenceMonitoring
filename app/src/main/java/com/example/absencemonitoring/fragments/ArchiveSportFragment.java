@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.ArchiveSportAdapter;
-import com.example.absencemonitoring.instances.Sport;
+import com.example.absencemonitoring.instances.NoticeSport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class ArchiveSportFragment extends Fragment {
     View view;
     RecyclerView rv;
     ArchiveSportAdapter archiveSportAdapter;
-    List<Sport> list;
+    List<NoticeSport> list;
 
 
     private void init() {
@@ -38,9 +38,9 @@ public class ArchiveSportFragment extends Fragment {
 
         init();
 
-        list.add(new Sport("والیبال", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.light_yellow), R.drawable.ic_volleyball));
-        list.add(new Sport("فوتبال", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.green), R.drawable.ic_football));
-        list.add(new Sport("استخر", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.light_blue), R.drawable.ic_swimming));
+        list.add(new NoticeSport("والیبال", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.light_yellow), R.drawable.ic_volleyball));
+        list.add(new NoticeSport("فوتبال", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.green), R.drawable.ic_football));
+        list.add(new NoticeSport("استخر", "۹۸/۰۸/۰۹", "۲۱:۰۰", "۲۳:۰۰", "۲۱", getResources().getColor(R.color.light_blue), R.drawable.ic_swimming));
 
         archiveSportAdapter = new ArchiveSportAdapter(getActivity(), list);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));

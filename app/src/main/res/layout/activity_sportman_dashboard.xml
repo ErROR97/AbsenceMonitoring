@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.GuardDashboardActivity">
+
+    <RelativeLayout
+        android:id="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="10dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            app:srcCompat="@drawable/ic_green_energy" />
+
+
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="متین براهویی"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="مسئول ورزشی"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/txt_name"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/iransansmobile_light" />
+
+        <TextView
+            android:id="@+id/lbl_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اداره کل برق"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="استان سیستان و بلوچستان"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_below="@id/lbl_brand"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/container_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/container_header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/txt_timing"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="تنظیم زمانبندی ها"
+            android:textColor="@color/light_yellow"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:background="@drawable/background_ripple_button_sportman"
+            android:fontFamily="@font/iransansmobile_medium" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/light_yellow"
+            android:layout_toRightOf="@id/txt_timing"/>
+
+        <TextView
+            android:id="@+id/txt_list"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="مشاهده لیست"
+            android:textColor="@color/light_yellow"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_toRightOf="@id/txt_timing"
+            android:layout_marginLeft="1dp"
+            android:background="@drawable/background_ripple_button_sportman1"
+            android:fontFamily="@font/iransansmobile_medium" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/container_date"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/container_buttons"
+        android:layout_centerHorizontal="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="شنبه ۹۸/۰۸/۱۲"
+            android:background="@drawable/background_date_reserve_sport_form"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:textColor="@color/light_yellow"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:fontFamily="@font/iransansmobile_medium"/>
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sportman_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_date"
+        android:layout_marginTop="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sportman_timing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_date"
+        android:visibility="invisible"
+        android:layout_marginTop="16dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_logout"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:cardCornerRadius="100dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/black"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="7dp"
+            app:srcCompat="@drawable/ic_logout"
+            android:layout_gravity="center"/>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</RelativeLayout>
