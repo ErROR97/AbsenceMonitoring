@@ -13,8 +13,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.absencemonitoring.instances.Furlough;
+import com.example.absencemonitoring.notifReqLeave;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ApiHandler {
@@ -23,6 +30,7 @@ public class ApiHandler {
     private String urlLogin = "http://matingrimes.ir/office/login.php";
     private String urlReqLeave = "http://matingrimes.ir/office/reqLeave.php";
     private String urlgetUserInfo = "http://matingrimes.ir/office/getUserInfo.php";
+    private String urlgetNotifLeave = "http://matingrimes.ir/office/notifLeave.php";
 
     public ApiHandler(Activity activity) {
         this.activity = activity;
@@ -108,7 +116,7 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void reqLeave(final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave, final responseListenerReqLeave responseListenerReqLeave) {
+    public void reqLeave(final String fullName,final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave, final responseListenerReqLeave responseListenerReqLeave) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlReqLeave,
                 new Response.Listener<String>() {
                     @Override
@@ -131,6 +139,7 @@ public class ApiHandler {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("fullName", fullName.trim());
                 params.put("personalId", personalId.trim());
                 params.put("personalIdmaster", personalIdmaster.trim());
                 params.put("leavetype", leavetype.trim());
@@ -138,6 +147,57 @@ public class ApiHandler {
                 params.put("timeLeave", timeLeave.trim());
                 params.put("startDate", startDate.trim());
                 params.put("descriptionLeave", descriptionLeave.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+    public void getNotifReqLeave(final String personalIdmaster, final responseListenerNotifReqLeave responseListenerNotifReqLeave){
+        final StringRequest request = new StringRequest(Request.Method.POST, urlgetNotifLeave,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONArray jsonArray = null;
+                        try {
+                            jsonArray = new JSONArray(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        List<Furlough> FurloughList=new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Furlough furlough = new Furlough();
+                            try {
+                                furlough.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
+                                furlough.setTimeLeave(jsonArray.getJSONObject(i).get("fullname").toString());
+                                furlough.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
+                                furlough.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
+                                furlough.setPersonalIdemployee(jsonArray.getJSONObject(i).get("personalIdemployee").toString());
+                                furlough.setPersonalIdMaster(jsonArray.getJSONObject(i).get("personalIdmaster").toString());
+                                furlough.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
+                                furlough.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            FurloughList.add(furlough);
+                        }
+                        responseListenerNotifReqLeave.onRevived(FurloughList);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalIdmaster", personalIdmaster.trim());
                 return params;
             }
         };
@@ -156,6 +216,10 @@ public class ApiHandler {
 
     public interface responseListenerReqLeave {
         void onRecived(String response);
+    }
+
+    public interface responseListenerNotifReqLeave{
+        void onRevived(List<Furlough> notifReqLeaveList);
     }
 
 }

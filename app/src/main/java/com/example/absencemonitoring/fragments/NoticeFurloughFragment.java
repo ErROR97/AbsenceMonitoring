@@ -37,11 +37,11 @@ public class NoticeFurloughFragment extends Fragment {
 
         init();
 
+        /*list.add(new Furlough("متین براهویی", "استعلاجی", "0000", "0000", "۳ روز"));
         list.add(new Furlough("متین براهویی", "استعلاجی", "0000", "0000", "۳ روز"));
         list.add(new Furlough("متین براهویی", "استعلاجی", "0000", "0000", "۳ روز"));
         list.add(new Furlough("متین براهویی", "استعلاجی", "0000", "0000", "۳ روز"));
-        list.add(new Furlough("متین براهویی", "استعلاجی", "0000", "0000", "۳ روز"));
-        list.add(new Furlough("متین براهویی", "استعلاجی", "0000", "0000", "۳ روز"));
+        list.add(new Furlough("متین براهویی", "استعلاجی", "0000", "0000", "۳ روز"));*/
 
         noticeFurloughAdapter = new NoticeFurloughAdapter(getActivity(), list);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
