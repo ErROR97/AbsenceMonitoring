@@ -9,6 +9,7 @@ import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,14 +44,18 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
     DateTime dateTime;
     CardView officialChkbx, personalChkbx, sickChkbx;
     ImageView imgOfficialChkbx, imgPersonalChkbx, imgSickChkbx;
+    ProgressBar progressBar;
+    TextView confirmTxt;
     String type = "اداری";
     String inputError = "ورودی های زیر را کنترل کنید";
     boolean error = false;
+
 
     @SuppressLint("SetTextI18n")
     private void init() {
         userDetails = new UserDetails(activity);
         apiHandler = new ApiHandler(activity);
+
 
         employeeFurloughActivity = findViewById(R.id.activity_employee_furlough);
 
@@ -81,6 +86,9 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
         EmplooyeeId = findViewById(R.id.txt_employee_situation);
 
         done = findViewById(R.id.btn_done);
+
+        progressBar = findViewById(R.id.progressbar);
+        confirmTxt = findViewById(R.id.txt_confirm);
 
         minStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
         hourStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
@@ -192,6 +200,7 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (minStartTime.length() == 0) {
                     inputError+= "\n-دقیقه زمان شروع";
                     error = true;
@@ -236,7 +245,6 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
                     TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
                     textView.setMaxLines(9);
                     textView.setTextSize(14);
-
                     textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_light));
                     textView.setTextColor(getResources().getColor(R.color.red));
 
@@ -255,6 +263,9 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
 
                     inputError = "ورودی های زیر را کنترل کنید";
                 } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    confirmTxt.setVisibility(View.INVISIBLE);
+                    done.setEnabled(false);
                     apiHandler.reqLeave(emplooyeeName.getText().toString(), userDetails.getUserDetails(), "9537063", type,
                             DateTime.timeToString(0, Integer.parseInt(hourStartTime.getText().toString()), Integer.parseInt(minStartTime.getText().toString())),
                             DateTime.timeToString(Integer.parseInt(dayDurationTime.getText().toString()), Integer.parseInt(hourDurationTime.getText().toString()), Integer.parseInt(minDurationTime.getText().toString())),
@@ -262,8 +273,14 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
                             new ApiHandler.responseListenerReqLeave() {
                                 @Override
                                 public void onRecived(String response) {
-                                    if (response.trim().equals("Success"))
-                                        Toast.makeText(activity, "Success", Toast.LENGTH_LONG).show();
+                                    if (response.trim().equals("success")) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        confirmTxt.setVisibility(View.VISIBLE);
+                                        done.setEnabled(true);
+
+                                        setResult(3);
+                                        finish();
+                                    }
                                 }
                             });
                 }
@@ -279,4 +296,5 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
     public int getdp(int pixel) {
         return pixel / (int) getApplicationContext().getResources().getDisplayMetrics().density;
     }
+
 }

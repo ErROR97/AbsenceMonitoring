@@ -1,7 +1,10 @@
 package com.example.absencemonitoring.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.ViewCompat;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,6 +26,7 @@ import com.example.absencemonitoring.fragments.ControlFragment;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.fragments.NoticeSportFragment;
 import com.example.absencemonitoring.fragments.NoticeTransportFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
@@ -41,6 +45,8 @@ public class MasterDashboardActivity extends AppCompatActivity {
     TextView previousSelectedTxt;
     ImageView previousSelectedImg;
 
+    RelativeLayout masterDashboardActivity;
+
     UserDetails userDetails;
     Activity activity;
     int previousSelectedDrawable;
@@ -49,6 +55,8 @@ public class MasterDashboardActivity extends AppCompatActivity {
     public void init() {
         userDetails = new UserDetails(activity);
         ApiHandler apiHandler = new ApiHandler(activity);
+
+        masterDashboardActivity = findViewById(R.id.activity_master_dashboard);
 
         menuContainer = findViewById(R.id.container_menu);
         menuContainer.bringToFront();
@@ -228,7 +236,7 @@ public class MasterDashboardActivity extends AppCompatActivity {
         requestFurlougTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MasterDashboardActivity.this, EmployeeFurloughActivity.class));
+                startActivityForResult(new Intent(MasterDashboardActivity.this, EmployeeFurloughActivity.class), 2);
                 requestDetailsContainer.setVisibility(View.INVISIBLE);
             }
         });
@@ -315,5 +323,26 @@ public class MasterDashboardActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 3) {
+            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "درخواست با موفقیت ارسال شد", Snackbar.LENGTH_LONG);
+
+            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
+
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(getResources().getColor(R.color.light_green));
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            textView.setMaxLines(9);
+            textView.setTextSize(14);
+            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
+            textView.setTextColor(getResources().getColor(R.color.black));
+
+            snackbar.show();
+        }
     }
 }

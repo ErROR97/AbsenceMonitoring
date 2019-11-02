@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
@@ -21,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class NoticeFurloughFragment extends Fragment {
     View view;
@@ -28,10 +30,13 @@ public class NoticeFurloughFragment extends Fragment {
     NoticeFurloughAdapter noticeFurloughAdapter;
     UserDetails userDetails;
     ApiHandler apiHandler;
-    List<Furlough> list;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public void init() {
         rv = view.findViewById(R.id.rv_notice_furlough);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_notice_furlough);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.light_yellow));
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.black));
 
         userDetails = new UserDetails(getActivity());
         apiHandler = new ApiHandler(getActivity());
@@ -53,6 +58,22 @@ public class NoticeFurloughFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_notice_furlough, container, false);
 
         init();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.responseListenerNotifReqLeave() {
+                    @Override
+                    public void onRevived(List<Furlough> notifReqLeaveList) {
+                        noticeFurloughAdapter = new NoticeFurloughAdapter(getActivity(), notifReqLeaveList);
+                        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        noticeFurloughAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                        rv.setAdapter(noticeFurloughAdapter);
+                    }
+                });
+            }
+        });
 
         return view;
     }

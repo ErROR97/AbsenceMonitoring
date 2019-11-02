@@ -36,6 +36,7 @@ public class ApiHandler {
         this.activity = activity;
     }
 
+
     public void logIn(final String personalId, final String password,final responseListenerLogin responseListenerLogin) {
 
         final StringRequest request = new StringRequest(Request.Method.POST, urlLogin,
@@ -80,6 +81,7 @@ public class ApiHandler {
 
     }
 
+
     public void getUserInfo(final String personalId, final responseListenerGetInfo responseListenerGetInfo){
         final StringRequest request = new StringRequest(Request.Method.POST, urlgetUserInfo,
                 new Response.Listener<String>() {
@@ -116,15 +118,16 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
+
     public void reqLeave(final String fullName,final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave, final responseListenerReqLeave responseListenerReqLeave) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlReqLeave,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.trim().split("_")[0].equals("Success")) {
-                            responseListenerReqLeave.onRecived("Success");
+                        if (response.trim().equals("success")) {
+                            responseListenerReqLeave.onRecived("success");
                         } else {
-                            responseListenerReqLeave.onRecived("Error");
+                            responseListenerReqLeave.onRecived("error");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -154,6 +157,7 @@ public class ApiHandler {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         requestQueue.add(request);
     }
+
 
     public void getNotifReqLeave(final String personalIdmaster, final responseListenerNotifReqLeave responseListenerNotifReqLeave){
         final StringRequest request = new StringRequest(Request.Method.POST, urlgetNotifLeave,
@@ -209,17 +213,21 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
+
     public interface responseListenerLogin {
         void onRecived(String response);
     }
+
 
     public interface responseListenerGetInfo {
         void onRecived(String response);
     }
 
+
     public interface responseListenerReqLeave {
         void onRecived(String response);
     }
+
 
     public interface responseListenerNotifReqLeave{
         void onRevived(List<Furlough> notifReqLeaveList);
