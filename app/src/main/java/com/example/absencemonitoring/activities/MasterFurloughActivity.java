@@ -8,7 +8,10 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.Utils.SolarCalendar;
 import com.example.absencemonitoring.instances.Furlough;
+
+import java.util.Calendar;
 
 public class MasterFurloughActivity extends AppCompatActivity {
 
@@ -73,7 +76,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
             startDateOrTimeLbl.setText("از تاریخ");
             endDateOrTimeLbl.setText("تا تاریخ");
             startDateOrTimeTxt.setText(furlough.getStartDate());
-
+//            endDateOrTimeTxt.setText(SolarCalendar.getCurrentShamsidate(Calendar.getInstance().add(Calendar.DATE, 5)));
         } else {
             amountTypeTxt.setText("ساعتی");
             dayOrHourTxt.setText("ساعت");
