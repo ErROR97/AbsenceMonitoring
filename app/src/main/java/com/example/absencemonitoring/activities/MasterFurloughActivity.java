@@ -22,6 +22,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
         furlough.setStartTime(intent.getStringExtra("startTime"));
         furlough.setTimeLeave(intent.getStringExtra("timeLeave"));
         furlough.setDescriptionLeave(intent.getStringExtra("descriptionLeave"));
+        furlough.setId(Integer.parseInt(intent.getStringExtra("id")));
 
     }
 

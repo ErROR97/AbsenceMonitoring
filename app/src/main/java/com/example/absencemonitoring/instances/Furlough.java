@@ -3,6 +3,7 @@ package com.example.absencemonitoring.instances;
 public class Furlough {
 
     private String personalIdemployee;
+    private int id;
     private String name;
     private String personalIdMaster;
     private String leaveType;
@@ -73,5 +74,13 @@ public class Furlough {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

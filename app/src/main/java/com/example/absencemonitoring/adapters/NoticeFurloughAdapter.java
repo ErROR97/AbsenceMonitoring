@@ -52,6 +52,7 @@ public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAd
                 intent.putExtra("timeLeave", list.get(position).getTimeLeave());
                 intent.putExtra("startDate", list.get(position).getStartDate());
                 intent.putExtra("descriptionLeave", list.get(position).getDescriptionLeave());
+                intent.putExtra("id", list.get(position).getId());
                 activity.startActivity(new Intent(activity, MasterFurloughActivity.class));
             }
         });

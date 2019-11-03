@@ -189,6 +189,7 @@ public class ApiHandler {
                                 furlough.setPersonalIdMaster(jsonArray.getJSONObject(i).get("personalIdmaster").toString());
                                 furlough.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
                                 furlough.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
+                                furlough.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
