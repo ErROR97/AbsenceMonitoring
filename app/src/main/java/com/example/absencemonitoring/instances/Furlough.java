@@ -5,6 +5,7 @@ public class Furlough {
     private String personalIdemployee;
     private int id;
     private String name;
+    private String currentDate;
     private String personalIdMaster;
     private String leaveType;
     private String startTime;
@@ -82,5 +83,13 @@ public class Furlough {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 }

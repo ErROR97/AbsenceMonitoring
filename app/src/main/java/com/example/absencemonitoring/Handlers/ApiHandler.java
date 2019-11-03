@@ -168,7 +168,6 @@ public class ApiHandler {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("kharkohi", "onResponse: "+response );
                         JSONArray jsonArray = null;
 
                         try {
@@ -190,6 +189,8 @@ public class ApiHandler {
                                 furlough.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
                                 furlough.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
                                 furlough.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
+
+                                furlough.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
