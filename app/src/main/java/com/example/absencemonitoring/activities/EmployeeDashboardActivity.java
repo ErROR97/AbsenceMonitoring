@@ -83,21 +83,14 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         archiveImg = findViewById(R.id.img_archive);
         controlImg = findViewById(R.id.img_controling);
 
-        apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
-            @Override
-            public void onRecived(String response) {
-                if(response.trim().equals("Success")){
-                    try {
-                        nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
-                        String role = userDetails.getUserInfo().getString("role");
-                        if (role.trim().equals("employee"))
-                            roleTxt.setText("کارمند");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        try {
+            nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
+            String role = userDetails.getUserInfo().getString("role");
+            if (role.trim().equals("employee"))
+                roleTxt.setText("کارمند");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

@@ -98,22 +98,29 @@ public class MasterDashboardActivity extends AppCompatActivity  {
         controlImg = findViewById(R.id.img_controling);
 
 
-        apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
+
+        String role = null;
+        try {
+            role = userDetails.getUserInfo().getString("role");
+            nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (role.trim().equals("master"))
+            roleTxt.setText("مدیر");
+
+        /*apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
             @Override
             public void onRecived(String response) {
                 if(response.trim().equals("Success")){
                     try {
-                        nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
-                        String role = userDetails.getUserInfo().getString("role");
-                        if (role.trim().equals("master"))
-                            roleTxt.setText("مدیر");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        });
+        });*/
     }
 
 

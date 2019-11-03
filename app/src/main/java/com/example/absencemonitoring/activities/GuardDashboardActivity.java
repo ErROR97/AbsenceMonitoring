@@ -44,18 +44,11 @@ public class GuardDashboardActivity extends AppCompatActivity {
         logoutCrd = findViewById(R.id.btn_logout);
         list = new ArrayList<>();
 
-        apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
-            @Override
-            public void onRecived(String response) {
-                if(response.trim().equals("Success")){
-                    try {
-                        nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        try {
+            nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

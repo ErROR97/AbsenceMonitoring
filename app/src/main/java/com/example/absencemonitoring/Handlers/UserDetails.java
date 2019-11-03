@@ -2,6 +2,7 @@ package com.example.absencemonitoring.Handlers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,16 +15,23 @@ public class UserDetails {
         preference=context.getSharedPreferences(preferenceName, context.MODE_PRIVATE);
     }
 
-    public void saveUserInfo(String personalId,String firstName , String lastName , String nationalId ,String phoneNumber ,String email ,String role ,String address){
+    public void saveUserInfo(JSONObject userInfo){
         SharedPreferences.Editor editor = preference.edit();
-        editor.putString("personalId",personalId);
-        editor.putString("firstName",firstName);
-        editor.putString("lastName",lastName);
-        editor.putString("nationalId",nationalId);
-        editor.putString("phoneNumber",phoneNumber);
-        editor.putString("email",email);
-        editor.putString("role",role);
-        editor.putString("address",address);
+        try {
+            editor.putString("personalId",userInfo.getString("personalId"));
+            editor.putString("firstName",userInfo.getString("firstname"));
+            editor.putString("lastName",userInfo.getString("lastname"));
+            editor.putString("nationalId",userInfo.getString("nationalId"));
+            editor.putString("phoneNumber",userInfo.getString("phonenumber"));
+            editor.putString("email",userInfo.getString("email"));
+            editor.putString("role",userInfo.getString("role"));
+            editor.putString("department",userInfo.getString("department"));
+            editor.putString("address",userInfo.getString("address"));
+            editor.putString("forgetCode",userInfo.getString("forgetcode"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         editor.apply();
     }
 
@@ -55,6 +63,8 @@ public class UserDetails {
             jsonObject.put("email",preference.getString("email", "not found"));
             jsonObject.put("role",preference.getString("role", "not found"));
             jsonObject.put("address",preference.getString("address", "not found"));
+            jsonObject.put("department",preference.getString("department", "not found"));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

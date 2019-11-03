@@ -17,6 +17,7 @@ import com.example.absencemonitoring.instances.Furlough;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,18 +42,15 @@ public class ApiHandler {
         final StringRequest request = new StringRequest(Request.Method.POST, urlLogin,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(final String response) {
 
-                        if (response.trim().split("_")[0].equals("loginSuccess")) {
+                        if (response.trim().split("_")[0].equals("success")) {
                             userDetails = new UserDetails(activity);
                             userDetails.saveUserDetails(personalId,true);
-                            responseListenerLogin.onRecived(response);
-                            userDetails.saveUserRole(response.trim().split("_")[1]);
-                            /*getUserInfo(personalId, new responseListenerGetInfo() {
-                                @Override
-                                public void onRecived(String response) {
-                                }
-                            });*/
+                            try {
+                                userDetails.saveUserInfo(new JSONObject(response.trim().split("_")[1]));
+                            } catch (JSONException e) { e.printStackTrace(); }
+                            responseListenerLogin.onRecived("success");
                             activity.finish();
                         } else {
                             responseListenerLogin.onRecived(response);
@@ -83,43 +81,6 @@ public class ApiHandler {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         requestQueue.add(request);
 
-    }
-
-
-    public void getUserInfo(final String personalId, final responseListenerGetInfo responseListenerGetInfo){
-        final StringRequest request = new StringRequest(Request.Method.POST, urlgetUserInfo,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("khar", "onResponse: " + response);
-                        if (response.trim().split("_")[0].equals("Success")) {
-                            userDetails = new UserDetails(activity);
-                            userDetails.saveUserInfo(personalId,response.trim().split("_")[1],response.trim().split("_")[2],response.trim().split("_")[3],response.trim().split("_")[4],response.trim().split("_")[5],response.trim().split("_")[6],response.trim().split("_")[7]);
-                            responseListenerGetInfo.onRecived("Success");
-                        } else {
-                            responseListenerGetInfo.onRecived("Error");
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NoConnectionError) {
-
-                }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("personalId", personalId.trim());
-                return params;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        requestQueue.add(request);
     }
 
 
@@ -177,7 +138,7 @@ public class ApiHandler {
                             e.printStackTrace();
                         }
 
-                        List<Furlough> FurloughList=new ArrayList<>();
+                        List<Furlough> FurloughList = new ArrayList<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Furlough furlough = new Furlough();
                             try {
@@ -222,11 +183,6 @@ public class ApiHandler {
 
 
     public interface responseListenerLogin {
-        void onRecived(String response);
-    }
-
-
-    public interface responseListenerGetInfo {
         void onRecived(String response);
     }
 
