@@ -123,7 +123,7 @@ public class ApiHandler {
     }
 
 
-    public void reqLeave(final String fullName,final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave, final responseListenerReqLeave responseListenerReqLeave) {
+    public void reqLeave(final String fullName,final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave,final String currentDate,final responseListenerReqLeave responseListenerReqLeave) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlReqLeave,
                 new Response.Listener<String>() {
                     @Override
@@ -154,6 +154,7 @@ public class ApiHandler {
                 params.put("timeLeave", timeLeave.trim());
                 params.put("startDate", startDate.trim());
                 params.put("descriptionLeave", descriptionLeave.trim());
+                params.put("currentdate", currentDate.trim());
                 return params;
             }
         };
