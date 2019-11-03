@@ -18,19 +18,19 @@ import com.example.absencemonitoring.instances.Furlough;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ApiHandler {
+
     private Activity activity;
     private UserDetails userDetails;
     private String urlLogin = "http://matingrimes.ir/office/login.php";
     private String urlReqLeave = "http://matingrimes.ir/office/reqLeave.php";
-    private String urlgetUserInfo = "http://matingrimes.ir/office/getUserInfo.php";
     private String urlgetNotifLeave = "http://matingrimes.ir/office/notifLeave.php";
+    private String urlAcceptRejectReqLeave = "http://matingrimes.ir/office/acceptRejectReqLeave.php";
 
     public ApiHandler(Activity activity) {
         this.activity = activity;
@@ -51,7 +51,6 @@ public class ApiHandler {
                                 userDetails.saveUserInfo(new JSONObject(response.trim().split("_")[1]));
                             } catch (JSONException e) { e.printStackTrace(); }
                             responseListenerLogin.onRecived("success");
-                            activity.finish();
                         } else {
                             responseListenerLogin.onRecived(response);
                         }
@@ -181,6 +180,43 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
+    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final responseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
+        final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptRejectReqLeave,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.trim().equals("success")) {
+                            responseListenerAcceptRejectReqLeave.onRecived("success");
+                        } else {
+                            responseListenerAcceptRejectReqLeave.onRecived("error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerAcceptRejectReqLeave.onRecived("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                if (status)
+                    params.put("status","true");
+                else
+                    params.put("status","false");
+                params.put("personalId", personalIdemployee.trim());
+                params.put("personalIdmaster", personalIdmaster.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
 
     public interface responseListenerLogin {
         void onRecived(String response);
@@ -188,6 +224,10 @@ public class ApiHandler {
 
 
     public interface responseListenerReqLeave {
+        void onRecived(String response);
+    }
+
+    public interface responseListenerAcceptRejectReqLeave {
         void onRecived(String response);
     }
 

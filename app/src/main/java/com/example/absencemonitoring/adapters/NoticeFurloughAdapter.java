@@ -2,6 +2,7 @@ package com.example.absencemonitoring.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoticeFurloughAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final NoticeFurloughAdapter.MyViewHolder holder, final int position) {
         holder.nameTxt.setText(list.get(position).getName());
         holder.typeTxt.setText(list.get(position).getLeaveType());
         holder.amountTxt.setText(DateTime.calculateAmountIsDayOrHour(list.get(position).getTimeLeave()));
@@ -54,7 +55,9 @@ public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAd
                 intent.putExtra("descriptionLeave", list.get(position).getDescriptionLeave());
                 intent.putExtra("id", list.get(position).getId());
                 intent.putExtra("currentDate", list.get(position).getCurrentDate());
-                activity.startActivity(new Intent(activity, MasterFurloughActivity.class));
+                intent.putExtra("dayOrTime", DateTime.calculateAmountIsDayOrHour(list.get(position).getTimeLeave()));
+
+                activity.startActivity(intent);
             }
         });
     }

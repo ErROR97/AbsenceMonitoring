@@ -42,7 +42,7 @@
                 />
 
             <TextView
-                android:id="@+id/lbl_date"
+                android:id="@+id/lbl_current_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="تاریخ"
@@ -63,7 +63,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_below="@id/img_icon"
-                android:layout_toLeftOf="@id/lbl_date"
+                android:layout_toLeftOf="@id/lbl_current_date"
                 android:textColor="@color/black"
                 android:fontFamily="@font/iransansmobile_medium" />
 
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:text="وقت"
                 android:textSize="14dp"
-                android:layout_below="@id/lbl_date"
+                android:layout_below="@id/lbl_current_date"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
@@ -89,7 +89,7 @@
                 android:textSize="16dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@id/lbl_date"
+                android:layout_below="@id/lbl_current_date"
                 android:layout_toLeftOf="@id/lbl_time"
                 android:textColor="@color/black"
                 android:fontFamily="@font/iransansmobile_medium" />
@@ -102,7 +102,7 @@
                 android:textSize="14dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@id/lbl_date"
+                android:layout_below="@id/lbl_current_date"
                 android:layout_toLeftOf="@id/txt_time_start"
                 android:textColor="@color/black"
                 android:fontFamily="@font/iransansmobile_light" />
@@ -115,7 +115,7 @@
                 android:textSize="16dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@id/lbl_date"
+                android:layout_below="@id/lbl_current_date"
                 android:layout_toLeftOf="@id/lbl_ta"
                 android:textColor="@color/black"
                 android:fontFamily="@font/iransansmobile_medium" />

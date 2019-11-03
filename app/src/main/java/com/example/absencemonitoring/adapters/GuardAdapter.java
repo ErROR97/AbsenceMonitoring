@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class GuardAdapter extends RecyclerView.Adapter<GuardAdapter.MyViewHolder> {
+public class                                                                                                              GuardAdapter extends RecyclerView.Adapter<GuardAdapter.MyViewHolder> {
 
     Activity activity;
     List<GuardList> list;

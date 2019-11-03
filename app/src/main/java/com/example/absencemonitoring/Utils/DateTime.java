@@ -21,9 +21,9 @@ public class DateTime {
     public static String calculateAmountIsDayOrHour(String amount) {
         String[] amounts = amount.split(":");
         if (amounts[0].equals("0")) {
-            return "ساعت" + amounts[1];
+            return amounts[1] + " ساعت";
         } else {
-            return "روز" + amounts[0];
+            return amounts[0] + " روز";
         }
     }
 }

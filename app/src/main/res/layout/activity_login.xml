@@ -22,7 +22,8 @@
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
             android:fontFamily="@font/iransansmobile_medium"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            />
 
         <EditText
             android:id="@+id/et_personal_code"
@@ -77,20 +78,42 @@
 
 
 
-    <TextView
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/btn_login"
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:background="@drawable/background_ripple_button"
-        android:text="ورود"
-        android:gravity="center"
+        android:backgroundTint="@color/black"
+        app:cardCornerRadius="10dp"
         android:layout_below="@id/container_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/iransansmobile_medium"
-        android:textSize="18dp"
-        android:textColor="@color/light_yellow"
-        />
+        >
+
+        <TextView
+            android:id="@+id/lbl_login"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:background="@drawable/background_ripple_button"
+            android:text="ورود"
+            android:gravity="center"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="18dp"
+            android:textColor="@color/light_yellow"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/light_yellow"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
+
+
+    </androidx.cardview.widget.CardView>
 
 
     <TextView

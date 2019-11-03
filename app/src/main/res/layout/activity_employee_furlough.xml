@@ -36,12 +36,13 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/txt_current_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="۱۳۹۷/۰۵/۲۷"
             android:textSize="14dp"
             android:textColor="@color/dark_green"
-            android:fontFamily="@font/iransansmobile_light"
+            android:fontFamily="@font/iransansmobile_medium"
             android:layout_marginLeft="16dp"
             android:layout_centerVertical="true"/>
     </RelativeLayout>

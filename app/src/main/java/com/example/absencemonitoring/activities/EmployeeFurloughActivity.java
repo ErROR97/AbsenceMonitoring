@@ -19,6 +19,7 @@ import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.Utils.InputFilterMinMax;
+import com.example.absencemonitoring.Utils.SolarCalendar;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -45,6 +46,7 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
     CardView officialChkbx, personalChkbx, sickChkbx;
     ImageView imgOfficialChkbx, imgPersonalChkbx, imgSickChkbx;
     ProgressBar progressBar;
+    TextView currentDateTxt;
     TextView confirmTxt;
     String type = "اداری";
     String inputError = "ورودی های زیر را کنترل کنید";
@@ -89,6 +91,9 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressbar);
         confirmTxt = findViewById(R.id.txt_confirm);
+
+        currentDateTxt = findViewById(R.id.txt_current_date);
+        currentDateTxt.setText(SolarCalendar.getCurrentShamsidate());
 
         minStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
         hourStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
@@ -269,7 +274,8 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
                     apiHandler.reqLeave(emplooyeeName.getText().toString(), userDetails.getUserDetails(), "9537063", type,
                             DateTime.timeToString(0, Integer.parseInt(hourStartTime.getText().toString()), Integer.parseInt(minStartTime.getText().toString())),
                             DateTime.timeToString(Integer.parseInt(dayDurationTime.getText().toString()), Integer.parseInt(hourDurationTime.getText().toString()), Integer.parseInt(minDurationTime.getText().toString())),
-                            DateTime.dateToString(Integer.parseInt(yearStartDate.getText().toString()), Integer.parseInt(monthStartDate.getText().toString()), Integer.parseInt(dayStartDate.getText().toString())), descriptionLeave.getText().toString(),"1398/8/12",
+                            DateTime.dateToString(Integer.parseInt(yearStartDate.getText().toString()), Integer.parseInt(monthStartDate.getText().toString()), Integer.parseInt(dayStartDate.getText().toString())), descriptionLeave.getText().toString(),
+                            currentDateTxt.getText().toString(),
                             new ApiHandler.responseListenerReqLeave() {
                                 @Override
                                 public void onRecived(String response) {
@@ -283,6 +289,7 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+
                 }
 
             }

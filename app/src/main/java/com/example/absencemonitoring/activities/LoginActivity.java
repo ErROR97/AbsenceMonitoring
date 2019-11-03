@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +19,10 @@ import com.example.absencemonitoring.fragments.RecoveryFragment;
 import org.json.JSONException;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class LoginActivity extends AppCompatActivity {
-    TextView loginButton;
+    CardView loginButton;
     TextView recoveryBtn;
     EditText passWord , personalId;
     FrameLayout containerFramelayout;
@@ -28,14 +30,27 @@ public class LoginActivity extends AppCompatActivity {
     ApiHandler apiHandler;
     UserDetails userDetails;
     Activity activity;
+    ProgressBar progressBar;
+    TextView loginLbl;
+
+    public void init() {
+        userDetails = new UserDetails(activity);
+        apiHandler = new ApiHandler(activity);
+
+        progressBar = findViewById(R.id.progressbar);
+        loginLbl = findViewById(R.id.lbl_login);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         activity = this;
 
-        userDetails = new UserDetails(activity);
-        apiHandler = new ApiHandler(activity);
+        init();
+
+
 
         if (userDetails.getUserLogin()) {
             String role = null;
@@ -86,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 */
 
-        setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btn_login);
         recoveryBtn = findViewById(R.id.btn_recovery_password);
         personalId = findViewById(R.id.et_personal_code);
@@ -100,18 +114,26 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                loginLbl.setVisibility(View.INVISIBLE);
                 apiHandler.logIn(personalId.getText().toString(), passWord.getText().toString(), new ApiHandler.responseListenerLogin() {
                     @Override
                     public void onRecived(String response) {
-                        if (response.trim().split("_")[0].equals("loginSuccess")) {
-                            if (response.trim().split("_")[1].equals("master")) {
-                                startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
-                            }
-                            else if (response.trim().split("_")[1].equals("employee")){
-                                startActivity(new Intent(LoginActivity.this, EmployeeDashboardActivity.class));
-                            }
-                            else if (response.trim().split("_")[1].equals("guard")){
-                                startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
+                        progressBar.setVisibility(View.INVISIBLE);
+                        loginLbl.setVisibility(View.VISIBLE);
+                        if (response.equals("success")) {
+                            try {
+                                if (userDetails.getUserInfo().getString("role").equals("master")) {
+                                    startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
+                                }
+                                else if (userDetails.getUserInfo().getString("role").equals("employee")){
+                                    startActivity(new Intent(LoginActivity.this, EmployeeDashboardActivity.class));
+                                }
+                                else if (userDetails.getUserInfo().getString("role").equals("guard")){
+                                    startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
                             apiHandler = new ApiHandler(activity);

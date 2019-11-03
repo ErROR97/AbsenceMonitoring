@@ -43,42 +43,66 @@
 
 
                         <TextView
-                            android:id="@+id/container_request_furlough"
+                            android:id="@+id/txt_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="درخواست مرخصی"
+                            tools:text="درخواست مرخصی"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="16dp"
                             android:textSize="20dp"
                             android:fontFamily="@font/iransansmobile_bold"
                             android:textColor="@color/black"/>
 
+
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/container_request_furlough"
+                            android:layout_below="@id/txt_type"
                             android:layout_marginRight="8dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="15dp">
 
                             <TextView
-                                android:id="@+id/lbl_date"
+                                android:id="@+id/lbl_current_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="تاریخ: ۹۸/۰۷/۲۲"
+                                android:text="تاریخ: "
                                 android:layout_alignParentRight="true"
                                 android:fontFamily="@font/iransansmobile_medium"
                                 android:textColor="@color/black"
                                 />
 
                             <TextView
-                                android:id="@+id/lbl_code"
+                                android:id="@+id/txt_current_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="کد مرخصی: ۱۲۳۴"
+                                tools:text="۹۸/۰۷/۲۲"
+                                android:layout_toLeftOf="@id/lbl_current_date"
                                 android:fontFamily="@font/iransansmobile_medium"
                                 android:textColor="@color/black"
                                 />
+
+
+                            <TextView
+                                android:id="@+id/lbl_furlough_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="کد مرخصی: "
+                                android:fontFamily="@font/iransansmobile_medium"
+                                android:textColor="@color/black"
+                                android:layout_toRightOf="@id/txt_furlough_code"
+                                />
+
+                            <TextView
+                                android:id="@+id/txt_furlough_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="۱۲۳۴"
+                                android:fontFamily="@font/iransansmobile_medium"
+                                android:textColor="@color/black"
+                                />
+
 
 
                         </RelativeLayout>
@@ -108,10 +132,10 @@
                             />
 
                         <TextView
-                            android:id="@+id/txt1"
+                            android:id="@+id/txt_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="متین دریانوش براهویی"
+                            tools:text="متین دریانوش براهویی"
                             android:textSize="15dp"
                             android:layout_toLeftOf="@id/lbl1"
                             android:layout_marginRight="4dp"
@@ -133,7 +157,7 @@
                             android:text="مشمول در واحد"/>
 
                         <TextView
-                            android:id="@+id/txt2"
+                            android:id="@+id/txt_department"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="حراست"
@@ -146,15 +170,29 @@
                             />
 
                         <TextView
+                            android:id="@+id/lbl9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="درخواست مرخصی روزانه"
+                            android:text="درخواست مرخصی"
                             android:layout_below="@id/lbl1"
-                            android:layout_toLeftOf="@id/txt2"
+                            android:layout_toLeftOf="@id/txt_department"
                             android:layout_marginRight="4dp"
                             android:textSize="15dp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/iransansmobile_medium"/>
+
+                        <TextView
+                            android:id="@+id/txt_amount_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="روزانه"
+                            android:layout_below="@id/lbl1"
+                            android:layout_toLeftOf="@id/lbl9"
+                            android:layout_marginRight="4dp"
+                            android:textSize="15dp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/iransansmobile_medium"/>
+
 
                         <TextView
                             android:id="@+id/lbl3"
@@ -170,10 +208,10 @@
                             />
 
                         <TextView
-                            android:id="@+id/txt3"
+                            android:id="@+id/txt_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="۱۴"
+                            tools:text="۱۴"
                             android:layout_below="@id/lbl2"
                             android:layout_toLeftOf="@id/lbl3"
                             android:textSize="15dp"
@@ -183,12 +221,12 @@
                             />
 
                         <TextView
-                            android:id="@+id/lbl4"
+                            android:id="@+id/txt_day_or_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="روز"
+                            tools:text="روز"
                             android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/txt3"
+                            android:layout_toLeftOf="@id/txt_amount"
                             android:textSize="15dp"
                             android:textColor="@color/black"
                             android:layout_marginRight="4dp"
@@ -196,12 +234,12 @@
                             />
 
                         <TextView
-                            android:id="@+id/lbl5"
+                            android:id="@+id/lbl_start_date_or_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="از تاریخ"
+                            tools:text="از تاریخ"
                             android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/lbl4"
+                            android:layout_toLeftOf="@id/txt_day_or_hour"
                             android:textSize="15dp"
                             android:textColor="@color/black"
                             android:layout_marginRight="4dp"
@@ -209,12 +247,12 @@
                             />
 
                         <TextView
-                            android:id="@+id/txt4"
+                            android:id="@+id/txt_start_date_or_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="۹۸/۰۷/۲۲"
+                            tools:text="۹۸/۰۷/۲۲"
                             android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/lbl5"
+                            android:layout_toLeftOf="@id/lbl_start_date_or_time"
                             android:textSize="15dp"
                             android:textColor="@color/black"
                             android:layout_marginRight="4dp"
@@ -222,12 +260,12 @@
                             />
 
                         <TextView
-                            android:id="@+id/lbl6"
+                            android:id="@+id/lbl_end_date_or_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="تا تاریخ"
+                            tools:text="تا تاریخ"
                             android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/txt4"
+                            android:layout_toLeftOf="@id/txt_start_date_or_time"
                             android:textSize="15dp"
                             android:textColor="@color/black"
                             android:layout_marginRight="4dp"
@@ -235,12 +273,12 @@
                             />
 
                         <TextView
-                            android:id="@+id/txt5"
+                            android:id="@+id/txt_end_date_or_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="۹۸/۰۸/۰۶"
+                            tools:text="۹۸/۰۸/۰۶"
                             android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/lbl6"
+                            android:layout_toLeftOf="@id/lbl_end_date_or_time"
                             android:textSize="15dp"
                             android:textColor="@color/black"
                             android:layout_marginRight="4dp"
@@ -309,9 +347,10 @@
                         android:layout_below="@id/container_signature">
 
                         <TextView
+                            android:id="@+id/txt_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="پیوست: لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است"
+                            tools:text="پیوست: لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است"
                             android:textSize="16dp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/iransansmobile_light"
