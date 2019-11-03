@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.activities.MasterFurloughActivity;
 import com.example.absencemonitoring.instances.Furlough;
 
@@ -37,7 +38,7 @@ public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAd
     public void onBindViewHolder(@NonNull NoticeFurloughAdapter.MyViewHolder holder, int position) {
         holder.nameTxt.setText(list.get(position).getName());
         holder.typeTxt.setText(list.get(position).getLeaveType());
-        holder.amountTxt.setText("3 روز");
+        holder.amountTxt.setText(DateTime.calculateAmountIsDayOrHour(list.get(position).getTimeLeave()));
 
         holder.noticeFurlough.setOnClickListener(new View.OnClickListener() {
             @Override

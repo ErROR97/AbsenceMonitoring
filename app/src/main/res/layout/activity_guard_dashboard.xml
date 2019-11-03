@@ -74,5 +74,28 @@
         android:layout_height="match_parent"
         android:layout_below="@id/container_header" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_logout"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:cardCornerRadius="100dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/black"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="7dp"
+            app:srcCompat="@drawable/ic_logout"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
+
 
 </RelativeLayout>

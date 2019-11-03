@@ -33,10 +33,32 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
-        userDetails = new UserDetails(activity);
 
+        userDetails = new UserDetails(activity);
         apiHandler = new ApiHandler(activity);
 
+        if (userDetails.getUserLogin()) {
+            String role = null;
+            try {
+                role = userDetails.getUserInfo().getString("role");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (role.trim().equals("master")) {
+                startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
+            }
+            else if (role.trim().equals("employee")){
+                startActivity(new Intent(LoginActivity.this, EmployeeDashboardActivity.class));
+            }
+            else if (role.trim().equals("guard")){
+                startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
+            }
+
+            apiHandler = new ApiHandler(activity);
+            finish();
+        }
+
+/*
         apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
             @Override
             public void onRecived(String response) {
@@ -62,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+*/
 
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btn_login);

@@ -14,7 +14,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.absencemonitoring.instances.Furlough;
-import com.example.absencemonitoring.notifReqLeave;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,8 +46,13 @@ public class ApiHandler {
                         if (response.trim().split("_")[0].equals("loginSuccess")) {
                             userDetails = new UserDetails(activity);
                             userDetails.saveUserDetails(personalId,true);
-                            userDetails.saveUserRole(response.trim().split("_")[1]);
                             responseListenerLogin.onRecived(response);
+                            userDetails.saveUserRole(response.trim().split("_")[1]);
+                            /*getUserInfo(personalId, new responseListenerGetInfo() {
+                                @Override
+                                public void onRecived(String response) {
+                                }
+                            });*/
                             activity.finish();
                         } else {
                             responseListenerLogin.onRecived(response);

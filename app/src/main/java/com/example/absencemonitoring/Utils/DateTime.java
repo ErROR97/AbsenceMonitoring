@@ -17,4 +17,13 @@ public class DateTime {
     public static String[] stringToDate(String string) {
         return string.split("/");
     }
+
+    public static String calculateAmountIsDayOrHour(String amount) {
+        String[] amounts = amount.split(":");
+        if (amounts[0].equals("0")) {
+            return "ساعت" + amounts[1];
+        } else {
+            return "روز" + amounts[0];
+        }
+    }
 }

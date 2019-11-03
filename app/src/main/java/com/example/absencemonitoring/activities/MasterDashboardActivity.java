@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
-public class MasterDashboardActivity extends AppCompatActivity {
+public class MasterDashboardActivity extends AppCompatActivity implements NoticeFurloughFragment.HeaderHiderListener {
 
     CardView menuContainer;
     RelativeLayout homeContainer, requestContainer, profileContainer, noticeContainer, archiveContainer, controlingContainer, logoutContainer;
@@ -45,7 +46,7 @@ public class MasterDashboardActivity extends AppCompatActivity {
     TextView previousSelectedTxt;
     ImageView previousSelectedImg;
 
-    RelativeLayout masterDashboardActivity;
+    RelativeLayout masterDashboardActivity, headerContainer;
 
     UserDetails userDetails;
     Activity activity;
@@ -57,6 +58,8 @@ public class MasterDashboardActivity extends AppCompatActivity {
         ApiHandler apiHandler = new ApiHandler(activity);
 
         masterDashboardActivity = findViewById(R.id.activity_master_dashboard);
+
+        headerContainer = findViewById(R.id.container_header);
 
         menuContainer = findViewById(R.id.container_menu);
         menuContainer.bringToFront();
@@ -343,6 +346,37 @@ public class MasterDashboardActivity extends AppCompatActivity {
             textView.setTextColor(getResources().getColor(R.color.black));
 
             snackbar.show();
+        }
+    }
+
+    @Override
+    public void onHide(String move) {
+        if (move.equals("show")) {
+            final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) headerContainer.getLayoutParams();
+            ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.topMargin, 0);
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator)
+                {
+                    layoutParams.topMargin = (Integer) valueAnimator.getAnimatedValue();
+                    headerContainer.requestLayout();
+                }
+            });
+            valueAnimator.setDuration(200);
+            valueAnimator.start();
+        } else {
+            final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) headerContainer.getLayoutParams();
+            ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.topMargin, - headerContainer.getHeight());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator)
+                {
+                    layoutParams.topMargin = (Integer) valueAnimator.getAnimatedValue();
+                    headerContainer.requestLayout();
+                }
+            });
+            valueAnimator.setDuration(200);
+            valueAnimator.start();
         }
     }
 }

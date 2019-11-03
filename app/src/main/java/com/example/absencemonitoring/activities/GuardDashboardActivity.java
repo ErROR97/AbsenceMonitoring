@@ -1,11 +1,14 @@
 package com.example.absencemonitoring.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
@@ -27,6 +30,7 @@ public class GuardDashboardActivity extends AppCompatActivity {
     TextView nameTxt;
     UserDetails userDetails;
     ApiHandler apiHandler;
+    CardView logoutCrd;
 
 
     private void init() {
@@ -37,6 +41,7 @@ public class GuardDashboardActivity extends AppCompatActivity {
         guardRv = findViewById(R.id.rv_guard);
 
         nameTxt = findViewById(R.id.txt_name);
+        logoutCrd = findViewById(R.id.btn_logout);
         list = new ArrayList<>();
 
         apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
@@ -73,6 +78,13 @@ public class GuardDashboardActivity extends AppCompatActivity {
         guardRv.setLayoutManager(new LinearLayoutManager(this));
 
         guardRv.setAdapter(guardAdapter);
+
+        logoutCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GuardDashboardActivity.this, LoginActivity.class));
+            }
+        });
 
 
     }
