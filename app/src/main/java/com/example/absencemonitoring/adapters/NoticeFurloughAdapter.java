@@ -35,14 +35,23 @@ public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoticeFurloughAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NoticeFurloughAdapter.MyViewHolder holder, final int position) {
         holder.nameTxt.setText(list.get(position).getName());
         holder.typeTxt.setText(list.get(position).getLeaveType());
         holder.amountTxt.setText(DateTime.calculateAmountIsDayOrHour(list.get(position).getTimeLeave()));
 
+
         holder.noticeFurlough.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(activity, MasterFurloughActivity.class);
+                intent.putExtra("fullName", list.get(position).getName());
+                intent.putExtra("personalIdemployee", list.get(position).getPersonalIdemployee());
+                intent.putExtra("leaveType", list.get(position).getLeaveType());
+                intent.putExtra("startTime", list.get(position).getStartTime());
+                intent.putExtra("timeLeave", list.get(position).getTimeLeave());
+                intent.putExtra("startDate", list.get(position).getStartDate());
+                intent.putExtra("descriptionLeave", list.get(position).getDescriptionLeave());
                 activity.startActivity(new Intent(activity, MasterFurloughActivity.class));
             }
         });

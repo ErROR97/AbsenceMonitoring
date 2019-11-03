@@ -31,7 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
-public class MasterDashboardActivity extends AppCompatActivity implements NoticeFurloughFragment.HeaderHiderListener {
+public class MasterDashboardActivity extends AppCompatActivity  {
 
     CardView menuContainer;
     RelativeLayout homeContainer, requestContainer, profileContainer, noticeContainer, archiveContainer, controlingContainer, logoutContainer;
@@ -349,7 +349,7 @@ public class MasterDashboardActivity extends AppCompatActivity implements Notice
         }
     }
 
-    @Override
+    /*@Override
     public void onHide(String move) {
         if (move.equals("show")) {
             final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) headerContainer.getLayoutParams();
@@ -378,5 +378,5 @@ public class MasterDashboardActivity extends AppCompatActivity implements Notice
             valueAnimator.setDuration(200);
             valueAnimator.start();
         }
-    }
+    }*/
 }
