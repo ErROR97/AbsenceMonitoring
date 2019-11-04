@@ -24,6 +24,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
+import java.util.Calendar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
@@ -93,7 +95,7 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
         confirmTxt = findViewById(R.id.txt_confirm);
 
         currentDateTxt = findViewById(R.id.txt_current_date);
-        currentDateTxt.setText(SolarCalendar.getCurrentShamsidate());
+        currentDateTxt.setText(SolarCalendar.getCurrentShamsidate(Calendar.getInstance(), 0));
 
         minStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
         hourStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});

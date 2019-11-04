@@ -238,9 +238,10 @@ import java.util.Locale;
             }
         }
 
-        public static String getCurrentShamsidate() {
+        public static String getCurrentShamsidate(Calendar calendar, int days) {
             Locale loc = new Locale("en_US");
-            SolarCalendar sc = new SolarCalendar();
+            calendar.add(Calendar.DATE, days - 1);
+            SolarCalendar sc = new SolarCalendar(calendar);
             return String.valueOf(sc.year) + "/" + String.format(loc, "%02d",
                     sc.month) + "/" + String.format(loc, "%02d", sc.date);
         }

@@ -1,6 +1,7 @@
 package com.example.absencemonitoring.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import ir.huri.jcal.JalaliCalendar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.example.absencemonitoring.Utils.SolarCalendar;
 import com.example.absencemonitoring.instances.Furlough;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class MasterFurloughActivity extends AppCompatActivity {
 
@@ -68,6 +70,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
 
         typeTxt.setText("درخواست مرخصی " + furlough.getLeaveType());
         amountTxt.setText(amount);
+        decriptionTxt.setText("پیوست: " + furlough.getDescriptionLeave());
 
         nameTxt.setText(furlough.getName());
         if (dayOrTime.equals("روز")) {
@@ -76,13 +79,20 @@ public class MasterFurloughActivity extends AppCompatActivity {
             startDateOrTimeLbl.setText("از تاریخ");
             endDateOrTimeLbl.setText("تا تاریخ");
             startDateOrTimeTxt.setText(furlough.getStartDate());
-//            endDateOrTimeTxt.setText(SolarCalendar.getCurrentShamsidate(Calendar.getInstance().add(Calendar.DATE, 5)));
+            JalaliCalendar jalaliCalendar = new JalaliCalendar(Integer.parseInt(furlough.getStartDate().split("/")[0]),
+                    Integer.parseInt(furlough.getStartDate().split("/")[1]),
+                    Integer.parseInt(furlough.getStartDate().split("/")[2]));
+            GregorianCalendar gregorianCalendar = jalaliCalendar.toGregorian();
+
+            endDateOrTimeTxt.setText(SolarCalendar.getCurrentShamsidate(gregorianCalendar, Integer.parseInt(furlough.getTimeLeave().split(":")[0])));
         } else {
             amountTypeTxt.setText("ساعتی");
             dayOrHourTxt.setText("ساعت");
             startDateOrTimeLbl.setText("از ساعت");
             endDateOrTimeLbl.setText("تا ساعت");
         }
+
+
 
 
 
