@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,11 +26,13 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
+import ir.huri.jcal.JalaliCalendar;
 
 public class EmployeeFurloughActivity extends AppCompatActivity {
 
@@ -95,7 +98,9 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
         confirmTxt = findViewById(R.id.txt_confirm);
 
         currentDateTxt = findViewById(R.id.txt_current_date);
-        currentDateTxt.setText(SolarCalendar.getCurrentShamsidate(Calendar.getInstance(), 0));
+        JalaliCalendar jalaliCalendar = new JalaliCalendar(new GregorianCalendar());
+        currentDateTxt.setText(jalaliCalendar.toString().split("-")[0] + "/" + jalaliCalendar.toString().split("-")[1] + "/"
+        + jalaliCalendar.toString().split("-")[2]);
 
         minStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
         hourStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});

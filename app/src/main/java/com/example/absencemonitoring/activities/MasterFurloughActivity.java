@@ -1,14 +1,19 @@
 package com.example.absencemonitoring.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import ir.huri.jcal.JalaliCalendar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.Utils.SolarCalendar;
 import com.example.absencemonitoring.instances.Furlough;
 
@@ -20,9 +25,14 @@ public class MasterFurloughActivity extends AppCompatActivity {
     Furlough furlough;
     TextView typeTxt, nameTxt, amountTypeTxt, amountTxt, dayOrHourTxt, startDateOrTimeLbl, startDateOrTimeTxt, endDateOrTimeLbl, endDateOrTimeTxt;
     TextView currentDateTxt, furloughCodeTxt, decriptionTxt;
+    CardView acceptBtn, rejectBtn;
 
     String dayOrTime = "";
     String amount = "";
+    RelativeLayout darkenBackground;
+    RelativeLayout rejectDescriptionContainer;
+    EditText rejectDescriptionEt;
+    CardView sendRejectBtn, cancelRejectBtn;
 
 
     private void init() {
@@ -54,6 +64,14 @@ public class MasterFurloughActivity extends AppCompatActivity {
         currentDateTxt = findViewById(R.id.txt_current_date);
         furloughCodeTxt = findViewById(R.id.txt_furlough_code);
         decriptionTxt = findViewById(R.id.txt_description);
+        acceptBtn = findViewById(R.id.btn_accept);
+        rejectBtn = findViewById(R.id.btn_reject);
+
+        darkenBackground = findViewById(R.id.darken_background);
+        rejectDescriptionContainer = findViewById(R.id.container_reject_description);
+        rejectDescriptionEt = findViewById(R.id.et_reject_description);
+        sendRejectBtn = findViewById(R.id.btn_send_reject);
+        cancelRejectBtn = findViewById(R.id.btn_cancel_reject);
 
 
     }
@@ -90,10 +108,40 @@ public class MasterFurloughActivity extends AppCompatActivity {
             dayOrHourTxt.setText("ساعت");
             startDateOrTimeLbl.setText("از ساعت");
             endDateOrTimeLbl.setText("تا ساعت");
+            startDateOrTimeTxt.setText(furlough.getStartTime().split(":")[1] + ":" + furlough.getStartTime().split(":")[2]);
+            endDateOrTimeTxt.setText(DateTime.calculateEndTime(furlough.getStartTime(), furlough.getTimeLeave()));
         }
 
+        acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
+        sendRejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        rejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                darkenBackground.setVisibility(View.VISIBLE);
+                rejectDescriptionContainer.setVisibility(View.VISIBLE);
+            }
+        });
+
+        cancelRejectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                darkenBackground.setVisibility(View.INVISIBLE);
+                rejectDescriptionContainer.setVisibility(View.INVISIBLE);
+                rejectDescriptionEt.setText("");
+            }
+        });
 
 
     }
