@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.absencemonitoring.Handlers.ApiHandler;
+import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.Utils.SolarCalendar;
@@ -34,8 +36,13 @@ public class MasterFurloughActivity extends AppCompatActivity {
     EditText rejectDescriptionEt;
     CardView sendRejectBtn, cancelRejectBtn;
 
+    ApiHandler apiHandler;
+    UserDetails userDetails;
+
 
     private void init() {
+        userDetails = new UserDetails(this);
+        apiHandler = new ApiHandler(this);
 
         furlough = new Furlough();
         furlough.setName(getIntent().getStringExtra("fullName"));
@@ -94,15 +101,9 @@ public class MasterFurloughActivity extends AppCompatActivity {
         if (dayOrTime.equals("روز")) {
             amountTypeTxt.setText("روزانه");
             dayOrHourTxt.setText("روز");
-            startDateOrTimeLbl.setText("از تاریخ");
-            endDateOrTimeLbl.setText("تا تاریخ");
+                        endDateOrTimeLbl.setText("تا تاریخ");
             startDateOrTimeTxt.setText(furlough.getStartDate());
-            JalaliCalendar jalaliCalendar = new JalaliCalendar(Integer.parseInt(furlough.getStartDate().split("/")[0]),
-                    Integer.parseInt(furlough.getStartDate().split("/")[1]),
-                    Integer.parseInt(furlough.getStartDate().split("/")[2]));
-            GregorianCalendar gregorianCalendar = jalaliCalendar.toGregorian();
-
-            endDateOrTimeTxt.setText(SolarCalendar.getCurrentShamsidate(gregorianCalendar, Integer.parseInt(furlough.getTimeLeave().split(":")[0])));
+//            endDateOrTimeTxt.setText(SolarCalendar.getCurrentShamsidate(Calendar.getInstance().add(Calendar.DATE, 5)));
         } else {
             amountTypeTxt.setText("ساعتی");
             dayOrHourTxt.setText("ساعت");
@@ -115,14 +116,42 @@ public class MasterFurloughActivity extends AppCompatActivity {
         acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                apiHandler.acceptRejectReqLeave(true,
+                        userDetails.getUserDetails(),
+                        "9537063",
+                        furlough.getLeaveType(),
+                        "رواله",
+                        "1398/8/14",
+                        new ApiHandler.responseListenerAcceptRejectReqLeave() {
+                    @Override
+                    public void onRecived(String response) {
 
+                        if (response.trim().equals("success")){
+                            Log.i("khar", "onRecived: "+response);
+                            //finish
+                        }
+                    }
+                });
             }
         });
 
         sendRejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                apiHandler.acceptRejectReqLeave(false,
+                        userDetails.getUserDetails(),
+                        "9537063",
+                        furlough.getLeaveType(),
+                        "عمرا بذارم بری!",
+                        "1398/8/14",
+                        new ApiHandler.responseListenerAcceptRejectReqLeave() {
+                            @Override
+                            public void onRecived(String response) {
+                                if (response.trim().equals("success")){
+                                    //finish
+                                }
+                            }
+                        });
             }
         });
 

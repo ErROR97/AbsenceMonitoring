@@ -73,33 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-/*
-        apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
-            @Override
-            public void onRecived(String response) {
-                if (userDetails.getUserLogin() && response.trim().equals("Success")) {
-                    String role = null;
-                    try {
-                        role = userDetails.getUserInfo().getString("role");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    if (role.trim().equals("master")) {
-                        startActivity(new Intent(LoginActivity.this, MasterDashboardActivity.class));
-                    }
-                    else if (role.trim().equals("employee")){
-                        startActivity(new Intent(LoginActivity.this, EmployeeDashboardActivity.class));
-                    }
-                    else if (role.trim().equals("guard")){
-                        startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
-                    }
-
-                    apiHandler = new ApiHandler(activity);
-                    finish();
-                }
-            }
-        });
-*/
 
         loginButton = findViewById(R.id.btn_login);
         recoveryBtn = findViewById(R.id.btn_recovery_password);

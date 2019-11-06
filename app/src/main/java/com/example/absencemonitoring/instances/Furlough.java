@@ -12,6 +12,8 @@ public class Furlough {
     private String timeLeave;
     private String startDate;
     private String descriptionLeave;
+    private String statusArchive;
+    private String statusLeave;
 
     public String getPersonalIdemployee() {
         return personalIdemployee;
@@ -91,5 +93,21 @@ public class Furlough {
 
     public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
+    }
+
+    public String getStatusArchive() {
+        return statusArchive;
+    }
+
+    public void setStatusArchive(String statusArchive) {
+        this.statusArchive = statusArchive;
+    }
+
+    public String getStatusLeave() {
+        return statusLeave;
+    }
+
+    public void setStatusLeave(String statusLeave) {
+        this.statusLeave = statusLeave;
     }
 }

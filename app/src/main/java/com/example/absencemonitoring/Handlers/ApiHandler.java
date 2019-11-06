@@ -31,6 +31,7 @@ public class ApiHandler {
     private String urlReqLeave = "http://matingrimes.ir/office/reqLeave.php";
     private String urlgetNotifLeave = "http://matingrimes.ir/office/notifLeave.php";
     private String urlAcceptRejectReqLeave = "http://matingrimes.ir/office/acceptRejectReqLeave.php";
+    private String urlAcceptControlReqLeave = "http://matingrimes.ir/office/controlReqLeave.php";
 
     public ApiHandler(Activity activity) {
         this.activity = activity;
@@ -124,6 +125,112 @@ public class ApiHandler {
     }
 
 
+    public void getControlReqLeave(final String personalIdmaster, final responseListenerControlReqLeave responseListenerControlReqLeave){
+        final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptControlReqLeave,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.trim().split("_")[0].equals("success")){
+                            JSONArray jsonArray = null;
+
+                            try {
+                                jsonArray = new JSONArray(response.trim().split("_")[1]);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            List<Furlough> FurloughList = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Furlough furlough = new Furlough();
+                                try {
+                                    furlough.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
+                                    furlough.setName(jsonArray.getJSONObject(i).get("fullname").toString());
+                                    furlough.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
+                                    furlough.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
+                                    furlough.setPersonalIdemployee(jsonArray.getJSONObject(i).get("personalIdemployee").toString());
+                                    furlough.setPersonalIdMaster(jsonArray.getJSONObject(i).get("personalIdmaster").toString());
+                                    furlough.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
+                                    furlough.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
+                                    furlough.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
+                                    furlough.setStatusArchive(jsonArray.getJSONObject(i).get("statusArchive").toString());
+                                    furlough.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
+                                    furlough.setStatusLeave(jsonArray.getJSONObject(i).get("status").toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                FurloughList.add(furlough);
+                            }
+                            responseListenerControlReqLeave.onRevived(FurloughList);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalIdmaster", personalIdmaster.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final String leaveType,final String description, final String currentDate, final responseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
+
+        final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptRejectReqLeave,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.trim().equals("success")) {
+                            responseListenerAcceptRejectReqLeave.onRecived("success");
+                        } else {
+                            responseListenerAcceptRejectReqLeave.onRecived("error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerAcceptRejectReqLeave.onRecived("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                if (status){
+                    params.put("personalIdemployee", personalIdemployee.trim());
+                    params.put("personalIdmaster", personalIdmaster.trim());
+                    params.put("currentDate", currentDate.trim());
+                    params.put("description", description.trim());
+                    params.put("leaveType", leaveType.trim());
+                    params.put("status","true");
+                } else {
+                    params.put("personalIdemployee", personalIdemployee.trim());
+                    params.put("personalIdmaster", personalIdmaster.trim());
+                    params.put("currentDate", currentDate.trim());
+                    params.put("description", description.trim());
+                    params.put("leaveType", leaveType.trim());
+                    params.put("status","false");
+                }
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
     public void getNotifReqLeave(final String personalIdmaster, final responseListenerNotifReqLeave responseListenerNotifReqLeave){
         final StringRequest request = new StringRequest(Request.Method.POST, urlgetNotifLeave,
                 new Response.Listener<String>() {
@@ -180,43 +287,6 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final responseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
-        final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptRejectReqLeave,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.trim().equals("success")) {
-                            responseListenerAcceptRejectReqLeave.onRecived("success");
-                        } else {
-                            responseListenerAcceptRejectReqLeave.onRecived("error");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NoConnectionError) {
-                    responseListenerAcceptRejectReqLeave.onRecived("NoConnectionError");
-                }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                if (status)
-                    params.put("status","true");
-                else
-                    params.put("status","false");
-                params.put("personalId", personalIdemployee.trim());
-                params.put("personalIdmaster", personalIdmaster.trim());
-                return params;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        requestQueue.add(request);
-    }
-
 
     public interface responseListenerLogin {
         void onRecived(String response);
@@ -233,6 +303,10 @@ public class ApiHandler {
 
 
     public interface responseListenerNotifReqLeave{
+        void onRevived(List<Furlough> notifReqLeaveList);
+    }
+
+    public interface responseListenerControlReqLeave{
         void onRevived(List<Furlough> notifReqLeaveList);
     }
 
