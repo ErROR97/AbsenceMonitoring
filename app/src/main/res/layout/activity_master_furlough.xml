@@ -376,6 +376,7 @@
             >
 
             <TextView
+                android:id="@+id/lbl_accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="تایید"
@@ -383,6 +384,17 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:fontFamily="@font/iransansmobile_medium" />
+
+            <ProgressBar
+                android:id="@+id/progressbar_accept"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:indeterminate="true"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/white"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
+
 
         </androidx.cardview.widget.CardView>
 
@@ -439,6 +451,7 @@
             >
 
             <TextView
+                android:id="@+id/lbl_reject"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:text="ارسال"
@@ -446,6 +459,19 @@
                 android:textSize="18dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/iransansmobile_medium" />
+
+            <ProgressBar
+                android:id="@+id/progressbar_reject"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:indeterminate="true"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/white"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
+
+
+
 
         </androidx.cardview.widget.CardView>
 

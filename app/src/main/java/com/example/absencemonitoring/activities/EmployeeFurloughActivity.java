@@ -2,30 +2,24 @@ package com.example.absencemonitoring.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.Utils.InputFilterMinMax;
-import com.example.absencemonitoring.Utils.SolarCalendar;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import androidx.appcompat.app.AppCompatActivity;

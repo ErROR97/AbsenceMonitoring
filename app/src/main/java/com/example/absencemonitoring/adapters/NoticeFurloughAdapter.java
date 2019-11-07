@@ -57,7 +57,7 @@ public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAd
                 intent.putExtra("currentDate", list.get(position).getCurrentDate());
                 intent.putExtra("dayOrTime", DateTime.calculateAmountIsDayOrHour(list.get(position).getTimeLeave()));
 
-                activity.startActivity(intent);
+                activity.startActivityForResult(intent, 4);
             }
         });
     }

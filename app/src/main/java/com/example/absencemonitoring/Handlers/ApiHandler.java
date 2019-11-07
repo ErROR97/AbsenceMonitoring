@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.instances.Furlough;
 
 import org.json.JSONArray;
@@ -155,6 +156,7 @@ public class ApiHandler {
                                     furlough.setStatusArchive(jsonArray.getJSONObject(i).get("statusArchive").toString());
                                     furlough.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
                                     furlough.setStatusLeave(jsonArray.getJSONObject(i).get("status").toString());
+                                    furlough.setStarted(DateTime.checkFurloughIsStarted(furlough.getStartDate(), furlough.getStartTime()));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -307,7 +309,7 @@ public class ApiHandler {
     }
 
     public interface responseListenerControlReqLeave{
-        void onRevived(List<Furlough> notifReqLeaveList);
+        void onRevived(List<Furlough> controlLeaveList);
     }
 
 }

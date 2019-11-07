@@ -6,27 +6,21 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.fragments.ArchiveFurloughFragment;
-import com.example.absencemonitoring.fragments.ArchiveSportFragment;
 import com.example.absencemonitoring.fragments.ControlFragment;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.fragments.NoticeSportFragment;
-import com.example.absencemonitoring.fragments.NoticeTransportFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -50,6 +44,7 @@ public class MasterDashboardActivity extends AppCompatActivity  {
 
     UserDetails userDetails;
     Activity activity;
+    RequestDeterminedListener requestDeterminedListener;
     int previousSelectedDrawable;
 
 
@@ -340,6 +335,7 @@ public class MasterDashboardActivity extends AppCompatActivity  {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == 3) {
+
             Snackbar snackbar = Snackbar.make(masterDashboardActivity, "درخواست با موفقیت ارسال شد", Snackbar.LENGTH_LONG);
 
             ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
@@ -353,37 +349,47 @@ public class MasterDashboardActivity extends AppCompatActivity  {
             textView.setTextColor(getResources().getColor(R.color.black));
 
             snackbar.show();
+        } else if (resultCode == 4) {
+            requestDeterminedListener.onReqDetermined();
+
+            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "درخواست تائید شد", Snackbar.LENGTH_LONG);
+
+            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
+
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(getResources().getColor(R.color.light_green));
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            textView.setMaxLines(9);
+            textView.setTextSize(14);
+            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
+            textView.setTextColor(getResources().getColor(R.color.black));
+
+            snackbar.show();
+        } else if (resultCode == 5) {
+            requestDeterminedListener.onReqDetermined();
+
+            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "درخواست رد شد", Snackbar.LENGTH_LONG);
+
+            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
+
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            textView.setMaxLines(9);
+            textView.setTextSize(14);
+            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
+            textView.setTextColor(getResources().getColor(R.color.black));
+
+            snackbar.show();
         }
     }
 
-    /*@Override
-    public void onHide(String move) {
-        if (move.equals("show")) {
-            final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) headerContainer.getLayoutParams();
-            ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.topMargin, 0);
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator)
-                {
-                    layoutParams.topMargin = (Integer) valueAnimator.getAnimatedValue();
-                    headerContainer.requestLayout();
-                }
-            });
-            valueAnimator.setDuration(200);
-            valueAnimator.start();
-        } else {
-            final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) headerContainer.getLayoutParams();
-            ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.topMargin, - headerContainer.getHeight());
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator)
-                {
-                    layoutParams.topMargin = (Integer) valueAnimator.getAnimatedValue();
-                    headerContainer.requestLayout();
-                }
-            });
-            valueAnimator.setDuration(200);
-            valueAnimator.start();
-        }
-    }*/
+    public void setOnDataListener(RequestDeterminedListener requestDeterminedListener) {
+        this.requestDeterminedListener = requestDeterminedListener;
+    }
+
+    public interface RequestDeterminedListener {
+        void onReqDetermined();
+    }
+
 }

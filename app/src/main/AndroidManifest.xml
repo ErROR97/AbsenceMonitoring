@@ -24,7 +24,6 @@
         <activity android:name=".activities.EmployeeDashboardActivity" />
         <activity android:name=".activities.GuardDashboardActivity" />
         <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.EmployeeTransportationReserveActivity" />
         <activity android:name=".activities.EmployeeSportReserveActivity" />
         <activity android:name=".activities.MasterDashboardActivity" />
         <activity android:name=".activities.MasterFurloughActivity" />

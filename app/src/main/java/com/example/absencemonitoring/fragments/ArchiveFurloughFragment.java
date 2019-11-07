@@ -36,15 +36,6 @@ public class ArchiveFurloughFragment extends Fragment {
         userDetails = new UserDetails(getActivity());
         apiHandler = new ApiHandler(getActivity());
 
-
-        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.responseListenerNotifReqLeave() {
-            @Override
-            public void onRevived(List<Furlough> notifReqLeaveList) {
-                archiveFurloughAdapter = new ArchiveFurloughAdapter(getActivity(), notifReqLeaveList);
-                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                rv.setAdapter(archiveFurloughAdapter);
-            }
-        });
     }
 
 
@@ -54,7 +45,6 @@ public class ArchiveFurloughFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_archive_furlough, container, false);
 
         init();
-
 
         return view;
     }

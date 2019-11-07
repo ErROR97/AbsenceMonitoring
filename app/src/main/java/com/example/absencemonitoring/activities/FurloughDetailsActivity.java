@@ -1,42 +1,79 @@
 package com.example.absencemonitoring.activities;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-
+import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.example.absencemonitoring.Utils.DateTime;
+import com.example.absencemonitoring.Utils.Formating;
 
-import java.util.List;
+import java.util.Calendar;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-public class FurloughDetailsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
-    SupportMapFragment mapFragment;
-    GoogleMap googleMap;
-    RelativeLayout furloughBtn;
+public class FurloughDetailsActivity extends AppCompatActivity {
+    TextView nameTxt, personalIdTxt, typeTxt, daysTxt, hoursTxt, minsTxt, startDateTxt, startTimeTxt, endDateTxt, endTimeTxt;
+
+    String remaindTime = "";
+    String StartDate = "";
+    String StartTime = "";
+    String amountTime = "";
+
+    Handler handler;
+    Runnable runnable;
+
+    public void init() {
+
+        handler = new Handler();
+
+        nameTxt = findViewById(R.id.txt_name);
+        personalIdTxt = findViewById(R.id.txt_personal_code);
+        typeTxt = findViewById(R.id.txt_type);
+        daysTxt = findViewById(R.id.txt_days);
+        hoursTxt = findViewById(R.id.txt_hours);
+        minsTxt = findViewById(R.id.txt_mins);
+        startDateTxt = findViewById(R.id.txt_start_date);
+        startTimeTxt = findViewById(R.id.txt_start_time);
+        endDateTxt = findViewById(R.id.txt_end_date);
+        endTimeTxt = findViewById(R.id.txt_end_time);
+
+        StartDate = getIntent().getStringExtra("startDate");
+        StartTime = getIntent().getStringExtra("startTime");
+        amountTime = getIntent().getStringExtra("amountTime");
+
+        nameTxt.setText(getIntent().getStringExtra("name"));
+        personalIdTxt.setText(Formating.englishDigitsToPersian(getIntent().getStringExtra("personalId")));
+        typeTxt.setText(getIntent().getStringExtra("type"));
+
+
+        if (getIntent().getBooleanExtra("isStarted", false)) {
+            remaindTime = DateTime.calculateRemainingTime(StartDate, StartTime, amountTime);
+        } else {
+            remaindTime = String.format("%02d", Integer.parseInt(amountTime.split(":")[0]))
+                    + ":" + String.format("%02d", Integer.parseInt(amountTime.split(":")[1]))
+                    + ":" + String.format("%02d", Integer.parseInt(amountTime.split(":")[2]));
+        }
+
+        daysTxt.setText(Formating.englishDigitsToPersian(remaindTime.split(":")[0]));
+        hoursTxt.setText(Formating.englishDigitsToPersian(remaindTime.split(":")[1]));
+        minsTxt.setText(Formating.englishDigitsToPersian(remaindTime.split(":")[2]));
+
+        startDateTxt.setText(Formating.cleanTimeOrDateFormat(getIntent().getStringExtra("startDate"), "/"));
+        startTimeTxt.setText(Formating.cleanTimeOrDateFormat(StartTime.split(":")[1] + ":" + StartTime.split(":")[2], ":"));
+
+        if (DateTime.checkForDailyOrHourly(amountTime).equals("روزانه")) {
+            endDateTxt.setText(Formating.cleanTimeOrDateFormat(DateTime.calculateEndDate(StartDate, amountTime), "/"));
+            endTimeTxt.setText(Formating.cleanTimeOrDateFormat(StartTime.split(":")[1] + ":" + StartTime.split(":")[2], ":"));
+        } else {
+            endDateTxt.setText(Formating.cleanTimeOrDateFormat(StartDate, "/"));
+            endTimeTxt.setText(Formating.cleanTimeOrDateFormat(DateTime.calculateEndTime(StartTime, amountTime), ":"));
+        }
+    }
 
 
     @Override
@@ -46,80 +83,31 @@ public class FurloughDetailsActivity extends AppCompatActivity implements OnMapR
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-
-
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-
+        init();
+        updateemainingTime();
 
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setupLocationManager() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        List<String> providers = locationManager.getProviders(true);
-        Location bestLocation = null;
-        if (locationManager != null) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            for (String provider : providers) {
-                Location l = locationManager.getLastKnownLocation(provider);
-                if (l == null) {
-                    continue;
+    private void updateemainingTime() {
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Calendar calendar = Calendar.getInstance();
+                int secs = calendar.get(Calendar.SECOND);
+
+                if (secs == 0) {
+                    if (DateTime.checkFurloughIsStarted(StartDate, StartTime)) {
+                        remaindTime = DateTime.calculateRemainingTime(StartDate, StartTime, amountTime);
+                        daysTxt.setText(Formating.englishDigitsToPersian(remaindTime.split(":")[0]));
+                        hoursTxt.setText(Formating.englishDigitsToPersian(remaindTime.split(":")[1]));
+                        minsTxt.setText(Formating.englishDigitsToPersian(remaindTime.split(":")[2]));
+                    }
                 }
-                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                    // Found best last known location: %s", l);
-                    bestLocation = l;
-                }
+                handler.postDelayed(runnable, 1000);
             }
-            onLocationChanged(bestLocation);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 5, this);
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-        setupLocationManager();
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if (location != null && googleMap != null) {
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_marker)));
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-            googleMap.moveCamera(cameraUpdate);
-        }
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
+        };
+        runnable.run();
     }
 }

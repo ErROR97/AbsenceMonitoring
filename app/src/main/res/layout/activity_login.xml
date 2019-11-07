@@ -20,24 +20,35 @@
             android:layout_height="wrap_content"
             android:text="کد پرسنلی"
             android:textColor="@color/black"
+            android:layout_marginRight="8dp"
             android:layout_alignParentRight="true"
             android:fontFamily="@font/iransansmobile_medium"
             android:textSize="18dp"
             />
 
-        <EditText
-            android:id="@+id/et_personal_code"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_et_personal_code"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:hint="1234"
-            android:textColorHint="@color/grey"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/lbl_personal_code"
-            android:fontFamily="@font/montserrat_medium"
-            android:background="@drawable/login_edit_text"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/honeydew"
+            app:cardCornerRadius="16dp">
+
+            <EditText
+                android:id="@+id/et_personal_code"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="1234"
+                android:textColorHint="@color/grey"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:background="@drawable/login_edit_text"
+                />
+
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 
@@ -46,33 +57,48 @@
         android:id="@+id/container_password"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="25dp"
         android:layout_below="@id/container_personal_code"
         android:layout_centerHorizontal="true">
 
         <TextView
-            android:id="@+id/lb_password"
+            android:id="@+id/lbl_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="رمز عبور"
             android:textColor="@color/black"
+            android:layout_marginRight="8dp"
             android:layout_alignParentRight="true"
             android:fontFamily="@font/iransansmobile_medium"
             android:textSize="18dp"/>
 
-        <EditText
-            android:id="@+id/et_password"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_et_password"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_password"
             android:layout_centerHorizontal="true"
-            android:hint="123456789"
-            android:textColorHint="@color/grey"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:layout_below="@id/lb_password"
-            android:fontFamily="@font/montserrat_medium"
-            android:background="@drawable/login_edit_text"
-            />
+            android:backgroundTint="@color/honeydew"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="16dp">
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:hint="123456789"
+                android:textColorHint="@color/grey"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_below="@id/lbl_password"
+                android:fontFamily="@font/montserrat_medium"
+                android:background="@drawable/login_edit_text"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
 
     </RelativeLayout>
 
@@ -126,14 +152,14 @@
         android:layout_marginTop="50dp"
         android:textColor="@color/black"
         android:textSize="18dp"
-        android:fontFamily="@font/iransansmobile_medium"/>
+        android:fontFamily="@font/iransansmobile_medium"
+        android:stateListAnimator="@null"/>
 
     <FrameLayout
         android:id="@+id/container_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
-        android:background="@color/white"/>
+        />
 
 
 </RelativeLayout>

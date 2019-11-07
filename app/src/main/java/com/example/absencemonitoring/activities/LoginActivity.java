@@ -3,7 +3,7 @@ package com.example.absencemonitoring.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -21,7 +21,7 @@ import org.json.JSONException;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements RecoveryFragment.fragmentRemoveListener {
     CardView loginButton;
     TextView recoveryBtn;
     EditText passWord , personalId;
@@ -122,8 +122,18 @@ public class LoginActivity extends AppCompatActivity {
         recoveryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                containerFramelayout.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction().add(R.id.container_fragment, recoveryFragment).addToBackStack("fragment").commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_left)
+                        .replace(R.id.container_fragment, recoveryFragment)
+                        .addToBackStack(null).commit();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loginButton.setVisibility(View.INVISIBLE);
+                    }
+                }, 100);
             }
         });
 
@@ -132,7 +142,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        getSupportFragmentManager().beginTransaction().remove(recoveryFragment).commit();
-        containerFramelayout.setVisibility(View.INVISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loginButton.setVisibility(View.VISIBLE);
+            }
+        }, 100);
+    }
+
+
+    @Override
+    public void onFragmentRemoved() {
+        onBackPressed();
     }
 }
