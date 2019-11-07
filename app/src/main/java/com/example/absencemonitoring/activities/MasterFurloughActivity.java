@@ -147,7 +147,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
                         });
             }
         });
-        //:/
+        //:/تنمتمتم
 
         sendRejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
