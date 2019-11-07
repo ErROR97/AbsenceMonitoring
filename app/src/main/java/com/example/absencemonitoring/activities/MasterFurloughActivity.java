@@ -107,7 +107,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
         if (dayOrTime.equals("روز")) {
             amountTypeTxt.setText("روزانه");
             dayOrHourTxt.setText("روز");
-                        endDateOrTimeLbl.setText("تا تاریخ");
+            endDateOrTimeLbl.setText("تا تاریخ");
             startDateOrTimeTxt.setText(furlough.getStartDate());
             endDateOrTimeTxt.setText(DateTime.calculateEndDate(furlough.getStartDate(), furlough.getTimeLeave()));
         } else {
@@ -133,21 +133,21 @@ public class MasterFurloughActivity extends AppCompatActivity {
                         "",
                         furlough.getCurrentDate(),
                         new ApiHandler.responseListenerAcceptRejectReqLeave() {
-                    @Override
-                    public void onRecived(String response) {
-                        if (response.trim().equals("success")) {
-                            acceptBtn.setEnabled(true);
-                            rejectBtn.setEnabled(true);
-                            acceptLbl.setVisibility(View.VISIBLE);
-                            acceptProgressbar.setVisibility(View.INVISIBLE);
-                            setResult(4);
-                            finish();
-                        }
-                    }
-                });
+                            @Override
+                            public void onRecived(String response) {
+                                if (response.trim().equals("success")) {
+                                    acceptBtn.setEnabled(true);
+                                    rejectBtn.setEnabled(true);
+                                    acceptLbl.setVisibility(View.VISIBLE);
+                                    acceptProgressbar.setVisibility(View.INVISIBLE);
+                                    setResult(4);
+                                    finish();
+                                }
+                            }
+                        });
             }
         });
-        //,jljk
+        //:/
 
         sendRejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override

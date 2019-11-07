@@ -210,7 +210,7 @@ public class ApiHandler {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                if (status){
+                /*if (status){
                     params.put("personalIdemployee", personalIdemployee.trim());
                     params.put("personalIdmaster", personalIdmaster.trim());
                     params.put("currentDate", currentDate.trim());
@@ -224,7 +224,13 @@ public class ApiHandler {
                     params.put("description", description.trim());
                     params.put("leaveType", leaveType.trim());
                     params.put("status","false");
-                }
+                }*/
+                params.put("personalIdemployee", personalIdemployee.trim());
+                params.put("personalIdmaster", personalIdmaster.trim());
+                params.put("currentDate", currentDate.trim());
+                params.put("description", description.trim());
+                params.put("leaveType", leaveType.trim());
+                params.put("status","true");
                 return params;
             }
         };
