@@ -2,24 +2,18 @@ package com.example.absencemonitoring.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
-import com.example.absencemonitoring.adapters.NoticeFurloughAdapter;
-import com.example.absencemonitoring.instances.ControlFurlough;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.ControlAdapter;
 import com.example.absencemonitoring.instances.Furlough;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -101,14 +95,12 @@ public class ControlFragment extends Fragment {
                 } else {
                     nothingFoundContainer.setVisibility(View.INVISIBLE);
                 }
-
                 Collections.sort(controlLeaveList, new Comparator<Furlough>() {
                     @Override
                     public int compare(Furlough abc1, Furlough abc2) {
                         return Boolean.compare(abc2.isStarted(), abc1.isStarted());
                     }
                 });
-
                 controlAdapter = new ControlAdapter(getActivity(), controlLeaveList);
                 rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                 rv.setAdapter(controlAdapter);

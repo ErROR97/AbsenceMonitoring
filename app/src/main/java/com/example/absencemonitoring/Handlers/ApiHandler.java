@@ -32,6 +32,7 @@ public class ApiHandler {
     private String urlgetNotifLeave = "http://matingrimes.ir/office/notifLeave.php";
     private String urlAcceptRejectReqLeave = "http://matingrimes.ir/office/acceptRejectReqLeave.php";
     private String urlAcceptControlReqLeave = "http://matingrimes.ir/office/controlReqLeave.php";
+    private String urlUpdateArchive = "http://matingrimes.ir/office/updateArchive.php";
 
     public ApiHandler(Activity activity) {
         this.activity = activity;
@@ -280,7 +281,7 @@ public class ApiHandler {
     }
 
     public void updateStatusArchive(final String id, final responseListenerUpdateArchive responseListenerUpdateArchive) {
-        final StringRequest request = new StringRequest(Request.Method.POST, urlLogin,
+        final StringRequest request = new StringRequest(Request.Method.POST, urlUpdateArchive,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
