@@ -1,18 +1,9 @@
 package com.example.absencemonitoring.Utils;
 
 import android.util.Log;
-import android.util.TimeUtils;
-
-import com.example.absencemonitoring.instances.Furlough;
-
-import java.sql.Time;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
-
-import javax.xml.datatype.Duration;
 
 import ir.huri.jcal.JalaliCalendar;
 
@@ -75,7 +66,7 @@ public class DateTime {
 
     public static String calculateAmountIsDayOrHour(String amount) {
         String[] amounts = amount.split(":");
-        if (amounts[0].equals("0")) {
+        if (amounts[0].equals("00")) {
             return String.format("%02d", Integer.parseInt(amounts[1])) + ":" + String.format("%02d", Integer.parseInt(amounts[2])) + " ساعت";
         } else {
             return amounts[0] + " روز";
@@ -152,5 +143,50 @@ public class DateTime {
         Log.i("goorekhar", "calculateRemainingTime: " + days + " " + hours + " " + minutes);
 
         return String.format("%02d", days) + ":" + String.format("%02d", hours) + ":" + String.format("%02d", minutes);
+    }
+
+    public static boolean checkForTimeInputValidation(int year, int month, int day, int hour, int min) {
+        JalaliCalendar jalaliCalendar = new JalaliCalendar(new GregorianCalendar());
+
+        if (year < Integer.parseInt(jalaliCalendar.toString().split("-")[0])) {
+            return  false;
+        }
+
+        if (year == Integer.parseInt(jalaliCalendar.toString().split("-")[0])
+                && month <  Integer.parseInt(jalaliCalendar.toString().split("-")[1])) {
+            return  false;
+        }
+
+        if (year == Integer.parseInt(jalaliCalendar.toString().split("-")[0])
+                && month ==  Integer.parseInt(jalaliCalendar.toString().split("-")[1])
+                && day <  Integer.parseInt(jalaliCalendar.toString().split("-")[2])) {
+            return  false;
+        }
+
+        if (year == Integer.parseInt(jalaliCalendar.toString().split("-")[0])
+                && month ==  Integer.parseInt(jalaliCalendar.toString().split("-")[1])
+                && day ==  Integer.parseInt(jalaliCalendar.toString().split("-")[2])
+                && hour < Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
+            return false;
+        }
+        if (year == Integer.parseInt(jalaliCalendar.toString().split("-")[0])
+                && month ==  Integer.parseInt(jalaliCalendar.toString().split("-")[1])
+                && day ==  Integer.parseInt(jalaliCalendar.toString().split("-")[2])
+                && hour == Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+                && min < Calendar.getInstance().get(Calendar.MINUTE)) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    public static boolean isPersianLeapYear(int persianYear) {
+        return ceil((38D + (ceil(persianYear - 474L, 2820L) + 474L)) * 682D, 2816D) < 682L;
+    }
+
+    public static long ceil(double double1, double double2) {
+        return (long) (double1 - double2 * Math.floor(double1 / double2));
     }
 }

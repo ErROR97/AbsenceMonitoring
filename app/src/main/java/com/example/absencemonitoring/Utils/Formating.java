@@ -2,6 +2,8 @@ package com.example.absencemonitoring.Utils;
 
 import android.annotation.SuppressLint;
 
+import java.util.Arrays;
+
 
 public class Formating {
 
@@ -23,6 +25,21 @@ public class Formating {
         for (int i = 0; i < input.length(); i++) {
             if (Character.isDigit(input.charAt(i))) {
                 builder.append(persianChars[(int) (input.charAt(i)) - 48]);
+            } else {
+                builder.append(input.charAt(i));
+            }
+        }
+        return builder.toString();
+    }
+
+    public static String persianDigitsToEnglish(String input) {
+        char[] persianChars = {'۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'};
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            int index = Arrays.binarySearch(persianChars, input.charAt(i));
+            if (index != -1) {
+                builder.append(Arrays.binarySearch(persianChars, input.charAt(i)));
             } else {
                 builder.append(input.charAt(i));
             }

@@ -3,32 +3,39 @@ package com.example.absencemonitoring.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.Utils.CustomTypefaceSpan;
 import com.example.absencemonitoring.Utils.DateTime;
+import com.example.absencemonitoring.Utils.Formating;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.instances.Furlough;
 
 public class MasterFurloughActivity extends AppCompatActivity {
 
     Furlough furlough;
-    TextView typeTxt, nameTxt, amountTypeTxt, amountTxt, dayOrHourTxt, startDateOrTimeLbl, startDateOrTimeTxt, endDateOrTimeLbl, endDateOrTimeTxt;
+    TextView nameTxt, typeTxt;
     TextView currentDateTxt, furloughCodeTxt, decriptionTxt;
     CardView acceptBtn, rejectBtn;
 
     String dayOrTime = "";
     String amount = "";
     RelativeLayout darkenBackground;
-    RelativeLayout rejectDescriptionContainer;
+    CardView rejectDescriptionContainer;
     EditText rejectDescriptionEt;
     CardView sendRejectBtn, cancelRejectBtn;
     ProgressBar acceptProgressbar, rejectProgressbar;
@@ -36,6 +43,8 @@ public class MasterFurloughActivity extends AppCompatActivity {
 
     ApiHandler apiHandler;
     UserDetails userDetails;
+
+
 
 
     private void init() {
@@ -60,13 +69,6 @@ public class MasterFurloughActivity extends AppCompatActivity {
 
         typeTxt = findViewById(R.id.txt_type);
         nameTxt = findViewById(R.id.txt_name);
-        amountTypeTxt = findViewById(R.id.txt_amount_type);
-        amountTxt = findViewById(R.id.txt_amount);
-        dayOrHourTxt = findViewById(R.id.txt_day_or_hour);
-        startDateOrTimeLbl = findViewById(R.id.lbl_start_date_or_time);
-        startDateOrTimeTxt = findViewById(R.id.txt_start_date_or_time);
-        endDateOrTimeLbl = findViewById(R.id.lbl_end_date_or_time);
-        endDateOrTimeTxt = findViewById(R.id.txt_end_date_or_time);
         currentDateTxt = findViewById(R.id.txt_current_date);
         furloughCodeTxt = findViewById(R.id.txt_furlough_code);
         decriptionTxt = findViewById(R.id.txt_description);
@@ -96,27 +98,104 @@ public class MasterFurloughActivity extends AppCompatActivity {
 
         DateTime.calculateRemainingTime(furlough.getStartDate(), furlough.getStartTime(), furlough.getTimeLeave());
 
-        currentDateTxt.setText(furlough.getCurrentDate());
-        furloughCodeTxt.setText(String.valueOf(furlough.getId()));
+        currentDateTxt.setText(Formating.englishDigitsToPersian(furlough.getCurrentDate()));
+        furloughCodeTxt.setText(Formating.englishDigitsToPersian(String.valueOf(furlough.getId())));
 
         typeTxt.setText("درخواست مرخصی " + furlough.getLeaveType());
-        amountTxt.setText(amount);
         decriptionTxt.setText("پیوست: " + furlough.getDescriptionLeave());
 
-        nameTxt.setText(furlough.getName());
         if (dayOrTime.equals("روز")) {
-            amountTypeTxt.setText("روزانه");
-            dayOrHourTxt.setText("روز");
-            endDateOrTimeLbl.setText("تا تاریخ");
-            startDateOrTimeTxt.setText(furlough.getStartDate());
-            endDateOrTimeTxt.setText(DateTime.calculateEndDate(furlough.getStartDate(), furlough.getTimeLeave()));
+            String firstWord = "   احتراما اینجانب ";
+            String secondWord =furlough.getName();
+            String thirdWord = " مشمول در واحد ";
+            String fourthWord = "حراست";
+            String fifthWord = " درخواست مرخصی ";
+            String sixthWord = "روزانه";
+            String seventhWord = " به مدت ";
+            String eighthWord = Formating.englishDigitsToPersian(amount) + " روز";
+            String ninthWord = " از تاریخ ";
+            String tenthWord = Formating.englishDigitsToPersian(furlough.getStartDate());
+            String eleventhWord = " تا تاریخ ";
+            String twelfthWord = Formating.englishDigitsToPersian(DateTime.calculateEndDate(furlough.getStartDate(), furlough.getTimeLeave()));
+            String thirteenthWord = " را دارم. لذا خواهشمند است در صورت امکان مساعدت لازم مبذول فرمائید.";
+
+            int tillFirstWord = firstWord.length();
+            int tillSecondWord = firstWord.length() + secondWord.length();
+            int tillThirdWord = firstWord.length() + secondWord.length() + thirdWord.length();
+            int tillFourthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length();
+            int tillFifthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length();
+            int tillSixthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length();
+            int tillSeventhWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length();
+            int tillEighthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length();
+            int tillNinthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length();
+            int tillTenthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length();
+            int tillEleventhWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length() + eleventhWord.length();
+            int tillTwelfthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length() + eleventhWord.length() + twelfthWord.length();
+            int tillThirteenthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length() + eleventhWord.length() + twelfthWord.length() + thirteenthWord.length();
+
+            SpannableStringBuilder spannable = new SpannableStringBuilder(firstWord + secondWord + thirdWord + fourthWord + fifthWord + sixthWord + seventhWord + eighthWord + ninthWord + tenthWord + eleventhWord + twelfthWord + thirteenthWord);
+
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), 0, tillFirstWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillFirstWord, tillSecondWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillSecondWord, tillThirdWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillThirdWord, tillFourthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillFourthWord, tillFifthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillFifthWord, tillSixthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillSixthWord, tillSeventhWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillSeventhWord, tillEighthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillEighthWord, tillNinthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillNinthWord, tillTenthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillTenthWord, tillEleventhWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillEleventhWord, tillTwelfthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillTwelfthWord, tillThirteenthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            nameTxt.setText(spannable);
         } else {
-            amountTypeTxt.setText("ساعتی");
-            dayOrHourTxt.setText("ساعت");
-            startDateOrTimeLbl.setText("از ساعت");
-            endDateOrTimeLbl.setText("تا ساعت");
-            startDateOrTimeTxt.setText(furlough.getStartTime().split(":")[1] + ":" + furlough.getStartTime().split(":")[2]);
-            endDateOrTimeTxt.setText(DateTime.calculateEndTime(furlough.getStartTime(), furlough.getTimeLeave()));
+            String firstWord = "   احتراما اینجانب ";
+            String secondWord =furlough.getName();
+            String thirdWord = " مشمول در واحد ";
+            String fourthWord = "حراست";
+            String fifthWord = " درخواست مرخصی ";
+            String sixthWord = "ساعتی";
+            String seventhWord = " به مدت ";
+            String eighthWord = Formating.englishDigitsToPersian(amount) + " ساعت";
+            String ninthWord = " از ساعت ";
+            String tenthWord = Formating.englishDigitsToPersian(furlough.getStartTime().split(":")[1] + ":" + furlough.getStartTime().split(":")[2]);
+            String eleventhWord = " تا ساعت ";
+            String twelfthWord = Formating.englishDigitsToPersian(DateTime.calculateEndTime(furlough.getStartTime(), furlough.getTimeLeave()));
+            String thirteenthWord = " را دارم. لذا خواهشمند است در صورت امکان مساعدت لازم مبذول فرمائید.";
+
+            int tillFirstWord = firstWord.length();
+            int tillSecondWord = firstWord.length() + secondWord.length();
+            int tillThirdWord = firstWord.length() + secondWord.length() + thirdWord.length();
+            int tillFourthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length();
+            int tillFifthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length();
+            int tillSixthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length();
+            int tillSeventhWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length();
+            int tillEighthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length();
+            int tillNinthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length();
+            int tillTenthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length();
+            int tillEleventhWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length() + eleventhWord.length();
+            int tillTwelfthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length() + eleventhWord.length() + twelfthWord.length();
+            int tillThirteenthWord = firstWord.length() + secondWord.length() + thirdWord.length() + fourthWord.length() + fifthWord.length() + sixthWord.length() + seventhWord.length() + eighthWord.length() + ninthWord.length() + tenthWord.length() + eleventhWord.length() + twelfthWord.length() + thirteenthWord.length();
+
+            SpannableStringBuilder spannable = new SpannableStringBuilder(firstWord + secondWord + thirdWord + fourthWord + fifthWord + sixthWord + seventhWord + eighthWord + ninthWord + tenthWord + eleventhWord + twelfthWord + thirteenthWord);
+
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), 0, tillFirstWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillFirstWord, tillSecondWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillSecondWord, tillThirdWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillThirdWord, tillFourthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillFourthWord, tillFifthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillFifthWord, tillSixthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillSixthWord, tillSeventhWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillSeventhWord, tillEighthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillEighthWord, tillNinthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillNinthWord, tillTenthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillTenthWord, tillEleventhWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_medium.ttf")), tillEleventhWord, tillTwelfthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new CustomTypefaceSpan("", Typeface.createFromAsset(getResources().getAssets(), "fonts/iransansmobile_light.ttf")), tillTwelfthWord, tillThirteenthWord, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            nameTxt.setText(spannable);
         }
 
         acceptBtn.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +248,8 @@ public class MasterFurloughActivity extends AppCompatActivity {
                                 if (response.trim().equals("success")) {
                                     setResult(5);
                                     finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

@@ -278,10 +278,10 @@
                 android:layout_height="20dp"
                 app:srcCompat="@drawable/ic_edit"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/txt_edit"/>
+                android:layout_toRightOf="@id/container_edit_start_time"/>
 
             <TextView
-                android:id="@+id/txt_edit"
+                android:id="@+id/container_edit_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="تغییر رمز عبور"

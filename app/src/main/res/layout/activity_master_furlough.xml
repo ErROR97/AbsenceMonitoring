@@ -118,185 +118,19 @@
                         android:layout_margin="8dp"
                         >
 
-                        <TextView
-                            android:id="@+id/lbl1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="احتراما اینجانب "
-                            android:paddingRight="32dp"
-                            android:layout_marginTop="8dp"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:layout_alignParentRight="true"
-                            />
 
                         <TextView
                             android:id="@+id/txt_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="متین دریانوش براهویی"
-                            android:textSize="14dp"
-                            android:layout_toLeftOf="@id/lbl1"
-                            android:layout_marginRight="4dp"
+                            android:textSize="16dp"
+                            android:layout_marginRight="8dp"
                             android:layout_marginTop="8dp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/lbl1"
                             android:layout_alignParentRight="true"
-                            android:textSize="14dp"
                             android:textColor="@color/black"
-                            android:layout_marginRight="8dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:text="مشمول در واحد"/>
-
-                        <TextView
-                            android:id="@+id/txt_department"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="حراست"
-                            android:layout_below="@id/lbl1"
-                            android:layout_toLeftOf="@id/lbl2"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="4dp"
                             android:fontFamily="@font/iransansmobile_medium"
                             />
-
-                        <TextView
-                            android:id="@+id/lbl9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="درخواست مرخصی"
-                            android:layout_below="@id/lbl1"
-                            android:layout_toLeftOf="@id/txt_department"
-                            android:layout_marginRight="4dp"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/iransansmobile_medium"/>
-
-                        <TextView
-                            android:id="@+id/txt_amount_type"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="روزانه"
-                            android:layout_below="@id/lbl1"
-                            android:layout_toLeftOf="@id/lbl9"
-                            android:layout_marginRight="4dp"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/iransansmobile_medium"/>
-
-
-                        <TextView
-                            android:id="@+id/lbl3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/lbl2"
-                            android:layout_alignParentRight="true"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="8dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:text="به مدت"
-                            />
-
-                        <TextView
-                            android:id="@+id/txt_amount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="۱۴"
-                            android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/lbl3"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            />
-
-                        <TextView
-                            android:id="@+id/txt_day_or_hour"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="روز"
-                            android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/txt_amount"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl_start_date_or_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="از تاریخ"
-                            android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/txt_day_or_hour"
-                            android:textSize="15dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            />
-
-                        <TextView
-                            android:id="@+id/txt_start_date_or_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="۹۸/۰۷/۲۲"
-                            android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/lbl_start_date_or_time"
-                            android:textSize="15dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl_end_date_or_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="تا تاریخ"
-                            android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/txt_start_date_or_time"
-                            android:textSize="14dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            />
-
-                        <TextView
-                            android:id="@+id/txt_end_date_or_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="۹۸/۰۸/۰۶"
-                            android:layout_below="@id/lbl2"
-                            android:layout_toLeftOf="@id/lbl_end_date_or_time"
-                            android:textSize="15dp"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="4dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/lbl3"
-                            android:layout_alignParentRight="true"
-                            android:textSize="14dp"
-                            android:layout_marginBottom="8dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="8dp"
-                            android:text="را دارم. لذا خواهشمند است در صورت امکان مساعدت لازم مبذول فرمائید."/>
 
 
                     </RelativeLayout>
@@ -410,12 +244,21 @@
         android:visibility="invisible"
         android:alpha=".8"/>
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/container_reject_description"
-        android:layout_width="200dp"
-        android:layout_height="250dp"
+        android:layout_width="216dp"
+        android:layout_height="282dp"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/blacker"
+        app:cardCornerRadius="8dp"
         android:visibility="invisible"
-        android:layout_centerInParent="true">
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_et_reject_description"
@@ -439,67 +282,72 @@
 
             </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btn_send_reject"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:backgroundTint="@color/blue"
-            android:layout_below="@id/container_et_reject_description"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            app:cardCornerRadius="8dp"
-            >
-
-            <TextView
-                android:id="@+id/lbl_reject"
-                android:layout_width="80dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_send_reject"
+                android:layout_width="90dp"
                 android:layout_height="40dp"
-                android:text="ارسال"
-                android:gravity="center"
-                android:textSize="18dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/iransansmobile_medium" />
+                android:backgroundTint="@color/white"
+                android:layout_below="@id/container_et_reject_description"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="8dp"
+                >
 
-            <ProgressBar
-                android:id="@+id/progressbar_reject"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:indeterminate="true"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/white"
-                android:layout_centerInParent="true"
-                android:visibility="invisible"/>
+                <TextView
+                    android:id="@+id/lbl_reject"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:text="ارسال"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:textColor="@color/blacker"
+                    android:fontFamily="@font/iransansmobile_medium" />
+
+                <ProgressBar
+                    android:id="@+id/progressbar_reject"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:indeterminate="true"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/blacker"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"/>
 
 
 
 
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/btn_cancel_reject"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:backgroundTint="@color/red"
-            android:layout_below="@id/container_et_reject_description"
-            android:layout_marginTop="10dp"
-            app:cardCornerRadius="8dp"
-            >
-
-            <TextView
-                android:layout_width="80dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_cancel_reject"
+                android:layout_width="90dp"
                 android:layout_height="40dp"
-                android:text="لغو"
-                android:gravity="center"
-                android:textSize="18dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/iransansmobile_medium"
-                />
+                android:backgroundTint="@color/red"
+                android:layout_toRightOf="@id/btn_send_reject"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@id/container_et_reject_description"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="8dp"
+                >
 
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:text="بازگشت"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:textColor="@color/blacker"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    />
+
+            </androidx.cardview.widget.CardView>
 
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 
 
 

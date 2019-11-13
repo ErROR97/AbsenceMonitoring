@@ -2,24 +2,28 @@ package com.example.absencemonitoring.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.Utils.InputFilterMinMax;
+import com.example.absencemonitoring.Utils.Formating;
 import com.google.android.material.snackbar.Snackbar;
+import com.shawnlin.numberpicker.NumberPicker;
 
 import org.json.JSONException;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,51 +38,163 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
     RelativeLayout employeeFurloughActivity;
     ImageView backImg;
     TextView emplooyeeName , EmplooyeeId;
-    EditText minStartTime, hourStartTime;
-    EditText minDurationTime, hourDurationTime, dayDurationTime;
-    EditText dayStartDate, monthStartDate, yearStartDate;
+    
     EditText descriptionLeave;
-    UserDetails userDetails;
-    ApiHandler apiHandler;
+    TextView startTimeMinTxt, startTimeHourTxt;
+    TextView amountTimeMinTxt, amountTimeHourTxt, amountTimeDayTxt;
+    TextView startDateYearTxt, startDateMonthTxt, startDateDayTxt;
+    
     CardView done;
-    DateTime dateTime;
+
+    RelativeLayout startTimeEditContainer;
+    RelativeLayout darkenBackground;
+    NumberPicker startHourNumpic, startMinNumpic;
+    CardView numpicStartTimeDialog;
+    CardView confirmStartTimeCrd, cancelStartTimeCrd;
+    String[] minArray, hourArray;
+
+    RelativeLayout amountTimeEditContainer;
+    CardView amountTimeNumpicDialog;
+    NumberPicker amountDayNumpic, amountHourNumpic, amountMinNumpic;
+    CardView confirmAmountTimeCrd, cancelAmountTimeCrd;
+    String[] amountDayArray;
+
+    RelativeLayout startDateEditContainer;
+    CardView startDateNumpicDialog;
+    NumberPicker startDateDayNumpic, startDateMonthNumpic, startDateYearNumpic;
+    CardView confirmstartDateCrd, cancelStartDateCrd;
+    String[] dayArray, monthArray, yearArray;
+
     CardView officialChkbx, personalChkbx, sickChkbx;
     ImageView imgOfficialChkbx, imgPersonalChkbx, imgSickChkbx;
     ProgressBar progressBar;
     TextView currentDateTxt;
     TextView confirmTxt;
+
+    UserDetails userDetails;
+    ApiHandler apiHandler;
     String type = "اداری";
     String inputError = "ورودی های زیر را کنترل کنید";
+    String[] jalaliCalendar;
     boolean error = false;
 
 
     @SuppressLint("SetTextI18n")
     private void init() {
+        jalaliCalendar = new JalaliCalendar(new GregorianCalendar()).toString().split("-");
+
         userDetails = new UserDetails(activity);
         apiHandler = new ApiHandler(activity);
 
+        minArray = displayValueOfNumpic(60, 0);
+        hourArray = displayValueOfNumpic(24, 0);
+        amountDayArray = displayValueOfNumpic(31, 0);
+        monthArray = displayValueOfNumpic(12, 1);
+        yearArray = displayValueOfNumpic(15, Integer.parseInt(jalaliCalendar[0]));
 
+//        esfandLengthinLeapYear(Integer.parseInt(jalaliCalendar[0]), Integer.parseInt(jalaliCalendar[1]));
+
+
+        darkenBackground = findViewById(R.id.darken_background);
         employeeFurloughActivity = findViewById(R.id.activity_employee_furlough);
 
         officialChkbx = findViewById(R.id.chkbx_official);
         personalChkbx = findViewById(R.id.chkbx_personal);
         sickChkbx = findViewById(R.id.chkbx_sick);
-
         imgOfficialChkbx = findViewById(R.id.img_chkbx_official);
         imgPersonalChkbx = findViewById(R.id.img_chkbx_personal);
         imgSickChkbx = findViewById(R.id.img_chkbx_sick);
 
+        startTimeMinTxt = findViewById(R.id.txt_start_time_min);
+        startTimeHourTxt = findViewById(R.id.txt_start_time_hour);
 
-        minStartTime = findViewById(R.id.et_min_start_time);
-        hourStartTime = findViewById(R.id.et_hour_start_time);
+        amountTimeMinTxt = findViewById(R.id.txt_amount_time_min);
+        amountTimeHourTxt = findViewById(R.id.txt_amount_time_hour);
+        amountTimeDayTxt = findViewById(R.id.txt_amount_time_day);
 
-        minDurationTime = findViewById(R.id.et_min_duration_time);
-        hourDurationTime = findViewById(R.id.et_hour_duration_time);
-        dayDurationTime = findViewById(R.id.et_day_duration_time);
+        startDateYearTxt = findViewById(R.id.txt_start_date_year);
+        startDateMonthTxt = findViewById(R.id.txt_start_date_month);
+        startDateDayTxt = findViewById(R.id.txt_start_date_day);
 
-        dayStartDate = findViewById(R.id.et_day_start_date);
-        monthStartDate = findViewById(R.id.et_month_start_date);
-        yearStartDate = findViewById(R.id.et_year_start_date);
+
+        startTimeEditContainer = findViewById(R.id.container_edit_start_time);
+        numpicStartTimeDialog = findViewById(R.id.dialog_numpic_start_time);
+        startHourNumpic = findViewById(R.id.numpic_start_time_hour);
+        startMinNumpic = findViewById(R.id.numpic_start_time_min);
+        confirmStartTimeCrd = findViewById(R.id.crd_confirm_start_time_dialog);
+        cancelStartTimeCrd = findViewById(R.id.crd_cancel_start_time_dialog);
+
+        amountTimeEditContainer = findViewById(R.id.container_edit_amount_time);
+        amountTimeNumpicDialog = findViewById(R.id.dialog_numpic_amount_time);
+        amountDayNumpic = findViewById(R.id.numpic_amount_time_day);
+        amountHourNumpic = findViewById(R.id.numpic_amount_time_hour);
+        amountMinNumpic = findViewById(R.id.numpic_amount_time_min);
+        confirmAmountTimeCrd = findViewById(R.id.crd_confirm_amount_time_dialog);
+        cancelAmountTimeCrd = findViewById(R.id.crd_cancel_amount_time_dialog);
+
+        startDateEditContainer = findViewById(R.id.container_edit_start_date);
+        startDateNumpicDialog = findViewById(R.id.dialog_numpic_start_date);
+        startDateYearNumpic = findViewById(R.id.numpic_start_date_year);
+        startDateMonthNumpic = findViewById(R.id.numpic_start_date_month);
+        startDateDayNumpic = findViewById(R.id.numpic_start_date_day);
+        confirmstartDateCrd = findViewById(R.id.crd_confirm_start_date_dialog);
+        cancelStartDateCrd = findViewById(R.id.crd_cancel_start_date_dialog);
+
+        startTimeMinTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", Calendar.getInstance().get(Calendar.MINUTE))));
+        startTimeHourTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY))));
+
+        startDateYearTxt.setText(Formating.englishDigitsToPersian(jalaliCalendar[0]));
+        startDateMonthTxt.setText(Formating.englishDigitsToPersian(jalaliCalendar[1]));
+        startDateDayTxt.setText(Formating.englishDigitsToPersian(jalaliCalendar[2]));
+
+        startMinNumpic.setMinValue(0);
+        startMinNumpic.setMaxValue(59);
+        startMinNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        startMinNumpic.setDisplayedValues(minArray);
+        startMinNumpic.setValue(Calendar.getInstance().get(Calendar.MINUTE));
+
+        startHourNumpic.setMinValue(0);
+        startHourNumpic.setMaxValue(23);
+        startHourNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        startHourNumpic.setDisplayedValues(hourArray);
+        startHourNumpic.setValue(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+
+        amountMinNumpic.setMinValue(0);
+        amountMinNumpic.setMaxValue(59);
+        amountMinNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        amountMinNumpic.setDisplayedValues(minArray);
+        amountMinNumpic.setValue(0);
+
+        amountHourNumpic.setMinValue(0);
+        amountHourNumpic.setMaxValue(23);
+        amountHourNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        amountHourNumpic.setDisplayedValues(hourArray);
+        amountHourNumpic.setValue(0);
+
+        amountDayNumpic.setMinValue(0);
+        amountDayNumpic.setMaxValue(30);
+        amountDayNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        amountDayNumpic.setDisplayedValues(amountDayArray);
+        amountDayNumpic.setValue(1);
+
+        startDateYearNumpic.setMinValue(Integer.parseInt(jalaliCalendar[0]));
+        startDateYearNumpic.setMaxValue(Integer.parseInt(jalaliCalendar[0]) + 10);
+        startDateYearNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        startDateYearNumpic.setDisplayedValues(yearArray);
+
+        startDateMonthNumpic.setMinValue(1);
+        startDateMonthNumpic.setMaxValue(12);
+        startDateMonthNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        startDateMonthNumpic.setDisplayedValues(monthArray);
+        startDateMonthNumpic.setValue(Integer.parseInt(jalaliCalendar[1]));
+
+
+        checkPersianLeapYear();
+        numberOfDaysInMonthPersian();
+
+        startDateDayNumpic.setTypeface(Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/iransansmobile_light.ttf"));
+        startDateDayNumpic.setValue(Integer.parseInt(jalaliCalendar[2]));
+
 
         descriptionLeave = findViewById(R.id.et_subject);
 
@@ -95,20 +211,6 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
         JalaliCalendar jalaliCalendar = new JalaliCalendar(new GregorianCalendar());
         currentDateTxt.setText(jalaliCalendar.toString().split("-")[0] + "/" + jalaliCalendar.toString().split("-")[1] + "/"
         + jalaliCalendar.toString().split("-")[2]);
-
-        minStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
-        hourStartTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
-
-        minDurationTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
-        hourDurationTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
-        hourDurationTime.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "30")});
-
-        dayStartDate.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "31")});
-        monthStartDate.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "12")});
-        yearStartDate.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "99")});
-
-
-
 
 
         try {
@@ -129,6 +231,7 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         init();
+
 
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,100 +304,232 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
 
 
 
+        startTimeEditContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                darkenBackground.setVisibility(View.VISIBLE);
+                numpicStartTimeDialog.setVisibility(View.VISIBLE);
+            }
+        });
+
+        confirmStartTimeCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (DateTime.checkForTimeInputValidation(
+                        Integer.parseInt(Formating.persianDigitsToEnglish(startDateYearTxt.getText().toString()))
+                        , Integer.parseInt(Formating.persianDigitsToEnglish(startDateMonthTxt.getText().toString()))
+                        , Integer.parseInt(Formating.persianDigitsToEnglish(startDateDayTxt.getText().toString()))
+                        , startHourNumpic.getValue()
+                        , startMinNumpic.getValue())) {
+
+                    startTimeMinTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", startMinNumpic.getValue())));
+                    startTimeHourTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", startHourNumpic.getValue())));
+                    numpicStartTimeDialog.setVisibility(View.GONE);
+                    darkenBackground.setVisibility(View.GONE);
+                } else {
+
+                    Snackbar snackbar = Snackbar.make(employeeFurloughActivity, "ورودی نباید از زمان حال کمتر باشد", Snackbar.LENGTH_LONG);
+                    ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
+
+                    View snackbarView = snackbar.getView();
+                    snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
+                    TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+                    textView.setTextSize(14);
+                    textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_light));
+                    textView.setTextColor(getResources().getColor(R.color.white));
+
+                    snackbar.show();
+
+                }
+            }
+        });
+
+        cancelStartTimeCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numpicStartTimeDialog.setVisibility(View.GONE);
+                darkenBackground.setVisibility(View.GONE);
+            }
+        });
+
+
+
+        amountTimeEditContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                darkenBackground.setVisibility(View.VISIBLE);
+                amountTimeNumpicDialog.setVisibility(View.VISIBLE);
+            }
+        });
+
+        confirmAmountTimeCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                amountTimeMinTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", amountMinNumpic.getValue())));
+                amountTimeHourTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", amountHourNumpic.getValue())));
+                amountTimeDayTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", amountDayNumpic.getValue())));
+                amountTimeNumpicDialog.setVisibility(View.GONE);
+                darkenBackground.setVisibility(View.GONE);
+            }
+        });
+
+        cancelAmountTimeCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                amountTimeNumpicDialog.setVisibility(View.GONE);
+                darkenBackground.setVisibility(View.GONE);
+            }
+        });
+
+        startDateEditContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                darkenBackground.setVisibility(View.VISIBLE);
+                startDateNumpicDialog.setVisibility(View.VISIBLE);
+            }
+        });
+
+        confirmstartDateCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (DateTime.checkForTimeInputValidation(
+                        startDateYearNumpic.getValue()
+                        , startDateMonthNumpic.getValue()
+                        , startDateDayNumpic.getValue()
+                        , Integer.parseInt(Formating.persianDigitsToEnglish(startTimeHourTxt.getText().toString()))
+                        , Integer.parseInt(Formating.persianDigitsToEnglish(startTimeMinTxt.getText().toString())))) {
+
+                    startDateYearTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", startDateYearNumpic.getValue())));
+                    startDateMonthTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", startDateMonthNumpic.getValue())));
+                    startDateDayTxt.setText(Formating.englishDigitsToPersian(String.format("%02d", startDateDayNumpic.getValue())));
+                    startDateNumpicDialog.setVisibility(View.GONE);
+                    darkenBackground.setVisibility(View.GONE);
+                } else {
+
+                    Snackbar snackbar = Snackbar.make(employeeFurloughActivity, "ورودی نباید از زمان حال کمتر باشد", Snackbar.LENGTH_LONG);
+                    ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
+
+                    View snackbarView = snackbar.getView();
+                    snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
+                    TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+                    textView.setTextSize(14);
+                    textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_light));
+                    textView.setTextColor(getResources().getColor(R.color.white));
+
+                    snackbar.show();
+
+                }
+            }
+        });
+
+        cancelStartDateCrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDateNumpicDialog.setVisibility(View.GONE);
+                darkenBackground.setVisibility(View.GONE);
+            }
+        });
+
+        startDateYearNumpic.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                checkPersianLeapYear();
+            }
+        });
+
+        startDateMonthNumpic.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                numberOfDaysInMonthPersian();
+            }
+        });
+
+
+
 
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (minStartTime.length() == 0) {
-                    inputError+= "\n-دقیقه زمان شروع";
-                    error = true;
-                }
-                if (hourStartTime.length() == 0) {
-                    inputError += "\n-ساعت زمان شروع";
-                    error = true;
-                }
-                if (minDurationTime.length() == 0) {
-                    inputError += "\n-دقیقه مدت زمان";
-                    error = true;
-                }
-                if (hourDurationTime.length() == 0) {
-                    inputError += "\n-ساعت مدت زمان";
-                    error = true;
-                }
-                if (dayDurationTime.length() == 0) {
-                    inputError += "\n-روز مدت زمان";
-                    error = true;
-                }
-                if (dayStartDate.length() == 0) {
-                    inputError += "\n-روز تاریخ شروع";
-                    error = true;
-                }
-                if (monthStartDate.length() == 0) {
-                    inputError += "\n-ماه تاریخ شروع";
-                    error = true;
-                }
-                if (yearStartDate.length() == 0) {
-                    inputError += "\n-سال تاریخ شروع";
-                    error = true;
-                }
-
-                if (error) {
-                    final Snackbar snackbar = Snackbar.make(employeeFurloughActivity, inputError, Snackbar.LENGTH_INDEFINITE);
-
-
-                    ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
-
-                    View snackbarView = snackbar.getView();
-                    snackbarView.setBackgroundColor(getResources().getColor(R.color.light_yellow));
-                    TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                    textView.setMaxLines(9);
-                    textView.setTextSize(14);
-                    textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_light));
-                    textView.setTextColor(getResources().getColor(R.color.red));
-
-                    snackbar.setActionTextColor(getResources().getColor(R.color.light_yellow));
-                    TextView snackbarActionView = snackbar.getView().findViewById(com.google.android.material.R.id.snackbar_action);
-                    snackbarActionView.setTextSize(18);
-                    snackbarActionView.setBackground(getResources().getDrawable(R.drawable.background_ripple_button));
-                    snackbarActionView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
-
-                    snackbar.setAction("باشه", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackbar.dismiss();
-                        }
-                    }).show();
-
-                    inputError = "ورودی های زیر را کنترل کنید";
-                } else {
-                    progressBar.setVisibility(View.VISIBLE);
-                    confirmTxt.setVisibility(View.INVISIBLE);
-                    done.setEnabled(false);
-                    apiHandler.reqLeave(emplooyeeName.getText().toString(), userDetails.getUserDetails(), "9537063", type,
-                            DateTime.timeToString(0, Integer.parseInt(hourStartTime.getText().toString()), Integer.parseInt(minStartTime.getText().toString())),
-                            DateTime.timeToString(Integer.parseInt(dayDurationTime.getText().toString()), Integer.parseInt(hourDurationTime.getText().toString()), Integer.parseInt(minDurationTime.getText().toString())),
-                            DateTime.dateToString(Integer.parseInt(yearStartDate.getText().toString()), Integer.parseInt(monthStartDate.getText().toString()), Integer.parseInt(dayStartDate.getText().toString())), descriptionLeave.getText().toString(),
-                            currentDateTxt.getText().toString(),
-                            new ApiHandler.responseListenerReqLeave() {
-                                @Override
-                                public void onRecived(String response) {
-                                    if (response.trim().equals("success")) {
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        confirmTxt.setVisibility(View.VISIBLE);
-                                        done.setEnabled(true);
-
-                                        setResult(3);
-                                        finish();
-                                    }
+                progressBar.setVisibility(View.VISIBLE);
+                confirmTxt.setVisibility(View.INVISIBLE);
+                done.setEnabled(false);
+                apiHandler.reqLeave(emplooyeeName.getText().toString(), userDetails.getUserDetails(), "9537063", type,
+                        "00" + ":" + Formating.persianDigitsToEnglish(startTimeHourTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(startTimeMinTxt.getText().toString()),
+                        Formating.persianDigitsToEnglish(amountTimeDayTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(amountTimeHourTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(amountTimeMinTxt.getText().toString()),
+                        Formating.persianDigitsToEnglish(startDateYearTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateMonthTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateDayTxt.getText().toString()),
+                        descriptionLeave.getText().toString(),
+                        currentDateTxt.getText().toString(),
+                        new ApiHandler.responseListenerReqLeave() {
+                            @Override
+                            public void onRecived(String response) {
+                                if (response.trim().equals("success")) {
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    confirmTxt.setVisibility(View.VISIBLE);
+                                    done.setEnabled(true);
+                                    setResult(3);
+                                    finish();
                                 }
-                            });
-
-                }
-
+                            }
+                        });
             }
         });
+    }
+
+
+    public String[] displayValueOfNumpic(int num, int start) {
+        String[] temp = new String[num];
+        for (int i = 0; i < temp.length ; i++) {
+            temp[i] = Formating.englishDigitsToPersian(String.format("%02d", i + start));
+        }
+        return temp;
+    }
+
+    public void esfandLengthinLeapYear(int year, int month) {
+        String[] JalaliCalendar = new JalaliCalendar(new GregorianCalendar()).toString().split("-");
+        if (month <= 6) {
+            dayArray = displayValueOfNumpic(32, 1);
+        } else {
+            if (month == 12 && DateTime.isPersianLeapYear(year)) {
+                dayArray = displayValueOfNumpic(30, 1);
+            } else {
+                dayArray = displayValueOfNumpic(29, 1);
+            }
+        }
+    }
+
+    private void numberOfDaysInMonthPersian() {
+        int[] array = {1, 5, 9, 13, 17, 22, 26, 30};
+
+        if (startDateMonthNumpic.getValue() <= 6) {
+            startDateDayNumpic.setMaxValue(31);
+            String[] displayedNumbers = new String[31 + 1];
+            for (int i = 0; i < displayedNumbers.length; i++) {
+                displayedNumbers[i] = String.valueOf(Formating.englishDigitsToPersian(String.valueOf(1 + i)));
+            }
+            startDateDayNumpic.setDisplayedValues(displayedNumbers);
+        } else if (startDateMonthNumpic.getValue() > 6 && startDateMonthNumpic.getValue() <= 11) {
+            startDateDayNumpic.setMaxValue(30);
+            String[] displayedNumbers = new String[30 + 1];
+            for (int i = 0; i < displayedNumbers.length; i++) {
+                displayedNumbers[i] = String.valueOf(Formating.englishDigitsToPersian(String.valueOf(1 + i)));
+            }
+            startDateDayNumpic.setDisplayedValues(displayedNumbers);
+        } else if (startDateMonthNumpic.getValue() == 12 && !Arrays.asList(array).contains(startDateYearNumpic.getValue() % 33)) {
+            startDateDayNumpic.setMaxValue(29);
+        } else if (startDateMonthNumpic.getValue() == 12 && Arrays.asList(array).contains(startDateYearNumpic.getValue() % 33)) {
+            startDateDayNumpic.setMaxValue(30);
+        }
+    }
+
+    public void checkPersianLeapYear() {
+
+        if (startDateMonthNumpic.getValue() == 12 && !DateTime.isPersianLeapYear(startDateYearNumpic.getValue())) {
+            startDateDayNumpic.setMaxValue(29);
+        } else if (startDateMonthNumpic.getValue() == 12 && DateTime.isPersianLeapYear(startDateYearNumpic.getValue())) {
+            startDateDayNumpic.setMaxValue(30);
+        }
     }
 
     public int getpixel(int dp) {
