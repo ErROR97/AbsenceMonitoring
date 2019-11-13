@@ -279,6 +279,39 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
+    public void updateStatusArchive(final String id, final responseListenerUpdateArchive responseListenerUpdateArchive) {
+        final StringRequest request = new StringRequest(Request.Method.POST, urlLogin,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        if (response.trim().equals("success")) {
+                            responseListenerUpdateArchive.onRecived("success");
+                        } else {
+                            responseListenerUpdateArchive.onRecived("error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerUpdateArchive.onRecived("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
 
     public interface responseListenerLogin {
         void onRecived(String response);
@@ -293,6 +326,9 @@ public class ApiHandler {
         void onRecived(String response);
     }
 
+    public interface responseListenerUpdateArchive {
+        void onRecived(String response);
+    }
 
     public interface responseListenerNotifReqLeave{
         void onRevived(List<Furlough> notifReqLeaveList);
