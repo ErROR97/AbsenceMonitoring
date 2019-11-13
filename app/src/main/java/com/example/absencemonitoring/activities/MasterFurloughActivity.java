@@ -1,12 +1,8 @@
 package com.example.absencemonitoring.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +18,12 @@ import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.Utils.CustomTypefaceSpan;
 import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.Utils.Formating;
-import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.instances.Furlough;
+
+import org.json.JSONException;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class MasterFurloughActivity extends AppCompatActivity {
 
@@ -62,6 +62,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
         furlough.setDescriptionLeave(getIntent().getStringExtra("descriptionLeave"));
         furlough.setId(getIntent().getIntExtra("id", 0));
         furlough.setCurrentDate(getIntent().getStringExtra("currentDate"));
+        Log.i("boz", "init: "+furlough.getDescriptionLeave());
 
         amount = getIntent().getStringExtra("dayOrTime").split(" ")[0];
         dayOrTime = getIntent().getStringExtra("dayOrTime").split(" ")[1];
@@ -205,28 +206,33 @@ public class MasterFurloughActivity extends AppCompatActivity {
                 acceptProgressbar.setVisibility(View.VISIBLE);
                 acceptBtn.setEnabled(false);
                 rejectBtn.setEnabled(false);
-                apiHandler.acceptRejectReqLeave(true,
-                        furlough.getPersonalIdemployee(),
-                        "9537063",
-                        furlough.getLeaveType(),
-                        "",
-                        furlough.getCurrentDate(),
-                        new ApiHandler.responseListenerAcceptRejectReqLeave() {
-                            @Override
-                            public void onRecived(String response) {
-                                if (response.trim().equals("success")) {
-                                    acceptBtn.setEnabled(true);
-                                    rejectBtn.setEnabled(true);
-                                    acceptLbl.setVisibility(View.VISIBLE);
-                                    acceptProgressbar.setVisibility(View.INVISIBLE);
-                                    setResult(4);
-                                    finish();
+                Log.i("khar", "onClick: "+furlough.getDescriptionLeave());
+                try {
+                    apiHandler.acceptRejectReqLeave(true,
+                            furlough.getPersonalIdemployee(),
+                            userDetails.getUserInfo().getString("personalIdmaster"),
+                            furlough.getLeaveType(),
+                            "",
+                            furlough.getDescriptionLeave(),
+                            furlough.getCurrentDate(),
+                            new ApiHandler.responseListenerAcceptRejectReqLeave() {
+                                @Override
+                                public void onRecived(String response) {
+                                    if (response.trim().equals("success")) {
+                                        acceptBtn.setEnabled(true);
+                                        rejectBtn.setEnabled(true);
+                                        acceptLbl.setVisibility(View.VISIBLE);
+                                        acceptProgressbar.setVisibility(View.INVISIBLE);
+                                        setResult(4);
+                                        finish();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
-        //:/تنمتمتم
 
         sendRejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,23 +242,28 @@ public class MasterFurloughActivity extends AppCompatActivity {
                 cancelRejectBtn.setEnabled(false);
                 sendRejectBtn.setEnabled(false);
 
-                apiHandler.acceptRejectReqLeave(false,
-                        furlough.getPersonalIdemployee(),
-                        "9537063",
-                        furlough.getLeaveType(),
-                        rejectDescriptionEt.getText().toString(),
-                        furlough.getCurrentDate(),
-                        new ApiHandler.responseListenerAcceptRejectReqLeave() {
-                            @Override
-                            public void onRecived(String response) {
-                                if (response.trim().equals("success")) {
-                                    setResult(5);
-                                    finish();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+                try {
+                    apiHandler.acceptRejectReqLeave(false,
+                            furlough.getPersonalIdemployee(),
+                            userDetails.getUserInfo().getString("personalIdmaster"),
+                            furlough.getLeaveType(),
+                            rejectDescriptionEt.getText().toString(),
+                            furlough.getDescriptionLeave(),
+                            furlough.getCurrentDate(),
+                            new ApiHandler.responseListenerAcceptRejectReqLeave() {
+                                @Override
+                                public void onRecived(String response) {
+                                    if (response.trim().equals("success")) {
+                                        setResult(5);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -276,7 +287,6 @@ public class MasterFurloughActivity extends AppCompatActivity {
                 rejectDescriptionEt.setText("");
             }
         });
-
 
 
     }

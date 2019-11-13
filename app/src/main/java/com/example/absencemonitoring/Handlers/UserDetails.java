@@ -2,7 +2,6 @@ package com.example.absencemonitoring.Handlers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +18,7 @@ public class UserDetails {
         SharedPreferences.Editor editor = preference.edit();
         try {
             editor.putString("personalId",userInfo.getString("personalId"));
+            editor.putString("personalIdmaster",userInfo.getString("personalIdmaster"));
             editor.putString("firstName",userInfo.getString("firstname"));
             editor.putString("lastName",userInfo.getString("lastname"));
             editor.putString("nationalId",userInfo.getString("nationalId"));
@@ -56,6 +56,7 @@ public class UserDetails {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("personalId",preference.getString("personalId", "not found"));
+            jsonObject.put("personalIdmaster",preference.getString("personalIdmaster", "not found"));
             jsonObject.put("firstName",preference.getString("firstName", "not found"));
             jsonObject.put("lastName",preference.getString("lastName", "not found"));
             jsonObject.put("nationalId",preference.getString("nationalId", "not found"));

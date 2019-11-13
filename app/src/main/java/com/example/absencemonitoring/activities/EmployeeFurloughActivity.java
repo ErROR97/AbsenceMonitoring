@@ -10,12 +10,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.Utils.Formating;
 import com.google.android.material.snackbar.Snackbar;
 import com.shawnlin.numberpicker.NumberPicker;
@@ -455,24 +454,28 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 confirmTxt.setVisibility(View.INVISIBLE);
                 done.setEnabled(false);
-                apiHandler.reqLeave(emplooyeeName.getText().toString(), userDetails.getUserDetails(), "9537063", type,
-                        "00" + ":" + Formating.persianDigitsToEnglish(startTimeHourTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(startTimeMinTxt.getText().toString()),
-                        Formating.persianDigitsToEnglish(amountTimeDayTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(amountTimeHourTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(amountTimeMinTxt.getText().toString()),
-                        Formating.persianDigitsToEnglish(startDateYearTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateMonthTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateDayTxt.getText().toString()),
-                        descriptionLeave.getText().toString(),
-                        currentDateTxt.getText().toString(),
-                        new ApiHandler.responseListenerReqLeave() {
-                            @Override
-                            public void onRecived(String response) {
-                                if (response.trim().equals("success")) {
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    confirmTxt.setVisibility(View.VISIBLE);
-                                    done.setEnabled(true);
-                                    setResult(3);
-                                    finish();
+                try {
+                    apiHandler.reqLeave(emplooyeeName.getText().toString(), userDetails.getUserDetails(), userDetails.getUserInfo().getString("personalIdmaster"), type,
+                            "00" + ":" + Formating.persianDigitsToEnglish(startTimeHourTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(startTimeMinTxt.getText().toString()),
+                            Formating.persianDigitsToEnglish(amountTimeDayTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(amountTimeHourTxt.getText().toString()) + ":" + Formating.persianDigitsToEnglish(amountTimeMinTxt.getText().toString()),
+                            Formating.persianDigitsToEnglish(startDateYearTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateMonthTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateDayTxt.getText().toString()),
+                            descriptionLeave.getText().toString(),
+                            currentDateTxt.getText().toString(),
+                            new ApiHandler.responseListenerReqLeave() {
+                                @Override
+                                public void onRecived(String response) {
+                                    if (response.trim().equals("success")) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        confirmTxt.setVisibility(View.VISIBLE);
+                                        done.setEnabled(true);
+                                        setResult(3);
+                                        finish();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

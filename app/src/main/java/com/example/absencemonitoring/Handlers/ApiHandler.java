@@ -1,8 +1,6 @@
 package com.example.absencemonitoring.Handlers;
 
 import android.app.Activity;
-import android.util.Log;
-
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -19,6 +17,7 @@ import com.example.absencemonitoring.instances.Furlough;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -186,7 +185,7 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final String leaveType,final String description, final String currentDate, final responseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
+    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final String leaveType,final String description,final String descriptionLeave, final String currentDate, final responseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
 
         final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptRejectReqLeave,
                 new Response.Listener<String>() {
@@ -210,25 +209,11 @@ public class ApiHandler {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-//                if (status){
-//                    params.put("personalIdemployee", personalIdemployee.trim());
-//                    params.put("personalIdmaster", personalIdmaster.trim());
-//                    params.put("currentDate", currentDate.trim());
-//                    params.put("description", description.trim());
-//                    params.put("leaveType", leaveType.trim());
-//                    params.put("status","true");
-//                } else {
-//                    params.put("personalIdemployee", personalIdemployee.trim());
-//                    params.put("personalIdmaster", personalIdmaster.trim());
-//                    params.put("currentDate", currentDate.trim());
-//                    params.put("description", description.trim());
-//                    params.put("leaveType", leaveType.trim());
-//                    params.put("status","false");
-//                }
                 params.put("personalIdemployee", personalIdemployee.trim());
                 params.put("personalIdmaster", personalIdmaster.trim());
                 params.put("currentDate", currentDate.trim());
                 params.put("description", description.trim());
+                params.put("descriptionLeave", descriptionLeave.trim());
                 params.put("leaveType", leaveType.trim());
                 params.put("status",String.valueOf(status));
                 return params;
@@ -265,7 +250,6 @@ public class ApiHandler {
                                 furlough.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
                                 furlough.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
                                 furlough.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
-
                                 furlough.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
                             } catch (JSONException e) {
                                 e.printStackTrace();
