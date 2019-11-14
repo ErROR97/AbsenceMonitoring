@@ -127,7 +127,7 @@
                 android:layout_margin="8dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:background="@drawable/border_remaidner_time_furlough_details"
+                android:background="@drawable/background_remaidner_time_furlough_details"
                 android:layout_centerHorizontal="true">
 
                 <TextView
@@ -163,6 +163,7 @@
 
 
                     <TextView
+                        android:id="@+id/lbl_days"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="روز"
@@ -200,6 +201,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/lbl_hours"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ساعت"
@@ -248,6 +250,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/lbl_mins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="دقیقه"
@@ -441,8 +444,39 @@
 
     </ScrollView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/crd_finish_furlough"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/black"
+        android:alpha=".4"
+        app:cardCornerRadius="8dp"
+        >
 
+        <TextView
+            android:id="@+id/lbl_finish_furlough"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اتمام"
+            android:textColor="@color/light_yellow"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:fontFamily="@font/iransansmobile_light"
+            android:layout_gravity="center" />
 
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:indeterminate="false"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:indeterminateTint="@color/yellow" />
+
+    </androidx.cardview.widget.CardView>
 
 
 

@@ -1,6 +1,7 @@
 package com.example.absencemonitoring.Handlers;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -90,6 +91,7 @@ public class ApiHandler {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("bozekohi", "onRecived: " + response);
                         if (response.trim().equals("success")) {
                             responseListenerReqLeave.onRecived("success");
                         } else {
@@ -156,13 +158,14 @@ public class ApiHandler {
                                     furlough.setStatusArchive(jsonArray.getJSONObject(i).get("statusArchive").toString());
                                     furlough.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
                                     furlough.setStatusLeave(jsonArray.getJSONObject(i).get("status").toString());
-                                    furlough.setStarted(DateTime.checkFurloughIsStarted(furlough.getStartDate(), furlough.getStartTime()));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                                 FurloughList.add(furlough);
                             }
                             responseListenerControlReqLeave.onRevived(FurloughList);
+                        } else {
+                            responseListenerControlReqLeave.onRevived(new ArrayList<Furlough>());
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -280,7 +283,7 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void updateStatusArchive(final String id, final responseListenerUpdateArchive responseListenerUpdateArchive) {
+    public void updateStatusArchive(final int id, final responseListenerUpdateArchive responseListenerUpdateArchive) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlUpdateArchive,
                 new Response.Listener<String>() {
                     @Override
@@ -304,7 +307,7 @@ public class ApiHandler {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("id", id.trim());
+                params.put("id", String.valueOf(id));
                 return params;
             }
         };

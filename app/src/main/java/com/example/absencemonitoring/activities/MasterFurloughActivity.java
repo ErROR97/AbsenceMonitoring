@@ -212,7 +212,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
                             furlough.getPersonalIdemployee(),
                             userDetails.getUserInfo().getString("personalIdmaster"),
                             furlough.getLeaveType(),
-                            "",
+                            "تائید شد",
                             furlough.getDescriptionLeave(),
                             furlough.getCurrentDate(),
                             new ApiHandler.responseListenerAcceptRejectReqLeave() {

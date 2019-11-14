@@ -2,18 +2,24 @@ package com.example.absencemonitoring.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.adapters.NoticeFurloughAdapter;
+import com.example.absencemonitoring.instances.ControlFurlough;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.ControlAdapter;
 import com.example.absencemonitoring.instances.Furlough;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -66,7 +72,7 @@ public class ControlFragment extends Fragment {
                 Collections.sort(controlLeaveList, new Comparator<Furlough>() {
                     @Override
                     public int compare(Furlough abc1, Furlough abc2) {
-                        return Boolean.compare(abc2.isStarted(), abc1.isStarted());
+                        return Integer.compare(abc2.getStarted(), abc1.getStarted());
                     }
                 });
 
@@ -85,27 +91,35 @@ public class ControlFragment extends Fragment {
 
         init();
 
-        apiHandler.getControlReqLeave("9537063", new ApiHandler.responseListenerControlReqLeave() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRevived(List<Furlough> controlLeaveList) {
-                progressBar.setVisibility(View.INVISIBLE);
-
-                if (controlLeaveList.size() == 0) {
-                    nothingFoundContainer.setVisibility(View.VISIBLE);
-                } else {
-                    nothingFoundContainer.setVisibility(View.INVISIBLE);
-                }
-                Collections.sort(controlLeaveList, new Comparator<Furlough>() {
+            public void onRefresh() {
+                apiHandler.getControlReqLeave("9537063", new ApiHandler.responseListenerControlReqLeave() {
                     @Override
-                    public int compare(Furlough abc1, Furlough abc2) {
-                        return Boolean.compare(abc2.isStarted(), abc1.isStarted());
+                    public void onRevived(List<Furlough> controlLeaveList) {
+                        progressBar.setVisibility(View.INVISIBLE);
+
+                        if (controlLeaveList.size() == 0) {
+                            nothingFoundContainer.setVisibility(View.VISIBLE);
+                        } else {
+                            nothingFoundContainer.setVisibility(View.INVISIBLE);
+                        }
+
+                        Collections.sort(controlLeaveList, new Comparator<Furlough>() {
+                            @Override
+                            public int compare(Furlough abc1, Furlough abc2) {
+                                return Integer.compare(abc2.getStarted(), abc1.getStarted());
+                            }
+                        });
+
+                        controlAdapter = new ControlAdapter(getActivity(), controlLeaveList);
+                        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        rv.setAdapter(controlAdapter);
+                        updateListRemainingTime();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
-                controlAdapter = new ControlAdapter(getActivity(), controlLeaveList);
-                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                rv.setAdapter(controlAdapter);
-                swipeRefreshLayout.setRefreshing(false);
-                updateListRemainingTime();
+
             }
         });
 

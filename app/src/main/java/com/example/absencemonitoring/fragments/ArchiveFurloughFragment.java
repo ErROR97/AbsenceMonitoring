@@ -27,7 +27,6 @@ public class ArchiveFurloughFragment extends Fragment {
     ArchiveFurloughAdapter archiveFurloughAdapter;
     UserDetails userDetails;
     ApiHandler apiHandler;
-    List<Furlough> list;
 
 
     private void init() {
@@ -35,6 +34,7 @@ public class ArchiveFurloughFragment extends Fragment {
 
         userDetails = new UserDetails(getActivity());
         apiHandler = new ApiHandler(getActivity());
+
 
     }
 

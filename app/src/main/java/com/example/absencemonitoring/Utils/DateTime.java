@@ -35,7 +35,7 @@ public class DateTime {
 
     public static String checkForDailyOrHourly(String amount) {
         String[] amounts = amount.split(":");
-        if (amounts[0].equals("0")) {
+        if (amounts[0].equals("00")) {
             return "ساعتی";
         } else {
             return "روزانه";
@@ -43,22 +43,36 @@ public class DateTime {
     }
 
 
-    public static boolean checkFurloughIsStarted(String startDate, String startTime) {
-        String[] starts = startDate.split("/");
-        starts[0] = String.valueOf(Integer.parseInt(starts[0]) + 1300);
+    public static int checkFurloughIsStarted(String startDate, String startTime, String amount) {
+        String[] startDates = startDate.split("/");
         String[] startTimes = startTime.split(":");
-        JalaliCalendar jalaliCalendar = new JalaliCalendar(Integer.parseInt(starts[0]), Integer.parseInt(starts[1]), Integer.parseInt(starts[2]));
+        String[] endDate = DateTime.calculateEndDate(startDate, amount).split("/");
+        String[] endTime = DateTime.calculateEndTime(startTime, amount).split(":");
+
+
+        JalaliCalendar jalaliCalendarStart = new JalaliCalendar(Integer.parseInt(startDates[0]), Integer.parseInt(startDates[1]), Integer.parseInt(startDates[2]));
+        JalaliCalendar jalaliCalendarEnd = new JalaliCalendar(Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2]));
 
         Calendar calendar = Calendar.getInstance();
 
-        Calendar startDateMiladi = jalaliCalendar.toGregorian();
+        Calendar startDateMiladi = jalaliCalendarStart.toGregorian();
         startDateMiladi.set(Calendar.HOUR, Integer.parseInt(startTimes[1]));
         startDateMiladi.set(Calendar.MINUTE, Integer.parseInt(startTimes[2]));
-        long difference = TimeUnit.MILLISECONDS.toSeconds(calendar.getTimeInMillis() - startDateMiladi.getTimeInMillis());
-        if (difference < 0) {
-            return false;
+
+        Calendar endDateMiladi = jalaliCalendarEnd.toGregorian();
+        endDateMiladi.set(Calendar.HOUR, Integer.parseInt(endTime[0]));
+        endDateMiladi.set(Calendar.MINUTE, Integer.parseInt(endTime[1]));
+
+
+        long differenceStart = TimeUnit.MILLISECONDS.toSeconds(calendar.getTimeInMillis() - startDateMiladi.getTimeInMillis());
+        long differenceEnd = TimeUnit.MILLISECONDS.toSeconds(endDateMiladi.getTimeInMillis() - calendar.getTimeInMillis());
+
+        if (differenceStart < 0) {
+            return 0;
+        } else if (differenceStart > 0 && differenceEnd > 0) {
+            return 1;
         } else {
-            return true;
+            return 2;
         }
     }
 
@@ -80,12 +94,12 @@ public class DateTime {
         String[] starts = startDate.split("/");
         String[] amounts = amountDate.split(":");
 
-        JalaliCalendar jalaliCalendar = new JalaliCalendar(Integer.parseInt(starts[0]) + 1300, Integer.parseInt(starts[1]), Integer.parseInt(starts[2]));
+        JalaliCalendar jalaliCalendar = new JalaliCalendar(Integer.parseInt(starts[0]), Integer.parseInt(starts[1]), Integer.parseInt(starts[2]));
         Calendar calendar = jalaliCalendar.toGregorian();
         calendar.add(Calendar.DAY_OF_YEAR, Integer.parseInt(amounts[0]));
         jalaliCalendar = new JalaliCalendar(new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)));
 
-        return String.valueOf(Integer.parseInt(jalaliCalendar.toString().split("-")[0]) - 1300)
+        return jalaliCalendar.toString().split("-")[0]
                 + "/" + jalaliCalendar.toString().split("-")[1]
                 + "/" + jalaliCalendar.toString().split("-")[2];
     }
@@ -109,7 +123,6 @@ public class DateTime {
 
     public static String calculateRemainingTime(String d,String t, String a) {
         String[] starts = d.split("/");
-        starts[0] = String.valueOf(Integer.parseInt(starts[0]) + 1300);
         String[] startTimes = t.split(":");
         String[] amounts = a.split(":");
 
@@ -140,9 +153,40 @@ public class DateTime {
                 hours = 23;
             }
         }
-        Log.i("goorekhar", "calculateRemainingTime: " + days + " " + hours + " " + minutes);
 
         return String.format("%02d", days) + ":" + String.format("%02d", hours) + ":" + String.format("%02d", minutes);
+    }
+
+    public static String calculatePassedTime(String startDate, String startTime, String amountTime) {
+        String[] endDate = DateTime.calculateEndDate(startDate, amountTime).split("/");
+        String[] endTime = DateTime.calculateEndTime(startTime, amountTime).split(":");
+        JalaliCalendar jalaliCalendar = new JalaliCalendar(Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[2]));
+        Calendar miladiEndDate = jalaliCalendar.toGregorian();
+        miladiEndDate.set(Calendar.HOUR, Integer.parseInt(endTime[0]));
+        miladiEndDate.set(Calendar.MINUTE, Integer.parseInt(endTime[1]));
+
+        Calendar now = Calendar.getInstance();
+        long difference = TimeUnit.MILLISECONDS.toMinutes(now.getTimeInMillis() - miladiEndDate.getTimeInMillis());
+
+        long days = difference / 24 / 60;
+        long hours = difference / 60 % 24;
+        long minutes = difference % 60;
+
+        if (hours < 0) {
+            days--;
+            hours = 24 - difference / 60 % 24;
+        }
+
+        if (minutes < 0) {
+            hours--;
+            minutes = 60 - difference % 60;
+            if (hours < 0) {
+                days--;
+                hours = 23;
+            }
+        }
+
+        return  String.format("%02d", days) + ":" + String.format("%02d", hours) + ":" + String.format("%02d", minutes);
     }
 
     public static boolean checkForTimeInputValidation(int year, int month, int day, int hour, int min) {

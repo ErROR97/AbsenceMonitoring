@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -66,6 +67,7 @@ public class MasterDashboardActivity extends AppCompatActivity  {
         archiveContainer = findViewById(R.id.container_archive);
         controlingContainer = findViewById(R.id.container_controling);
         logoutContainer = findViewById(R.id.container_logout);
+
 
 
         requestDetailsContainer = findViewById(R.id.container_request_details);
@@ -374,6 +376,20 @@ public class MasterDashboardActivity extends AppCompatActivity  {
 
             View snackbarView = snackbar.getView();
             snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            textView.setMaxLines(9);
+            textView.setTextSize(14);
+            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
+            textView.setTextColor(getResources().getColor(R.color.black));
+
+            snackbar.show();
+        } else if (resultCode == 6) {
+            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "اتمام مرخصی تائید شد", Snackbar.LENGTH_LONG);
+
+            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
+
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(getResources().getColor(R.color.light_green));
             TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
             textView.setMaxLines(9);
             textView.setTextSize(14);

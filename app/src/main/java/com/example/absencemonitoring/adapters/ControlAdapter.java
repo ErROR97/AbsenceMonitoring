@@ -39,25 +39,27 @@ public class ControlAdapter extends RecyclerView.Adapter<ControlAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull ControlAdapter.MyViewHolder holder, final int position) {
         String remaindTime;
+        list.get(position).setStarted(DateTime.checkFurloughIsStarted(list.get(position).getStartDate(), list.get(position).getStartTime(), list.get(position).getTimeLeave()));
 
-        if (list.get(position).isStarted()) {
-
+        if (list.get(position).getStarted() == 1) {
             remaindTime = DateTime.calculateRemainingTime(list.get(position).getStartDate(), list.get(position).getStartTime(), list.get(position).getTimeLeave());
 
             holder.controlItem.setCardBackgroundColor(activity.getResources().getColor(R.color.light_green));
+            holder.statusTxt.setText("در حال انجام");
             holder.dayTxt.setTextColor(activity.getResources().getColor(R.color.light_yellow));
             holder.hourTxt.setTextColor(activity.getResources().getColor(R.color.light_yellow));
             holder.minuteTxt.setTextColor(activity.getResources().getColor(R.color.light_yellow));
             holder.dayLbl.setTextColor(activity.getResources().getColor(R.color.light_yellow));
             holder.hourLbl.setTextColor(activity.getResources().getColor(R.color.light_yellow));
             holder.minuteLbl.setTextColor(activity.getResources().getColor(R.color.light_yellow));
-        } else {
+        } else if (list.get(position).getStarted() == 0) {
 
             remaindTime = String.format("%02d", Integer.parseInt(list.get(position).getTimeLeave().split(":")[0]))
             + ":" + String.format("%02d", Integer.parseInt(list.get(position).getTimeLeave().split(":")[1]))
             + ":" + String.format("%02d", Integer.parseInt(list.get(position).getTimeLeave().split(":")[2]));
 
             holder.controlItem.setCardBackgroundColor(activity.getResources().getColor(R.color.yellow));
+            holder.statusTxt.setText("شروع نشده");
             holder.dayTxt.setTextColor(activity.getResources().getColor(R.color.light_green));
             holder.hourTxt.setTextColor(activity.getResources().getColor(R.color.light_green));
             holder.minuteTxt.setTextColor(activity.getResources().getColor(R.color.light_green));
@@ -65,6 +67,11 @@ public class ControlAdapter extends RecyclerView.Adapter<ControlAdapter.MyViewHo
             holder.hourLbl.setTextColor(activity.getResources().getColor(R.color.light_green));
             holder.minuteLbl.setTextColor(activity.getResources().getColor(R.color.light_green));
 
+        } else {
+            remaindTime = DateTime.calculatePassedTime(list.get(position).getStartDate(), list.get(position).getStartTime(), list.get(position).getTimeLeave());
+            holder.controlItem.setCardBackgroundColor(activity.getResources().getColor(R.color.red));
+            holder.statusTxt.setText("از موئد کذشته");
+            holder.remainderLbl.setText("گذشته از مرخصی");
         }
         holder.nameTxt.setText(list.get(position).getName());
         holder.typeTxt.setText(list.get(position).getLeaveType());
@@ -82,8 +89,9 @@ public class ControlAdapter extends RecyclerView.Adapter<ControlAdapter.MyViewHo
                 intent.putExtra("startDate", list.get(position).getStartDate());
                 intent.putExtra("startTime", list.get(position).getStartTime());
                 intent.putExtra("amountTime", list.get(position).getTimeLeave());
-                intent.putExtra("isStarted", list.get(position).isStarted());
-                activity.startActivity(intent);
+                intent.putExtra("isStarted", list.get(position).getStarted());
+                intent.putExtra("id", list.get(position).getId());
+                activity.startActivityForResult(intent, 7);
             }
         });
     }
@@ -95,18 +103,20 @@ public class ControlAdapter extends RecyclerView.Adapter<ControlAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView typeTxt, nameTxt, dayTxt, hourTxt, minuteTxt;
-        TextView dayLbl, hourLbl, minuteLbl;
+        TextView statusTxt, typeTxt, nameTxt, dayTxt, hourTxt, minuteTxt;
+        TextView remainderLbl, dayLbl, hourLbl, minuteLbl;
         CardView controlItem;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             controlItem = itemView.findViewById(R.id.item_control);
+            statusTxt = itemView.findViewById(R.id.txt_status);
             nameTxt = itemView.findViewById(R.id.txt_name);
             typeTxt = itemView.findViewById(R.id.txt_type);
             dayTxt = itemView.findViewById(R.id.txt_remainder_day);
             hourTxt = itemView.findViewById(R.id.txt_remainder_hour);
             minuteTxt = itemView.findViewById(R.id.txt_remainder_minutes);
 
+            remainderLbl = itemView.findViewById(R.id.lbl_remainder);
             dayLbl = itemView.findViewById(R.id.lbl_day);
             hourLbl = itemView.findViewById(R.id.lbl_hour);
             minuteLbl = itemView.findViewById(R.id.lbl_minute);

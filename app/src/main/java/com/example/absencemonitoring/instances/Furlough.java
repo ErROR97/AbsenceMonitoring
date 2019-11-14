@@ -14,7 +14,7 @@ public class Furlough {
     private String descriptionLeave;
     private String statusArchive;
     private String statusLeave;
-    private boolean isStarted;
+    private int started;
 
     public String getPersonalIdemployee() {
         return personalIdemployee;
@@ -112,11 +112,11 @@ public class Furlough {
         this.statusLeave = statusLeave;
     }
 
-    public boolean isStarted() {
-        return isStarted;
+    public int getStarted() {
+        return started;
     }
 
-    public void setStarted(boolean started) {
-        isStarted = started;
+    public void setStarted(int isStarted) {
+        this.started = isStarted;
     }
 }
