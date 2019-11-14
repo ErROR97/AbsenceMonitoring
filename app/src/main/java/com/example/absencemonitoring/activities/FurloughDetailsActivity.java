@@ -1,6 +1,5 @@
 package com.example.absencemonitoring.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -127,7 +126,7 @@ public class FurloughDetailsActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 finishFurloughLbl.setVisibility(View.INVISIBLE);
                 Log.i("gavaznekohi", "onClick: " + getIntent().getStringExtra("id"));
-                apiHandler.updateStatusArchive(getIntent().getIntExtra("id", 0), new ApiHandler.responseListenerUpdateArchive() {
+                apiHandler.updateStatusArchive(getIntent().getIntExtra("id", 0), new ApiHandler.ResponseListenerUpdateArchive() {
                     @Override
                     public void onRecived(String response) {
                         if (response.equals("success")) {

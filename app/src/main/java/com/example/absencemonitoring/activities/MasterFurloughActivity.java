@@ -215,7 +215,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
                             "تائید شد",
                             furlough.getDescriptionLeave(),
                             furlough.getCurrentDate(),
-                            new ApiHandler.responseListenerAcceptRejectReqLeave() {
+                            new ApiHandler.ResponseListenerAcceptRejectReqLeave() {
                                 @Override
                                 public void onRecived(String response) {
                                     if (response.trim().equals("success")) {
@@ -250,7 +250,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
                             rejectDescriptionEt.getText().toString(),
                             furlough.getDescriptionLeave(),
                             furlough.getCurrentDate(),
-                            new ApiHandler.responseListenerAcceptRejectReqLeave() {
+                            new ApiHandler.ResponseListenerAcceptRejectReqLeave() {
                                 @Override
                                 public void onRecived(String response) {
                                     if (response.trim().equals("success")) {

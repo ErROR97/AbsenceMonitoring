@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements RecoveryFragment
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 loginLbl.setVisibility(View.INVISIBLE);
-                apiHandler.logIn(personalId.getText().toString(), passWord.getText().toString(), new ApiHandler.responseListenerLogin() {
+                apiHandler.logIn(personalId.getText().toString(), passWord.getText().toString(), new ApiHandler.ResponseListenerLogin() {
                     @Override
                     public void onRecived(String response) {
                         progressBar.setVisibility(View.INVISIBLE);
@@ -104,6 +104,8 @@ public class LoginActivity extends AppCompatActivity implements RecoveryFragment
                                 }
                                 else if (userDetails.getUserInfo().getString("role").equals("guard")){
                                     startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
+                                } else if (userDetails.getUserInfo().getString("role").equals("sportman")) {
+                                    startActivity(new Intent(LoginActivity.this, SportmanDashboardActivity.class));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

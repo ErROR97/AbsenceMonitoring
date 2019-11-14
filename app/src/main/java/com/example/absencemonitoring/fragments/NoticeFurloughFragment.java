@@ -1,25 +1,20 @@
 package com.example.absencemonitoring.fragments;
 
 import android.os.Bundle;
-import android.renderscript.Script;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.activities.MasterDashboardActivity;
-import com.example.absencemonitoring.activities.MasterFurloughActivity;
-import com.example.absencemonitoring.adapters.ArchiveFurloughAdapter;
 import com.example.absencemonitoring.adapters.NoticeFurloughAdapter;
 import com.example.absencemonitoring.instances.Furlough;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -52,7 +47,7 @@ public class NoticeFurloughFragment extends Fragment implements MasterDashboardA
         apiHandler = new ApiHandler(getActivity());
 
 
-        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.responseListenerNotifReqLeave() {
+        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.ResponseListenerNotifReqLeave() {
             @Override
             public void onRevived(List<Furlough> notifReqLeaveList) {
                 progressBar.setVisibility(View.INVISIBLE);
@@ -82,7 +77,7 @@ public class NoticeFurloughFragment extends Fragment implements MasterDashboardA
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.responseListenerNotifReqLeave() {
+                apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.ResponseListenerNotifReqLeave() {
                     @Override
                     public void onRevived(List<Furlough> notifReqLeaveList) {
                         progressBar.setVisibility(View.INVISIBLE);
@@ -110,7 +105,7 @@ public class NoticeFurloughFragment extends Fragment implements MasterDashboardA
     @Override
     public void onReqDetermined() {
         progressBar.setVisibility(View.VISIBLE);
-        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.responseListenerNotifReqLeave() {
+        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.ResponseListenerNotifReqLeave() {
             @Override
             public void onRevived(List<Furlough> notifReqLeaveList) {
                 progressBar.setVisibility(View.INVISIBLE);

@@ -76,6 +76,8 @@ public class GuardDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(GuardDashboardActivity.this, LoginActivity.class));
+                finish();
+                userDetails.deleteUser();
             }
         });
 

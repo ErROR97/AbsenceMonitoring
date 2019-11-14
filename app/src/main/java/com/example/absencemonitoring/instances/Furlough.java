@@ -11,6 +11,7 @@ public class Furlough {
     private String startTime;
     private String timeLeave;
     private String startDate;
+    private String description;
     private String descriptionLeave;
     private String statusArchive;
     private String statusLeave;
@@ -62,6 +63,14 @@ public class Furlough {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDescriptionLeave() {

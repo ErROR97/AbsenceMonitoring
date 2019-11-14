@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -462,7 +461,7 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
                             Formating.persianDigitsToEnglish(startDateYearTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateMonthTxt.getText().toString()) + "/" + Formating.persianDigitsToEnglish(startDateDayTxt.getText().toString()),
                             descriptionLeave.getText().toString(),
                             currentDateTxt.getText().toString(),
-                            new ApiHandler.responseListenerReqLeave() {
+                            new ApiHandler.ResponseListenerReqLeave() {
                                 @Override
                                 public void onRecived(String response) {
                                     if (response.trim().equals("success")) {

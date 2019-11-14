@@ -2,24 +2,18 @@ package com.example.absencemonitoring.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.absencemonitoring.Handlers.ApiHandler;
 import com.example.absencemonitoring.Handlers.UserDetails;
-import com.example.absencemonitoring.adapters.NoticeFurloughAdapter;
-import com.example.absencemonitoring.instances.ControlFurlough;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.ControlAdapter;
 import com.example.absencemonitoring.instances.Furlough;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -58,7 +52,7 @@ public class ControlFragment extends Fragment {
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.black));
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.light_blue));
 
-        apiHandler.getControlReqLeave("9537063", new ApiHandler.responseListenerControlReqLeave() {
+        apiHandler.getControlReqLeave("9537063", new ApiHandler.ResponseListenerControlReqLeave() {
             @Override
             public void onRevived(List<Furlough> controlLeaveList) {
                 progressBar.setVisibility(View.INVISIBLE);
@@ -94,7 +88,7 @@ public class ControlFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                apiHandler.getControlReqLeave("9537063", new ApiHandler.responseListenerControlReqLeave() {
+                apiHandler.getControlReqLeave("9537063", new ApiHandler.ResponseListenerControlReqLeave() {
                     @Override
                     public void onRevived(List<Furlough> controlLeaveList) {
                         progressBar.setVisibility(View.INVISIBLE);

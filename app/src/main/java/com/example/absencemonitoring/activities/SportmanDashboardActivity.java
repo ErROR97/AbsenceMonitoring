@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.absencemonitoring.Handlers.ApiHandler;
+import com.example.absencemonitoring.Handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.SportmanListAdapter;
 import com.example.absencemonitoring.adapters.SportmanTimingAdapter;
@@ -28,7 +30,13 @@ public class SportmanDashboardActivity extends AppCompatActivity {
     TextView txtList, txtTiming;
     CardView logoutBtn;
 
+    ApiHandler apiHandler;
+    UserDetails userDetails;
+
     public void init() {
+
+        apiHandler = new ApiHandler(this);
+        userDetails = new UserDetails(this);
         sportmanListRv = findViewById(R.id.rv_sportman_list);
         sportmanTimingRv = findViewById(R.id.rv_sportman_timing);
 
@@ -93,6 +101,8 @@ public class SportmanDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SportmanDashboardActivity.this, LoginActivity.class));
+                finish();
+                userDetails.deleteUser();
             }
         });
 

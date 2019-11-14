@@ -12,6 +12,8 @@ import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.ArchiveFurloughAdapter;
 import com.example.absencemonitoring.instances.Furlough;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,25 @@ public class ArchiveFurloughFragment extends Fragment {
 
         userDetails = new UserDetails(getActivity());
         apiHandler = new ApiHandler(getActivity());
+
+        try {
+            apiHandler.getLeaveArchive(userDetails.getUserInfo().getString("personalIdmaster"), new ApiHandler.ResponseListenerLeaveArchive() {
+                @Override
+                public void onRevived(List<Furlough> leaveArchiveList) {
+                    archiveFurloughAdapter = new ArchiveFurloughAdapter(getActivity(), leaveArchiveList);
+                    rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    rv.setAdapter(archiveFurloughAdapter);
+                }
+
+                @Override
+                public void onMessage(String error) {
+
+                }
+
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
     }

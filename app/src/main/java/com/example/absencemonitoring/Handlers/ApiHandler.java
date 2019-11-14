@@ -12,7 +12,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.absencemonitoring.Utils.DateTime;
 import com.example.absencemonitoring.instances.Furlough;
 
 import org.json.JSONArray;
@@ -34,13 +33,14 @@ public class ApiHandler {
     private String urlAcceptRejectReqLeave = "http://matingrimes.ir/office/acceptRejectReqLeave.php";
     private String urlAcceptControlReqLeave = "http://matingrimes.ir/office/controlReqLeave.php";
     private String urlUpdateArchive = "http://matingrimes.ir/office/updateArchive.php";
+    private String urlGetLeaveArchive = "http://matingrimes.ir/office/getLeaveArchive.php";
 
     public ApiHandler(Activity activity) {
         this.activity = activity;
     }
 
 
-    public void logIn(final String personalId, final String password,final responseListenerLogin responseListenerLogin) {
+    public void logIn(final String personalId, final String password,final ResponseListenerLogin responseListenerLogin) {
 
         final StringRequest request = new StringRequest(Request.Method.POST, urlLogin,
                 new Response.Listener<String>() {
@@ -86,7 +86,7 @@ public class ApiHandler {
     }
 
 
-    public void reqLeave(final String fullName,final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave,final String currentDate,final responseListenerReqLeave responseListenerReqLeave) {
+    public void reqLeave(final String fullName,final String personalId, final String personalIdmaster, final String leavetype, final String startTime, final String timeLeave, final String startDate, final String descriptionLeave,final String currentDate,final ResponseListenerReqLeave responseListenerReqLeave) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlReqLeave,
                 new Response.Listener<String>() {
                     @Override
@@ -128,7 +128,7 @@ public class ApiHandler {
     }
 
 
-    public void getControlReqLeave(final String personalIdmaster, final responseListenerControlReqLeave responseListenerControlReqLeave){
+    public void getControlReqLeave(final String personalIdmaster, final ResponseListenerControlReqLeave responseListenerControlReqLeave){
         final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptControlReqLeave,
                 new Response.Listener<String>() {
                     @Override
@@ -189,7 +189,7 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final String leaveType,final String description,final String descriptionLeave, final String currentDate, final responseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
+    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final String leaveType,final String description,final String descriptionLeave, final String currentDate, final ResponseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
 
         final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptRejectReqLeave,
                 new Response.Listener<String>() {
@@ -228,7 +228,7 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void getNotifReqLeave(final String personalIdmaster, final responseListenerNotifReqLeave responseListenerNotifReqLeave){
+    public void getNotifReqLeave(final String personalIdmaster, final ResponseListenerNotifReqLeave responseListenerNotifReqLeave){
         final StringRequest request = new StringRequest(Request.Method.POST, urlgetNotifLeave,
                 new Response.Listener<String>() {
                     @Override
@@ -283,7 +283,70 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void updateStatusArchive(final int id, final responseListenerUpdateArchive responseListenerUpdateArchive) {
+    public void getLeaveArchive(final String personalIdmaster, final ResponseListenerLeaveArchive responseListenerLeaveArchive){
+        final StringRequest request = new StringRequest(Request.Method.POST, urlGetLeaveArchive,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONArray jsonArray = null;
+
+                        if (response.trim().split("_")[0].equals("success")) {
+                            try {
+                                jsonArray = new JSONArray(response.trim().split("_")[1]);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            List<Furlough> FurloughList = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Furlough furlough = new Furlough();
+                                try {
+                                    furlough.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
+                                    furlough.setName(jsonArray.getJSONObject(i).get("fullname").toString());
+                                    furlough.setPersonalIdemployee(jsonArray.getJSONObject(i).get("personalIdemployee").toString());
+                                    furlough.setPersonalIdMaster(jsonArray.getJSONObject(i).get("personalIdmaster").toString());
+                                    furlough.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
+                                    furlough.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
+                                    furlough.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
+                                    furlough.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
+                                    furlough.setDescription(jsonArray.getJSONObject(i).get("description").toString());
+                                    furlough.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
+                                    furlough.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                FurloughList.add(furlough);
+                            }
+                            responseListenerLeaveArchive.onRevived(FurloughList);
+                            responseListenerLeaveArchive.onMessage("success");
+                        } else {
+                            responseListenerLeaveArchive.onMessage("error");
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalIdmaster", personalIdmaster.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+
+    public void updateStatusArchive(final int id, final ResponseListenerUpdateArchive responseListenerUpdateArchive) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlUpdateArchive,
                 new Response.Listener<String>() {
                     @Override
@@ -317,30 +380,38 @@ public class ApiHandler {
     }
 
 
-    public interface responseListenerLogin {
+    public interface ResponseListenerLogin {
         void onRecived(String response);
     }
 
 
-    public interface responseListenerReqLeave {
+    public interface ResponseListenerReqLeave {
         void onRecived(String response);
     }
 
-    public interface responseListenerAcceptRejectReqLeave {
+    public interface ResponseListenerAcceptRejectReqLeave {
         void onRecived(String response);
     }
 
-    public interface responseListenerUpdateArchive {
+    public interface ResponseListenerUpdateArchive {
         void onRecived(String response);
     }
 
-    public interface responseListenerNotifReqLeave{
+    public interface ResponseListenerNotifReqLeave {
         void onRevived(List<Furlough> notifReqLeaveList);
     }
 
-    public interface responseListenerControlReqLeave{
+    public interface ResponseListenerLeaveArchive {
+        void onRevived(List<Furlough> leaveArchiveList);
+
+        void onMessage(String error);
+    }
+
+    public interface ResponseListenerControlReqLeave {
         void onRevived(List<Furlough> controlLeaveList);
     }
+
+
 
 }
 
