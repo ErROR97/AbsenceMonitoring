@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.addReserveSportTimeFragment">
+
+    <RelativeLayout
+        android:id="@+id/container_types"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_volleyball"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@id/container_football"
+            android:layout_marginLeft="8dp"
+            app:cardCornerRadius="4dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/yellow">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right|center_vertical"
+                app:srcCompat="@drawable/ic_volleyball"
+                android:layout_marginRight="8dp"
+                />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="والیبال"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:layout_gravity="left|center_vertical"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_toLeftOf="@id/img_icon"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_football"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="4dp"
+            android:layout_toRightOf="@id/container_swimming"
+            android:layout_marginLeft="8dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/light_green">
+
+            <ImageView
+                android:id="@+id/img_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right|center_vertical"
+                app:srcCompat="@drawable/ic_football"
+                android:layout_marginRight="8dp"
+                />
+
+            <TextView
+                android:id="@+id/txt_type"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="فوتبال"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:layout_gravity="left|center_vertical"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_toLeftOf="@id/img_icon"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_swimming"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="4dp"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/light_blue">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right|center_vertical"
+                app:srcCompat="@drawable/ic_swimming"
+                android:layout_marginRight="8dp"
+                />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="استخر"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:layout_gravity="left|center_vertical"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_toLeftOf="@id/img_icon"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/container_start_time"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layoutDirection="rtl"
+        android:layout_below="@id/container_types"
+        android:layout_marginRight="16dp"
+        >
+
+        <TextView
+            android:id="@+id/lbl_start_time"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="زمان شروع:"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="16dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+        
+
+
+        <TextView
+            android:id="@+id/txt_start_time_min"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:text="۱۲"
+            android:fontFamily="@font/iransansmobile_bold"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textColor="@color/light_blue"
+            android:layout_toLeftOf="@id/lbl_start_time"
+            />
+
+
+        <TextView
+            android:id="@+id/lbl_colon_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text=":"
+            android:gravity="center"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/txt_start_time_min"
+            android:textColor="@color/light_blue"
+            />
+        
+
+        <TextView
+            android:id="@+id/txt_start_time_hour"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:text="۱۲"
+            android:fontFamily="@font/iransansmobile_bold"
+            android:textSize="24dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/light_blue"
+            android:layout_toLeftOf="@id/lbl_colon_start_time"
+            />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/crd_edit_start_time"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:backgroundTint="@color/light_yellow"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/txt_start_time_hour"
+            app:cardCornerRadius="12dp">
+
+
+            <RelativeLayout
+                android:id="@+id/container_edit_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/txt_edit_start_time"/>
+
+                <TextView
+                    android:id="@+id/txt_edit_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تغییر"
+                    android:textSize="16dp"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/iransansmobile_light"
+                    android:textColor="@color/black" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/container_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_marginLeft="16dp"
+        android:layoutDirection="rtl"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/container_start_time"
+        android:layout_marginRight="16dp">
+
+        <TextView
+            android:id="@+id/lbl_end_time"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="زمان پایان:"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="16dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+
+
+
+        <TextView
+            android:id="@+id/txt_end_time_min"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:text="۱۲"
+            android:fontFamily="@font/iransansmobile_bold"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textColor="@color/orange"
+            android:layout_toLeftOf="@id/lbl_end_time"
+            />
+
+
+        <TextView
+            android:id="@+id/lbl_colon_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text=":"
+            android:gravity="center"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/txt_end_time_min"
+            android:textColor="@color/orange"
+            />
+
+
+        <TextView
+            android:id="@+id/txt_end_time_hour"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:text="۱۲"
+            android:fontFamily="@font/iransansmobile_bold"
+            android:textSize="24dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/orange"
+            android:layout_toLeftOf="@id/lbl_colon_end_time"
+            />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/crd_edit_end_time"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:backgroundTint="@color/light_yellow"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/txt_end_time_hour"
+            app:cardCornerRadius="12dp">
+
+
+            <RelativeLayout
+                android:id="@+id/container_edit_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/txt_edit_end_time"/>
+
+                <TextView
+                    android:id="@+id/txt_edit_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تغییر"
+                    android:textSize="16dp"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/iransansmobile_light"
+                    android:textColor="@color/black" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dialog_numpic_time"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blacker"
+        android:visibility="invisible"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="12dp"
+        android:layout_centerInParent="true">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_gravity="center"
+            >
+
+            <TextView
+                android:id="@+id/lbl_hour_start_time_dialog"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ساعت"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/light_green"
+                android:fontFamily="@font/iransansmobile_medium"
+                />
+
+
+            <TextView
+                android:id="@+id/lbl_min_start_time_dialog"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="دقیقه"
+                android:textSize="16dp"
+                android:layout_toRightOf="@id/lbl_hour_start_time_dialog"
+                android:textColor="@color/light_green"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_marginLeft="24dp"/>
+
+
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/numpic_time_hour"
+                android:layout_width="60dp"
+                android:layout_height="120dp"
+                android:layout_below="@id/lbl_min_start_time_dialog"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                app:np_dividerColor="@color/light_yellow"
+                app:np_textColor="@color/light_yellow"
+                app:np_textSize="18dp"
+                app:np_selectedTextSize="24dp"
+                app:np_selectedTextColor="@color/yellow"
+                app:np_typeface="iransansmobile_light"
+                />
+
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/numpic_time_min"
+                android:layout_width="60dp"
+                android:layout_height="120dp"
+                app:np_dividerColor="@color/light_yellow"
+                app:np_textColor="@color/light_yellow"
+                app:np_textSize="18dp"
+                app:np_selectedTextSize="24dp"
+                app:np_selectedTextColor="@color/yellow"
+                app:np_typeface="iransansmobile_light"
+                android:layout_toRightOf="@id/numpic_time_hour"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/lbl_min_start_time_dialog"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_confirm_time_dialog"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_below="@id/numpic_time_hour"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="24dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    app:srcCompat="@drawable/ic_tick"
+                    android:layout_gravity="center"
+                    />
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_cancel_time_dialog"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_below="@id/numpic_time_hour"
+                android:backgroundTint="@color/red"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/crd_confirm_time_dialog"
+                app:cardCornerRadius="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="24dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_close"
+                    android:layout_gravity="center"
+                    />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</RelativeLayout>

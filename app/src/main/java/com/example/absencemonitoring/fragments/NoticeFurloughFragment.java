@@ -8,12 +8,14 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
-import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.activities.MasterDashboardActivity;
 import com.example.absencemonitoring.adapters.NoticeFurloughAdapter;
 import com.example.absencemonitoring.instances.Furlough;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -71,7 +73,13 @@ public class NoticeFurloughFragment extends Fragment implements MasterDashboardA
         view = inflater.inflate(R.layout.fragment_notice_furlough, container, false);
 
         init();
-        ((MasterDashboardActivity)getActivity()).setOnDataListener(this);
+        try {
+            if (userDetails.getUserInfo().getString("role").equals("master")) {
+                ((MasterDashboardActivity)getActivity()).setOnDataListener(this);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

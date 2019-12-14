@@ -1,14 +1,14 @@
 package com.example.absencemonitoring.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.activities.MasterFurloughActivity;
+import com.example.absencemonitoring.utils.DateTime;
+import com.example.absencemonitoring.utils.Formating;
 import com.example.absencemonitoring.instances.Furlough;
 
 import java.util.List;
@@ -37,8 +37,15 @@ public class ArchiveFurloughAdapter extends RecyclerView.Adapter<ArchiveFurlough
     public void onBindViewHolder(@NonNull ArchiveFurloughAdapter.MyViewHolder holder, int position) {
         holder.nameTxt.setText(list.get(position).getName());
         holder.typeTxt.setText(list.get(position).getLeaveType());
-        holder.amountTxt.setText("5 روز");
-//        holder.dateTxt.setText(list.get(position).getStartDate());
+        holder.amountTxt.setText(DateTime.calculateAmountIsDayOrHour(list.get(position).getTimeLeave()));
+        holder.dateTxt.setText(Formating.englishDigitsToPersian(list.get(position).getStartDate()));
+        if (list.get(position).getStatusLeave().equals("false")) {
+            holder.statusTxt.setText("وضعیت: رد شده");
+            holder.statusTxtContainer.setCardBackgroundColor(activity.getResources().getColor(R.color.red));
+        } else if (list.get(position).getStatusLeave().equals("true")) {
+            holder.statusTxt.setText("وضعیت: تائید شده");
+            holder.statusTxtContainer.setCardBackgroundColor(activity.getResources().getColor(R.color.light_blue));
+        }
 
     }
 
@@ -49,15 +56,16 @@ public class ArchiveFurloughAdapter extends RecyclerView.Adapter<ArchiveFurlough
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView typeTxt, nameTxt, amountTxt, dateTxt;
-        CardView noticeFurlough;
+        TextView typeTxt, nameTxt, amountTxt, dateTxt, statusTxt;
+        CardView statusTxtContainer;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            noticeFurlough = itemView.findViewById(R.id.item_archive_furlough);
+            statusTxtContainer = itemView.findViewById(R.id.container_txt_status);
             nameTxt = itemView.findViewById(R.id.txt_name);
             typeTxt = itemView.findViewById(R.id.txt_type);
             amountTxt = itemView.findViewById(R.id.txt_amount);
-//            dateTxt = itemView.findViewById(R.id.txt_date);
+            dateTxt = itemView.findViewById(R.id.txt_date);
+            statusTxt = itemView.findViewById(R.id.txt_status);
         }
     }
 }

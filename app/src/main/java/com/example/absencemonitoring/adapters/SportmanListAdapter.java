@@ -51,6 +51,7 @@ public class SportmanListAdapter extends RecyclerView.Adapter<SportmanListAdapte
 
             }
         });
+
     }
 
 

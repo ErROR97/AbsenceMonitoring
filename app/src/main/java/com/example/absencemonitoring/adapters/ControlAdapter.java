@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.absencemonitoring.Utils.DateTime;
-import com.example.absencemonitoring.Utils.Formating;
-import com.example.absencemonitoring.instances.ControlFurlough;
+import com.example.absencemonitoring.utils.DateTime;
+import com.example.absencemonitoring.utils.Formating;
 import com.example.absencemonitoring.activities.FurloughDetailsActivity;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.instances.Furlough;
@@ -37,7 +36,7 @@ public class ControlAdapter extends RecyclerView.Adapter<ControlAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ControlAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ControlAdapter.MyViewHolder holder, final int position) {
         String remaindTime;
         list.get(position).setStarted(DateTime.checkFurloughIsStarted(list.get(position).getStartDate(), list.get(position).getStartTime(), list.get(position).getTimeLeave()));
 
@@ -91,6 +90,7 @@ public class ControlAdapter extends RecyclerView.Adapter<ControlAdapter.MyViewHo
                 intent.putExtra("amountTime", list.get(position).getTimeLeave());
                 intent.putExtra("isStarted", list.get(position).getStarted());
                 intent.putExtra("id", list.get(position).getId());
+                intent.putExtra("status", holder.statusTxt.getText().toString());
                 activity.startActivityForResult(intent, 7);
             }
         });

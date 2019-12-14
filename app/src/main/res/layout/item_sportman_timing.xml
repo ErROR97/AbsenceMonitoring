@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:backgroundTint="@color/light_yellow"
+    android:layout_height="100dp"
+    android:backgroundTint="@color/honeydew"
     android:layout_marginRight="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginTop="12dp"
@@ -32,7 +32,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/txt_time"
             android:layout_marginTop="8dp"
             android:layoutDirection="rtl">
@@ -58,7 +58,7 @@
                 tools:text="۱۸:۰۰"
                 android:gravity="center"
                 android:textSize="22dp"
-                android:textColor="@color/green"
+                android:textColor="@color/light_blue"
                 android:fontFamily="@font/iransansmobile_medium"
                 android:layout_toLeftOf="@id/lbl_start_time"
                 android:layout_marginRight="8dp"
@@ -85,7 +85,7 @@
                 tools:text="۲۰:۰۰"
                 android:gravity="center"
                 android:textSize="22dp"
-                android:textColor="@color/red"
+                android:textColor="@color/orange"
                 android:fontFamily="@font/iransansmobile_medium"
                 android:layout_toLeftOf="@id/lbl_end_time"
                 android:layout_marginRight="8dp"
@@ -93,22 +93,22 @@
         </RelativeLayout>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/btn_edit"
-            android:layout_width="100dp"
+            android:id="@+id/btn_delete"
+            android:layout_width="80dp"
             android:layout_height="35dp"
-            android:layout_marginBottom="16dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/black"
-            app:cardCornerRadius="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_below="@id/txt_time"
+            android:backgroundTint="@color/red"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ویرایش"
+                android:text="حذف"
                 android:textSize="16dp"
-                android:textColor="@color/light_yellow"
+                android:textColor="@color/white"
                 android:fontFamily="@font/iransansmobile_medium"
                 android:layout_gravity="center" />
 

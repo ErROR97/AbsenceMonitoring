@@ -13,7 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.absencemonitoring.instances.Furlough;
-import com.example.absencemonitoring.instances.Sport;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,10 +34,6 @@ public class ApiHandler {
     private String urlAcceptControlReqLeave = "http://matingrimes.ir/office/controlReqLeave.php";
     private String urlUpdateArchive = "http://matingrimes.ir/office/updateArchive.php";
     private String urlGetLeaveArchive = "http://matingrimes.ir/office/getLeaveArchive.php";
-    private String urlGetSport = "http://matingrimes.ir/office/getSport.php";
-    private String urlReqSport = "http://matingrimes.ir/office/sportReq.php";
-    private String urlInsertTimeSport = "http://matingrimes.ir/office/insertTimeSport.php";
-
 
     public ApiHandler(Activity activity) {
         this.activity = activity;
@@ -352,147 +347,6 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void getSport(final ResponseListenerGetSport responseListenerGetSport){
-        final StringRequest request = new StringRequest(Request.Method.POST, urlGetSport,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        JSONArray jsonArray = null;
-
-                        if (response.trim().split("_")[0].equals("success")) {
-                            try {
-                                jsonArray = new JSONArray(response.trim().split("_")[1]);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            List<Sport> sportList = new ArrayList<>();
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                Sport sport = new Sport();
-                                try {
-                                    sport.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
-                                    sport.setCode(jsonArray.getJSONObject(i).get("code").toString());
-                                    sport.setType(jsonArray.getJSONObject(i).get("type").toString());
-                                    sport.setDate((JSONObject) jsonArray.getJSONObject(i).get("date"));
-                                    sport.setPersonalIds((JSONObject) jsonArray.getJSONObject(i).get("personalid"));
-                                    sport.setCapacity((JSONObject) jsonArray.getJSONObject(i).get("capacity"));
-                                    sport.setStatus((JSONObject) jsonArray.getJSONObject(i).get("status"));
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                sportList.add(sport);
-                            }
-                            responseListenerGetSport.onRevived(sportList);
-                            responseListenerGetSport.onMessage("success");
-                        } else {
-                            responseListenerGetSport.onMessage("error");
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NoConnectionError) {
-
-                }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                return params;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        requestQueue.add(request);
-    }
-
-    public void reqSport(final String code, final String personalId, final String date, final ResponseListenerReqSport responseListenerReqSport) {
-
-        final StringRequest request = new StringRequest(Request.Method.POST, urlReqSport,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-
-                        if (response.trim().equals("success")) {
-                            responseListenerReqSport.onRecived("success");
-                        } else {
-                            responseListenerReqSport.onRecived(response);
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NoConnectionError) {
-                    responseListenerReqSport.onRecived("NoConnectionError");
-                }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("personalId", personalId.trim());
-                params.put("code", code.trim());
-                params.put("date", date.trim());
-                return params;
-
-
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        requestQueue.add(request);
-
-    }
-
-    public void insertTimeSport(final String type, final String capacity, final String time, final String date, final ResponseListenerInserTimeSport responseListenerInserTimeSport) {
-
-        final StringRequest request = new StringRequest(Request.Method.POST, urlInsertTimeSport,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-
-                        if (response.trim().equals("success")) {
-                            responseListenerInserTimeSport.onRecived("success");
-                        } else {
-                            responseListenerInserTimeSport.onRecived(response);
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NoConnectionError) {
-                    responseListenerInserTimeSport.onRecived("NoConnectionError");
-                }
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("type", type.trim());
-                params.put("capacity", capacity.trim());
-                params.put("time", time.trim());
-                params.put("date", date.trim());
-                return params;
-
-
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        requestQueue.add(request);
-
-    }
-
 
     public void updateStatusArchive(final int id, final ResponseListenerUpdateArchive responseListenerUpdateArchive) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlUpdateArchive,
@@ -532,6 +386,7 @@ public class ApiHandler {
         void onRecived(String response);
     }
 
+
     public interface ResponseListenerReqLeave {
         void onRecived(String response);
     }
@@ -558,19 +413,7 @@ public class ApiHandler {
         void onRevived(List<Furlough> controlLeaveList);
     }
 
-    public interface ResponseListenerGetSport{
 
-        void onRevived(List<Sport> SportList);
-        void onMessage(String error);
-    }
-
-    public interface ResponseListenerReqSport {
-        void onRecived(String response);
-    }
-
-    public interface ResponseListenerInserTimeSport {
-        void onRecived(String response);
-    }
 
 }
 

@@ -58,7 +58,7 @@ public class SportmanTimingAdapter extends RecyclerView.Adapter<SportmanTimingAd
             timeTxt = itemView.findViewById(R.id.txt_time);
             startTxt = itemView.findViewById(R.id.txt_start_time);
             endTxt = itemView.findViewById(R.id.txt_end_time);
-            editBtn = itemView.findViewById(R.id.btn_edit);
+            editBtn = itemView.findViewById(R.id.btn_delete);
         }
     }
 }

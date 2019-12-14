@@ -9,10 +9,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.ApiHandler;
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.Utils.DateTime;
-import com.example.absencemonitoring.Utils.Formating;
+import com.example.absencemonitoring.utils.DateTime;
+import com.example.absencemonitoring.utils.Formating;
 
 import java.util.Calendar;
 
@@ -25,6 +25,9 @@ public class FurloughDetailsActivity extends AppCompatActivity {
     RelativeLayout remainderContainer;
     CardView finishFurloughCrd;
     ProgressBar progressBar;
+
+    CardView statusTxtConainer;
+    TextView statusTxt;
 
     String remaindTime = "";
     String StartDate = "";
@@ -52,6 +55,9 @@ public class FurloughDetailsActivity extends AppCompatActivity {
         startTimeTxt = findViewById(R.id.txt_start_time);
         endDateTxt = findViewById(R.id.txt_end_date);
         endTimeTxt = findViewById(R.id.txt_end_time);
+
+        statusTxt = findViewById(R.id.txt_status);
+        statusTxtConainer = findViewById(R.id.container_txt_status);
 
         remainderLbl = findViewById(R.id.lbl_remainder);
         minsLbl = findViewById(R.id.lbl_mins);
@@ -105,6 +111,16 @@ public class FurloughDetailsActivity extends AppCompatActivity {
         } else {
             endDateTxt.setText(Formating.cleanTimeOrDateFormat(StartDate, "/"));
             endTimeTxt.setText(Formating.cleanTimeOrDateFormat(DateTime.calculateEndTime(StartTime, amountTime), ":"));
+        }
+
+        statusTxt.setText(getIntent().getStringExtra("status"));
+
+        if (getIntent().getStringExtra("status").equals("شروع نشده")) {
+            statusTxtConainer.setCardBackgroundColor(getResources().getColor(R.color.yellow));
+        } else if (getIntent().getStringExtra("status").equals("در حال انجام")) {
+            statusTxtConainer.setCardBackgroundColor(getResources().getColor(R.color.light_green));
+        } else {
+            statusTxtConainer.setCardBackgroundColor(getResources().getColor(R.color.red));
         }
     }
 

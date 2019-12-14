@@ -1,18 +1,24 @@
 package com.example.absencemonitoring.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
-import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.ControlAdapter;
 import com.example.absencemonitoring.instances.Furlough;
+import com.example.absencemonitoring.interfaces.SwipeEndFragmentListener;
+import com.example.absencemonitoring.interfaces.SwipeFragmentListener;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -27,30 +33,47 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ControlFragment extends Fragment {
-    View view;
-    RecyclerView rv;
-    ProgressBar progressBar;
-    RelativeLayout nothingFoundContainer;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private View view;
+    private RecyclerView rv;
+    private ProgressBar progressBar;
+    private RelativeLayout nothingFoundContainer;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    ControlAdapter controlAdapter;
-    ApiHandler apiHandler;
-    UserDetails userDetails;
-    Handler handler;
-    Runnable runnable;
+    private ControlAdapter controlAdapter;
+    private ApiHandler apiHandler;
+    private UserDetails userDetails;
+    private Handler handler;
+    private Runnable runnable;
+    GestureDetector gestureDetector;
 
+    SwipeFragmentListener swipeFragmentListener;
+
+    @SuppressLint("ClickableViewAccessibility")
     public void init() {
         apiHandler = new ApiHandler(getActivity());
         userDetails = new UserDetails(getActivity());
         handler = new Handler();
+
+        gestureDetector = new GestureDetector(getActivity(), new MyGestureListener());
+
+
+        swipeFragmentListener = (SwipeFragmentListener) getActivity();
 
         rv = view.findViewById(R.id.rv_control_furlough);
         progressBar = view.findViewById(R.id.progressbar);
         nothingFoundContainer = view.findViewById(R.id.container_nothing_found);
         swipeRefreshLayout = view.findViewById(R.id.swipe_control);
 
+        rv.setOnTouchListener(onTouchListener);
+
+
+        rv.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, 0f, 100f, 0));
+
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.black));
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.light_blue));
+
+
+
 
         apiHandler.getControlReqLeave("9537063", new ApiHandler.ResponseListenerControlReqLeave() {
             @Override
@@ -88,6 +111,7 @@ public class ControlFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 apiHandler.getControlReqLeave("9537063", new ApiHandler.ResponseListenerControlReqLeave() {
                     @Override
                     public void onRevived(List<Furlough> controlLeaveList) {
@@ -117,6 +141,10 @@ public class ControlFragment extends Fragment {
             }
         });
 
+
+
+
+
         return view;
     }
 
@@ -136,4 +164,68 @@ public class ControlFragment extends Fragment {
         };
         runnable.run();
     }
+
+    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            return gestureDetector.onTouchEvent(event);
+        }
+    };
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+
+            return false;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+            return false;
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onFling(MotionEvent event1, final MotionEvent event2, float velocityX, float velocityY) {
+
+            if (Math.abs(velocityX) > Math.abs(velocityY)) {
+                rv.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                            swipeFragmentListener.onSwipe(rv, event2, new SwipeEndFragmentListener() {
+                                @Override
+                                public void onSwipe() {
+                                rv.setOnTouchListener(onTouchListener);
+                                }
+                            });
+                        return true;
+                    }
+                });
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+
 }
+

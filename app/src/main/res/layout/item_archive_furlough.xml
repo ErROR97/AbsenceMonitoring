@@ -9,7 +9,7 @@
     android:layout_marginBottom="4dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:backgroundTint="@color/green"
+    android:backgroundTint="@color/honeydew"
     app:cardCornerRadius="10dp"
     >
 
@@ -17,6 +17,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_txt_status"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            >
+
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/iransansmobile_light"
+                tools:text="وضعیت: رد شده" />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/txt_name"
@@ -26,6 +48,7 @@
             android:textSize="16dp"
             android:layout_alignParentRight="true"
             android:textColor="@color/black"
+            android:layout_below="@id/container_txt_status"
             android:fontFamily="@font/iransansmobile_medium"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp" />
@@ -36,6 +59,7 @@
             android:layout_height="wrap_content"
             tools:text="۹۸/۰۵/۰۸"
             android:textSize="14dp"
+            android:gravity="center"
             android:textColor="@color/black"
             android:fontFamily="@font/iransansmobile_light"
             android:layout_marginTop="8dp"
@@ -49,7 +73,7 @@
             tools:text="استعلاجی"
             android:textSize="14dp"
             android:textColor="@color/black"
-            android:fontFamily="@font/iransansmobile_light"
+            android:fontFamily="@font/iransansmobile_medium"
             android:layout_below="@id/txt_name"
             android:layout_alignParentRight="true"
             android:layout_marginTop="8dp"
@@ -60,8 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="۴ روز"
-            android:textSize="18dp"
-            android:textColor="@color/yellow"
+            android:textSize="16dp"
+            android:textColor="@color/blue"
             android:fontFamily="@font/iransansmobile_light"
             android:layout_below="@id/txt_name"
             android:layout_marginTop="8dp"

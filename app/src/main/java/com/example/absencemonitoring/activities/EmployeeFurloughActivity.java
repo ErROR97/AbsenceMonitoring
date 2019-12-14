@@ -11,11 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
-import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.UserDetails;
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.Utils.DateTime;
-import com.example.absencemonitoring.Utils.Formating;
+import com.example.absencemonitoring.utils.DateTime;
+import com.example.absencemonitoring.utils.Formating;
 import com.google.android.material.snackbar.Snackbar;
 import com.shawnlin.numberpicker.NumberPicker;
 
@@ -481,13 +481,6 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
     }
 
 
-    public String[] displayValueOfNumpic(int num, int start) {
-        String[] temp = new String[num];
-        for (int i = 0; i < temp.length ; i++) {
-            temp[i] = Formating.englishDigitsToPersian(String.format("%02d", i + start));
-        }
-        return temp;
-    }
 
     public void esfandLengthinLeapYear(int year, int month) {
         String[] JalaliCalendar = new JalaliCalendar(new GregorianCalendar()).toString().split("-");
@@ -541,6 +534,14 @@ public class EmployeeFurloughActivity extends AppCompatActivity {
 
     public int getdp(int pixel) {
         return pixel / (int) getApplicationContext().getResources().getDisplayMetrics().density;
+    }
+
+    public String[] displayValueOfNumpic(int num, int start) {
+        String[] temp = new String[num];
+        for (int i = 0; i < temp.length ; i++) {
+            temp[i] = Formating.englishDigitsToPersian(String.format("%02d", i + start));
+        }
+        return temp;
     }
 
 }

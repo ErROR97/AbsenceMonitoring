@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/container_search_bar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="10dp"
@@ -29,19 +29,346 @@
             android:paddingRight="8dp"/>
 
         <ImageView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             app:srcCompat="@drawable/ic_search_bar"
             android:layout_marginTop="7dp"
             android:layout_marginLeft="5dp" />
 
     </androidx.cardview.widget.CardView>
 
+
+    <LinearLayout
+        android:id="@+id/container_filter_sort"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/container_search_bar"
+        android:layoutDirection="rtl">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_filter"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight=".4"
+            app:cardBackgroundColor="@color/dark_green"
+            app:cardCornerRadius="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginRight="8dp">
+
+                <ImageView
+                    android:id="@+id/img_filter"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_filter"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="4dp"
+                    />
+
+                <TextView
+                    android:id="@+id/lbl_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="فیلتر کردن"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:layout_toLeftOf="@id/img_filter"
+                    android:layout_marginRight="8dp"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_sort"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight=".4"
+            app:cardBackgroundColor="@color/yellow"
+            app:cardCornerRadius="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                >
+
+                <ImageView
+                    android:id="@+id/img_sort"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_sort"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="4dp"
+                    />
+
+                <TextView
+                    android:id="@+id/lbl_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="مرتب کردن"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/iransansmobile_medium"
+                    android:layout_toLeftOf="@id/img_sort"
+                    android:layout_marginRight="8dp"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_archive_furlough"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/container_search_bar" />
+        android:layout_below="@id/container_filter_sort"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/container_items_filter_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_below="@id/container_filter_sort"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layoutDirection="rtl"
+        android:layout_marginTop="-8dp"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/contaiener_items_filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:visibility="invisible"
+            app:cardBackgroundColor="@color/dark_green"
+            android:layout_marginLeft="8dp"
+            app:cardCornerRadius="16dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <ImageView
+                        android:id="@+id/img_tick_rejecteds"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/ic_tick_white"
+                        android:layout_marginRight="16dp"/>
+
+                    <TextView
+                        android:id="@+id/txt_rejecteds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="رد شده ها"
+                        android:textSize="14dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/iransansmobile_medium" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <ImageView
+                        android:id="@+id/img_tick_confirmeds"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_tick_white"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="invisible"
+                        android:layout_marginRight="16dp"/>
+
+                    <TextView
+                        android:id="@+id/txt_confirms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="تائید شده ها"
+                        android:textSize="14dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/iransansmobile_medium" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_tick_white"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="invisible"
+                        android:layout_marginRight="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="تمام شده ها"
+                        android:textSize="14dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/iransansmobile_medium" />
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_items_sort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            app:cardBackgroundColor="@color/yellow"
+            android:visibility="invisible"
+            app:cardCornerRadius="16dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:layoutDirection="rtl"
+                    >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_tick"
+                        android:layout_marginRight="16dp"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="تاریخ شروع"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:layout_marginRight="8dp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:layoutDirection="rtl"
+                    >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_tick"
+                        android:layout_marginRight="16dp"
+                        android:visibility="invisible"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="نام"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:layout_marginRight="8dp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:layoutDirection="rtl"
+                    >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_tick"
+                        android:layout_marginRight="16dp"
+                        android:visibility="invisible"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="مدت زمان"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:layout_marginRight="8dp"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
 
 
 

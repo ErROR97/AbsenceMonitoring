@@ -12,12 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
-import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.UserDetails;
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.Utils.CustomTypefaceSpan;
-import com.example.absencemonitoring.Utils.DateTime;
-import com.example.absencemonitoring.Utils.Formating;
+import com.example.absencemonitoring.utils.CustomTypefaceSpan;
+import com.example.absencemonitoring.utils.DateTime;
+import com.example.absencemonitoring.utils.Formating;
 import com.example.absencemonitoring.instances.Furlough;
 
 import org.json.JSONException;
@@ -41,6 +41,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
     ProgressBar acceptProgressbar, rejectProgressbar;
     TextView acceptLbl, rejectLbl;
 
+
     ApiHandler apiHandler;
     UserDetails userDetails;
 
@@ -62,10 +63,13 @@ public class MasterFurloughActivity extends AppCompatActivity {
         furlough.setDescriptionLeave(getIntent().getStringExtra("descriptionLeave"));
         furlough.setId(getIntent().getIntExtra("id", 0));
         furlough.setCurrentDate(getIntent().getStringExtra("currentDate"));
+
         Log.i("boz", "init: "+furlough.getDescriptionLeave());
 
         amount = getIntent().getStringExtra("dayOrTime").split(" ")[0];
         dayOrTime = getIntent().getStringExtra("dayOrTime").split(" ")[1];
+
+
 
 
         typeTxt = findViewById(R.id.txt_type);
@@ -87,6 +91,15 @@ public class MasterFurloughActivity extends AppCompatActivity {
         sendRejectBtn = findViewById(R.id.btn_send_reject);
         cancelRejectBtn = findViewById(R.id.btn_cancel_reject);
 
+        try {
+            if (!(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName")).equals("امیر مهدی نصرآبادی")) {
+                acceptBtn.setVisibility(View.INVISIBLE);
+                rejectBtn.setVisibility(View.INVISIBLE);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -105,15 +118,22 @@ public class MasterFurloughActivity extends AppCompatActivity {
         typeTxt.setText("درخواست مرخصی " + furlough.getLeaveType());
         decriptionTxt.setText("پیوست: " + furlough.getDescriptionLeave());
 
+
+
         if (dayOrTime.equals("روز")) {
             String firstWord = "   احتراما اینجانب ";
             String secondWord =furlough.getName();
             String thirdWord = " مشمول در واحد ";
-            String fourthWord = "حراست";
+            String fourthWord = null;
+            try {
+                fourthWord = userDetails.getUserInfo().getString("department");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             String fifthWord = " درخواست مرخصی ";
             String sixthWord = "روزانه";
             String seventhWord = " به مدت ";
-            String eighthWord = Formating.englishDigitsToPersian(amount) + " روز";
+            String eighthWord = amount + " روز";
             String ninthWord = " از تاریخ ";
             String tenthWord = Formating.englishDigitsToPersian(furlough.getStartDate());
             String eleventhWord = " تا تاریخ ";
@@ -155,11 +175,16 @@ public class MasterFurloughActivity extends AppCompatActivity {
             String firstWord = "   احتراما اینجانب ";
             String secondWord =furlough.getName();
             String thirdWord = " مشمول در واحد ";
-            String fourthWord = "حراست";
+            String fourthWord = null;
+            try {
+                fourthWord = userDetails.getUserInfo().getString("department");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             String fifthWord = " درخواست مرخصی ";
             String sixthWord = "ساعتی";
             String seventhWord = " به مدت ";
-            String eighthWord = Formating.englishDigitsToPersian(amount) + " ساعت";
+            String eighthWord = amount + " ساعت";
             String ninthWord = " از ساعت ";
             String tenthWord = Formating.englishDigitsToPersian(furlough.getStartTime().split(":")[1] + ":" + furlough.getStartTime().split(":")[2]);
             String eleventhWord = " تا ساعت ";

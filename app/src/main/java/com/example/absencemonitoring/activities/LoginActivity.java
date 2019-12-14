@@ -11,8 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
-import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.fragments.RecoveryFragment;
 
@@ -67,6 +67,8 @@ public class LoginActivity extends AppCompatActivity implements RecoveryFragment
             }
             else if (role.trim().equals("guard")){
                 startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
+            } else if (role.trim().equals("sportman")) {
+                startActivity(new Intent(LoginActivity.this, SportmanDashboardActivity.class));
             }
 
             apiHandler = new ApiHandler(activity);

@@ -6,17 +6,16 @@ import androidx.cardview.widget.CardView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
-import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.fragments.HomeFragment;
+import com.example.absencemonitoring.handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.fragments.ArchiveFurloughFragment;
-import com.example.absencemonitoring.fragments.ControlFragment;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.fragments.NoticeSportFragment;
 
@@ -37,6 +36,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     TextView previousSelectedTxt;
     ImageView previousSelectedImg;
     int previousSelectedDrawable;
+
 
     TextView nameTxt, roleTxt;
     UserDetails userDetails;
@@ -83,6 +83,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         archiveImg = findViewById(R.id.img_archive);
         controlImg = findViewById(R.id.img_controling);
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new HomeFragment()).commit();
+
         try {
             nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
             String role = userDetails.getUserInfo().getString("role");
@@ -91,6 +93,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
 
@@ -115,6 +118,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!checkFragment.equals("homeFragment")) {
                     checkFragment = "homeFragment";
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new HomeFragment()).commit();
 
                     archiveDetailsContainer.setVisibility(View.INVISIBLE);
                     requestDetailsContainer.setVisibility(View.INVISIBLE);

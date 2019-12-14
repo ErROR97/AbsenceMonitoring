@@ -6,68 +6,116 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.ViewCompat;
 
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.absencemonitoring.Handlers.ApiHandler;
-import com.example.absencemonitoring.Handlers.UserDetails;
+import com.example.absencemonitoring.handlers.ApiHandler;
+import com.example.absencemonitoring.handlers.UserDetails;
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.fragments.ArchiveFurloughFragment;
 import com.example.absencemonitoring.fragments.ControlFragment;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.fragments.NoticeSportFragment;
+import com.example.absencemonitoring.instances.Furlough;
+import com.example.absencemonitoring.interfaces.SwipeEndFragmentListener;
+import com.example.absencemonitoring.interfaces.SwipeFragmentListener;
+import com.example.absencemonitoring.utils.Formating;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
-public class MasterDashboardActivity extends AppCompatActivity  {
+import java.util.List;
+
+public class MasterDashboardActivity extends AppCompatActivity implements View.OnTouchListener, SwipeFragmentListener {
 
     CardView menuContainer;
     RelativeLayout homeContainer, requestContainer, profileContainer, noticeContainer, archiveContainer, controlingContainer, logoutContainer;
+    TextView homeTxt, profileTxt, requestTxt, noticeTxt, archiveTxt, controlTxt, logoutTxt;
+    ImageView homeImg, profileImg, requestImg, noticeImg, archiveImg, controlImg, logoutImg;
     CardView requestDetailsContainer, noticeDetailsContainer, archiveDetailsContainer;
     TextView requestFurlougTxt, requestSportTxt;
     TextView noticeFurloughTxt, noticeSportTxt;
     TextView archiveFurloughTxt;
-    TextView homeTxt, noticeTxt, archiveTxt, controlTxt;
     TextView nameTxt, roleTxt;
-    ImageView homeImg, noticeImg, archiveImg, controlImg;
     String checkFragment = "";
     TextView previousSelectedTxt;
+    TextView txtNumberOfNotices, txtNumberOfFurloughNotices;
+
+    RelativeLayout previousSelectedContainer;
     ImageView previousSelectedImg;
+    FrameLayout fragmentContainer;
 
     RelativeLayout masterDashboardActivity, headerContainer;
 
     UserDetails userDetails;
     Activity activity;
     RequestDeterminedListener requestDeterminedListener;
+    ApiHandler apiHandler;
     int previousSelectedDrawable;
+    int menuXdelta, iconXdelta;
+    int oldX;
+
+    boolean isMenuOpen = true;
 
 
+
+    @SuppressLint("ClickableViewAccessibility")
     public void init() {
         userDetails = new UserDetails(activity);
-        ApiHandler apiHandler = new ApiHandler(activity);
+        apiHandler = new ApiHandler(activity);
 
         masterDashboardActivity = findViewById(R.id.activity_master_dashboard);
+        masterDashboardActivity.setOnTouchListener(this);
+
+        fragmentContainer = findViewById(R.id.container_fragment);
+        fragmentContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        fragmentContainer.setOnTouchListener(this);
 
         headerContainer = findViewById(R.id.container_header);
+        nameTxt = findViewById(R.id.txt_name);
+        roleTxt = findViewById(R.id.txt_role);
 
         menuContainer = findViewById(R.id.container_menu);
         menuContainer.bringToFront();
+        menuContainer.setOnTouchListener(this);
 
         homeContainer = findViewById(R.id.container_home);
-        profileContainer = findViewById(R.id.container_profile);
-        requestContainer = findViewById(R.id.container_request);
-        noticeContainer = findViewById(R.id.container_notice);
-        archiveContainer = findViewById(R.id.container_archive);
-        controlingContainer = findViewById(R.id.container_controling);
-        logoutContainer = findViewById(R.id.container_logout);
+        homeContainer.setOnTouchListener(this);
 
+        profileContainer = findViewById(R.id.container_profile);
+        profileContainer.setOnTouchListener(this);
+
+        requestContainer = findViewById(R.id.container_request);
+        requestContainer.setOnTouchListener(this);
+
+        noticeContainer = findViewById(R.id.container_notice);
+        noticeContainer.setOnTouchListener(this);
+
+        archiveContainer = findViewById(R.id.container_archive);
+        archiveContainer.setOnTouchListener(this);
+
+        controlingContainer = findViewById(R.id.container_controling);
+        controlingContainer.setOnTouchListener(this);
+
+        logoutContainer = findViewById(R.id.container_logout);
+        logoutContainer.setOnTouchListener(this);
 
 
         requestDetailsContainer = findViewById(R.id.container_request_details);
@@ -82,17 +130,25 @@ public class MasterDashboardActivity extends AppCompatActivity  {
 
         archiveFurloughTxt = findViewById(R.id.txt_archive_furlough);
 
-        nameTxt = findViewById(R.id.txt_name);
-        roleTxt = findViewById(R.id.txt_role);
+
         homeTxt = findViewById(R.id.txt_home);
+        profileTxt = findViewById(R.id.txt_profile);
+        requestTxt = findViewById(R.id.txt_request);
         noticeTxt = findViewById(R.id.txt_notice);
         archiveTxt = findViewById(R.id.txt_archive);
         controlTxt = findViewById(R.id.txt_controling);
+        logoutTxt = findViewById(R.id.txt_logout);
 
         homeImg = findViewById(R.id.img_home);
+        profileImg = findViewById(R.id.img_profile);
+        requestImg = findViewById(R.id.img_request);
         noticeImg = findViewById(R.id.img_notice);
         archiveImg = findViewById(R.id.img_archive);
         controlImg = findViewById(R.id.img_controling);
+        logoutImg = findViewById(R.id.img_logout);
+
+        txtNumberOfNotices = findViewById(R.id.txt_number_of_notices);
+        txtNumberOfFurloughNotices = findViewById(R.id.txt_number_of_furlough_notices);
 
 
 
@@ -128,11 +184,26 @@ public class MasterDashboardActivity extends AppCompatActivity  {
         activity = this;
         init();
 
+        homeContainer.setBackground(getResources().getDrawable(R.drawable.background_home_container));
         homeTxt.setTextColor(getResources().getColor(R.color.red));
         homeImg.setImageResource(R.drawable.ic_home_selected);
+        previousSelectedContainer = homeContainer;
         previousSelectedTxt = homeTxt;
         previousSelectedImg = homeImg;
         previousSelectedDrawable = R.drawable.ic_home;
+
+        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.ResponseListenerNotifReqLeave() {
+            @Override
+            public void onRevived(List<Furlough> notifReqLeaveList) {
+                if (notifReqLeaveList.size() > 0) {
+                    txtNumberOfNotices.setVisibility(View.VISIBLE);
+                    txtNumberOfFurloughNotices.setVisibility(View.INVISIBLE);
+
+                    txtNumberOfNotices.setText(Formating.englishDigitsToPersian(String.valueOf(notifReqLeaveList.size())));
+                    txtNumberOfFurloughNotices.setText(Formating.englishDigitsToPersian(String.valueOf(notifReqLeaveList.size())));
+                }
+            }
+        });
 
 
 
@@ -147,11 +218,16 @@ public class MasterDashboardActivity extends AppCompatActivity  {
                     noticeDetailsContainer.setVisibility(View.INVISIBLE);
 
 
+                    previousSelectedContainer.setBackground(null);
+                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
                     previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
                     previousSelectedImg.setImageResource(previousSelectedDrawable);
 
+                    homeContainer.setBackground(getResources().getDrawable(R.drawable.background_home_container));
                     homeTxt.setTextColor(getResources().getColor(R.color.red));
                     homeImg.setImageResource(R.drawable.ic_home_selected);
+
+                    previousSelectedContainer = homeContainer;
                     previousSelectedTxt = homeTxt;
                     previousSelectedImg = homeImg;
                     previousSelectedDrawable = R.drawable.ic_home;
@@ -217,12 +293,16 @@ public class MasterDashboardActivity extends AppCompatActivity  {
                     requestDetailsContainer.setVisibility(View.INVISIBLE);
                     noticeDetailsContainer.setVisibility(View.INVISIBLE);
 
+                    previousSelectedContainer.setBackground(null);
+                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
                     previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
                     previousSelectedImg.setImageResource(previousSelectedDrawable);
 
+                    controlingContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
                     controlTxt.setTextColor(getResources().getColor(R.color.red));
                     controlImg.setImageResource(R.drawable.ic_control_selected);
 
+                    previousSelectedContainer = controlingContainer;
                     previousSelectedTxt = controlTxt;
                     previousSelectedImg = controlImg;
                     previousSelectedDrawable = R.drawable.ic_control;
@@ -265,15 +345,20 @@ public class MasterDashboardActivity extends AppCompatActivity  {
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeFurloughFragment()).commit();
                     checkFragment = "noticeFurlough";
+//                    aminateMarginRight();
 
                     noticeDetailsContainer.setVisibility(View.INVISIBLE);
 
+                    previousSelectedContainer.setBackground(null);
+                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
                     previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
                     previousSelectedImg.setImageResource(previousSelectedDrawable);
 
+                    noticeContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
                     noticeTxt.setTextColor(getResources().getColor(R.color.red));
                     noticeImg.setImageResource(R.drawable.ic_notification_selected);
 
+                    previousSelectedContainer = noticeContainer;
                     previousSelectedTxt = noticeTxt;
                     previousSelectedImg = noticeImg;
                     previousSelectedDrawable = R.drawable.ic_notification;
@@ -292,12 +377,16 @@ public class MasterDashboardActivity extends AppCompatActivity  {
 
                     noticeDetailsContainer.setVisibility(View.INVISIBLE);
 
+                    previousSelectedContainer.setBackground(null);
+                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
                     previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
                     previousSelectedImg.setImageResource(previousSelectedDrawable);
 
+                    noticeContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
                     noticeTxt.setTextColor(getResources().getColor(R.color.red));
                     noticeImg.setImageResource(R.drawable.ic_notification_selected);
 
+                    previousSelectedContainer = noticeContainer;
                     previousSelectedTxt = noticeTxt;
                     previousSelectedImg = noticeImg;
                     previousSelectedDrawable = R.drawable.ic_notification;
@@ -315,12 +404,16 @@ public class MasterDashboardActivity extends AppCompatActivity  {
 
                     archiveDetailsContainer.setVisibility(View.INVISIBLE);
 
+                    previousSelectedContainer.setBackground(null);
+                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
                     previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
                     previousSelectedImg.setImageResource(previousSelectedDrawable);
 
+                    archiveContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
                     archiveTxt.setTextColor(getResources().getColor(R.color.red));
                     archiveImg.setImageResource(R.drawable.ic_archive_selected);
 
+                    previousSelectedContainer = archiveContainer;
                     previousSelectedTxt = archiveTxt;
                     previousSelectedImg = archiveImg;
                     previousSelectedDrawable = R.drawable.ic_archive;
@@ -400,12 +493,257 @@ public class MasterDashboardActivity extends AppCompatActivity  {
         }
     }
 
+    public void aminateMarginRight(final View view, int amount) {
+        final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.rightMargin, amount);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                layoutParams.rightMargin = (Integer) valueAnimator.getAnimatedValue();
+                view.requestLayout();
+            }
+        });
+        valueAnimator.setDuration(300);
+        valueAnimator.start();
+    }
+
+    public void fadeAnimation(View view, float from, float to) {
+        AlphaAnimation fadeAnimation = new AlphaAnimation(from, to);
+        fadeAnimation.setDuration(300);
+        fadeAnimation.setFillAfter(true);
+        view.startAnimation(fadeAnimation);
+    }
+
+//    public void expandMenu() {
+//        final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
+//        ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.rightMargin, amount);
+//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+//                layoutParams.rightMargin = (Integer) valueAnimator.getAnimatedValue();
+//                menuContainer.requestLayout();
+//            }
+//        });
+//        valueAnimator.setDuration(300);
+//        valueAnimator.start();
+//    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        final int X = (int) event.getRawX();
+
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
+                RelativeLayout.LayoutParams lParams1 = (RelativeLayout.LayoutParams) homeImg.getLayoutParams();
+                menuXdelta = lParams.rightMargin;
+                iconXdelta = lParams1.rightMargin;
+                oldX = X;
+                if (isMenuOpen) {
+                    fadeAnimation(homeTxt, 1, 0);
+                    fadeAnimation(profileTxt, 1, 0);
+                    fadeAnimation(requestTxt, 1, 0);
+                    fadeAnimation(noticeTxt, 1, 0);
+                    fadeAnimation(archiveTxt, 1, 0);
+                    fadeAnimation(controlTxt, 1, 0);
+                    fadeAnimation(logoutTxt, 1, 0);
+                }
+
+                break;
+            case MotionEvent.ACTION_UP:
+                RelativeLayout.LayoutParams layoutParams1 = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
+                if (layoutParams1.rightMargin > -getpixel(130)) {
+                    aminateMarginRight(menuContainer, - getpixel(110));
+                    aminateMarginRight(homeImg, getpixel(25));
+                    aminateMarginRight(profileImg, getpixel(25));
+                    aminateMarginRight(requestImg, getpixel(25));
+                    aminateMarginRight(noticeImg, getpixel(25));
+                    aminateMarginRight(archiveImg, getpixel(25));
+                    aminateMarginRight(controlImg, getpixel(25));
+                    aminateMarginRight(logoutImg, getpixel(25));
+
+                    fadeAnimation(homeTxt, 0, 1);
+                    fadeAnimation(profileTxt, 0, 1);
+                    fadeAnimation(requestTxt, 0, 1);
+                    fadeAnimation(noticeTxt, 0, 1);
+                    fadeAnimation(archiveTxt, 0, 1);
+                    fadeAnimation(controlTxt, 0, 1);
+                    fadeAnimation(logoutTxt, 0, 1);
+                    isMenuOpen = true;
+                } else {
+                    aminateMarginRight(menuContainer, - getpixel(150));
+                    aminateMarginRight(homeImg, getpixel(45));
+                    aminateMarginRight(profileImg, getpixel(45));
+                    aminateMarginRight(requestImg, getpixel(45));
+                    aminateMarginRight(noticeImg, getpixel(45));
+                    aminateMarginRight(archiveImg, getpixel(45));
+                    aminateMarginRight(controlImg, getpixel(45));
+                    aminateMarginRight(logoutImg, getpixel(45));
+                    isMenuOpen = false;
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) homeImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams3 = (RelativeLayout.LayoutParams) profileImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams4 = (RelativeLayout.LayoutParams) requestImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams5 = (RelativeLayout.LayoutParams) noticeImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams6 = (RelativeLayout.LayoutParams) archiveImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams7 = (RelativeLayout.LayoutParams) controlImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams8 = (RelativeLayout.LayoutParams) logoutImg.getLayoutParams();
+
+                if ((layoutParams.rightMargin >= -getpixel(150) && X > oldX) || (layoutParams.rightMargin <= -getpixel(100) && X < oldX)) {
+                    layoutParams.rightMargin = (((oldX - X ) / 2) + menuXdelta);
+                    layoutParams2.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams3.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams4.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams5.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams6.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams7.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams8.rightMargin = (((X - oldX) / 4) + iconXdelta);
+
+                    Log.i("gaaav", "gaaav" + layoutParams.rightMargin);
+
+                    menuContainer.setLayoutParams(layoutParams);
+                    homeImg.setLayoutParams(layoutParams2);
+                    profileImg.setLayoutParams(layoutParams3);
+                    requestImg.setLayoutParams(layoutParams4);
+                    noticeImg.setLayoutParams(layoutParams5);
+                    archiveImg.setLayoutParams(layoutParams6);
+                    controlImg.setLayoutParams(layoutParams7);
+                    logoutImg.setLayoutParams(layoutParams8);
+                }
+
+                break;
+        }
+        masterDashboardActivity.invalidate();
+        return false;
+    }
+
+
     public void setOnDataListener(RequestDeterminedListener requestDeterminedListener) {
         this.requestDeterminedListener = requestDeterminedListener;
     }
 
+    @Override
+    public void onSwipe(View view, MotionEvent event, SwipeEndFragmentListener swipeEndFragmentListener) {
+        final int X = (int) event.getRawX();
+
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
+                RelativeLayout.LayoutParams lParams1 = (RelativeLayout.LayoutParams) homeImg.getLayoutParams();
+                menuXdelta = lParams.rightMargin;
+                iconXdelta = lParams1.rightMargin;
+                oldX = X;
+                if (isMenuOpen) {
+                    fadeAnimation(homeTxt, 1, 0);
+                    fadeAnimation(profileTxt, 1, 0);
+                    fadeAnimation(requestTxt, 1, 0);
+                    fadeAnimation(noticeTxt, 1, 0);
+                    fadeAnimation(archiveTxt, 1, 0);
+                    fadeAnimation(controlTxt, 1, 0);
+                    fadeAnimation(logoutTxt, 1, 0);
+                }
+
+                break;
+            case MotionEvent.ACTION_UP:
+                RelativeLayout.LayoutParams layoutParams1 = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
+                if (layoutParams1.rightMargin > -getpixel(130)) {
+                    swipeEndFragmentListener.onSwipe();
+                    aminateMarginRight(menuContainer, - getpixel(110));
+                    aminateMarginRight(homeImg, getpixel(25));
+                    aminateMarginRight(profileImg, getpixel(25));
+                    aminateMarginRight(requestImg, getpixel(25));
+                    aminateMarginRight(noticeImg, getpixel(25));
+                    aminateMarginRight(archiveImg, getpixel(25));
+                    aminateMarginRight(controlImg, getpixel(25));
+                    aminateMarginRight(logoutImg, getpixel(25));
+
+                    fadeAnimation(homeTxt, 0, 1);
+                    fadeAnimation(profileTxt, 0, 1);
+                    fadeAnimation(requestTxt, 0, 1);
+                    fadeAnimation(noticeTxt, 0, 1);
+                    fadeAnimation(archiveTxt, 0, 1);
+                    fadeAnimation(controlTxt, 0, 1);
+                    fadeAnimation(logoutTxt, 0, 1);
+                    isMenuOpen = true;
+                } else {
+                    swipeEndFragmentListener.onSwipe();
+                    aminateMarginRight(menuContainer, - getpixel(150));
+                    aminateMarginRight(homeImg, getpixel(45));
+                    aminateMarginRight(profileImg, getpixel(45));
+                    aminateMarginRight(requestImg, getpixel(45));
+                    aminateMarginRight(noticeImg, getpixel(45));
+                    aminateMarginRight(archiveImg, getpixel(45));
+                    aminateMarginRight(controlImg, getpixel(45));
+                    aminateMarginRight(logoutImg, getpixel(45));
+                    isMenuOpen = false;
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) homeImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams3 = (RelativeLayout.LayoutParams) profileImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams4 = (RelativeLayout.LayoutParams) requestImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams5 = (RelativeLayout.LayoutParams) noticeImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams6 = (RelativeLayout.LayoutParams) archiveImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams7 = (RelativeLayout.LayoutParams) controlImg.getLayoutParams();
+                RelativeLayout.LayoutParams layoutParams8 = (RelativeLayout.LayoutParams) logoutImg.getLayoutParams();
+
+                if ((layoutParams.rightMargin >= -getpixel(150) && X > oldX) || (layoutParams.rightMargin <= -getpixel(100) && X < oldX)) {
+                    layoutParams.rightMargin = (((oldX - X ) / 2) + menuXdelta);
+                    layoutParams2.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams3.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams4.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams5.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams6.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams7.rightMargin = (((X - oldX) / 4) + iconXdelta);
+                    layoutParams8.rightMargin = (((X - oldX) / 4) + iconXdelta);
+
+                    Log.i("gaaav", "gaaav" + layoutParams.rightMargin);
+
+                    menuContainer.setLayoutParams(layoutParams);
+                    homeImg.setLayoutParams(layoutParams2);
+                    profileImg.setLayoutParams(layoutParams3);
+                    requestImg.setLayoutParams(layoutParams4);
+                    noticeImg.setLayoutParams(layoutParams5);
+                    archiveImg.setLayoutParams(layoutParams6);
+                    controlImg.setLayoutParams(layoutParams7);
+                    logoutImg.setLayoutParams(layoutParams8);
+                }
+
+                break;
+        }
+        masterDashboardActivity.invalidate();
+    }
+
+    @Override
+    public void onCloseMenu() {
+        aminateMarginRight(menuContainer, - getpixel(150));
+        aminateMarginRight(homeImg, getpixel(45));
+        aminateMarginRight(profileImg, getpixel(45));
+        aminateMarginRight(requestImg, getpixel(45));
+        aminateMarginRight(noticeImg, getpixel(45));
+        aminateMarginRight(archiveImg, getpixel(45));
+        aminateMarginRight(controlImg, getpixel(45));
+        aminateMarginRight(logoutImg, getpixel(45));
+
+    }
+
+
+
     public interface RequestDeterminedListener {
         void onReqDetermined();
     }
+
+    public int getpixel(int dp) {
+        return dp * (int) getApplicationContext().getResources().getDisplayMetrics().density;
+    }
+
+    public int getdp(int pixel) {
+        return pixel / (int) getApplicationContext().getResources().getDisplayMetrics().density;
+    }
+
 
 }
