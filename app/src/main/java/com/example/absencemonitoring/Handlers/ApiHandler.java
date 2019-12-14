@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.absencemonitoring.instances.Furlough;
+import com.example.absencemonitoring.instances.FurloughArchive;
 import com.example.absencemonitoring.instances.Sport;
 
 import org.json.JSONArray;
@@ -38,6 +39,9 @@ public class ApiHandler {
     private String urlGetSport = "http://matingrimes.ir/office/getSport.php";
     private String urlReqSport = "http://matingrimes.ir/office/sportReq.php";
     private String urlInsertTimeSport = "http://matingrimes.ir/office/insertTimeSport.php";
+    private String urlArchiveReqLeaveEmployee = "http://matingrimes.ir/office/archiveReqLeaveEmployee.php";
+    private String urlNotifReqEmployee = "http://matingrimes.ir/office/notifReqEmployee.php";
+    private String urlControlReqLeaveEmployee = "http://matingrimes.ir/office/controlReqLeaveEmployee.php";
 
 
     public ApiHandler(Activity activity) {
@@ -352,6 +356,198 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
+
+    public void getNotifReqEmployee(final String personalId, final ResponseListenerNotifReqLeaveEmployee responseListenerNotifReqLeaveEmployee){
+        final StringRequest request = new StringRequest(Request.Method.POST, urlNotifReqEmployee,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONArray jsonArray = null;
+
+                        if (response.trim().split("_")[0].equals("success")) {
+                            try {
+                                jsonArray = new JSONArray(response.trim().split("_")[1]);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            List<Furlough> FurloughList = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Furlough furlough = new Furlough();
+                                try {
+                                    furlough.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
+                                    furlough.setName(jsonArray.getJSONObject(i).get("id").toString());
+                                    furlough.setPersonalIdemployee(jsonArray.getJSONObject(i).get("id").toString());
+                                    furlough.setPersonalIdMaster(jsonArray.getJSONObject(i).get("id").toString());
+                                    furlough.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
+                                    furlough.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
+                                    furlough.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
+                                    furlough.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
+                                    furlough.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
+                                    furlough.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                FurloughList.add(furlough);
+                            }
+                            responseListenerNotifReqLeaveEmployee.onRevived(FurloughList);
+                            responseListenerNotifReqLeaveEmployee.onMessage("success");
+                        } else {
+                            responseListenerNotifReqLeaveEmployee.onMessage("error");
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerNotifReqLeaveEmployee.onMessage("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalIdemployee", personalId.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+    public void getArchiveEmployee(final String personalId, final ResponseListenerArchiveReqLeaveEmployee responseListenerArchiveReqLeaveEmployee){
+        final StringRequest request = new StringRequest(Request.Method.POST, urlArchiveReqLeaveEmployee,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONArray jsonArray = null;
+
+                        if (response.trim().split("_")[0].equals("success")) {
+                            try {
+                                jsonArray = new JSONArray(response.trim().split("_")[1]);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            List<FurloughArchive> FurloughArchiveList = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                FurloughArchive furloughArchive = new FurloughArchive();
+                                try {
+                                    furloughArchive.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
+                                    furloughArchive.setFullName(jsonArray.getJSONObject(i).get("id").toString());
+                                    furloughArchive.setPersonalIdEmployee(jsonArray.getJSONObject(i).get("id").toString());
+                                    furloughArchive.setPersonalIdMaster(jsonArray.getJSONObject(i).get("id").toString());
+                                    furloughArchive.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
+                                    furloughArchive.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
+                                    furloughArchive.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
+                                    furloughArchive.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
+                                    furloughArchive.setDescription(jsonArray.getJSONObject(i).get("description").toString());
+
+                                    furloughArchive.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
+                                    furloughArchive.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                FurloughArchiveList.add(furloughArchive);
+                            }
+                            responseListenerArchiveReqLeaveEmployee.onRevived(FurloughArchiveList);
+                            responseListenerArchiveReqLeaveEmployee.onMessage("success");
+                        } else {
+                            responseListenerArchiveReqLeaveEmployee.onMessage("error");
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerArchiveReqLeaveEmployee.onMessage("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalIdemployee", personalId.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+    public void getControllEmployee(final String personalId, final ResponseListenerControlReqLeaveEmployee responseListenerControlReqLeaveEmployee){
+        final StringRequest request = new StringRequest(Request.Method.POST, urlControlReqLeaveEmployee,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONArray jsonArray = null;
+
+                        if (response.trim().split("_")[0].equals("success")) {
+                            try {
+                                jsonArray = new JSONArray(response.trim().split("_")[1]);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            List<FurloughArchive> FurloughArchiveList = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                FurloughArchive furloughArchive = new FurloughArchive();
+                                try {
+                                    furloughArchive.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
+                                    furloughArchive.setFullName(jsonArray.getJSONObject(i).get("id").toString());
+                                    furloughArchive.setPersonalIdEmployee(jsonArray.getJSONObject(i).get("id").toString());
+                                    furloughArchive.setPersonalIdMaster(jsonArray.getJSONObject(i).get("id").toString());
+                                    furloughArchive.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
+                                    furloughArchive.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
+                                    furloughArchive.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
+                                    furloughArchive.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
+                                    furloughArchive.setDescription(jsonArray.getJSONObject(i).get("description").toString());
+
+                                    furloughArchive.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
+                                    furloughArchive.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                FurloughArchiveList.add(furloughArchive);
+                            }
+                            responseListenerControlReqLeaveEmployee.onRevived(FurloughArchiveList);
+                            responseListenerControlReqLeaveEmployee.onMessage("success");
+                        } else {
+                            responseListenerControlReqLeaveEmployee.onMessage("error");
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerControlReqLeaveEmployee.onMessage("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalIdemployee", personalId.trim());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+
     public void getSport(final ResponseListenerGetSport responseListenerGetSport){
         final StringRequest request = new StringRequest(Request.Method.POST, urlGetSport,
                 new Response.Listener<String>() {
@@ -373,10 +569,11 @@ public class ApiHandler {
                                     sport.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
                                     sport.setCode(jsonArray.getJSONObject(i).get("code").toString());
                                     sport.setType(jsonArray.getJSONObject(i).get("type").toString());
-                                    sport.setDate((JSONObject) jsonArray.getJSONObject(i).get("date"));
-                                    sport.setPersonalIds((JSONObject) jsonArray.getJSONObject(i).get("personalid"));
-                                    sport.setCapacity((JSONObject) jsonArray.getJSONObject(i).get("capacity"));
-                                    sport.setStatus((JSONObject) jsonArray.getJSONObject(i).get("status"));
+                                    sport.setTime(jsonArray.getJSONObject(i).get("time").toString());
+                                    sport.setDate(new JSONObject(jsonArray.getJSONObject(i).get("date").toString()));
+                                    sport.setPersonalIds(new JSONObject(jsonArray.getJSONObject(i).get("personalid").toString()));
+                                    sport.setCapacity(new JSONObject(jsonArray.getJSONObject(i).get("capacity").toString()));
+                                    sport.setStatus(new JSONObject(jsonArray.getJSONObject(i).get("status").toString()));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -546,6 +743,27 @@ public class ApiHandler {
 
     public interface ResponseListenerNotifReqLeave {
         void onRevived(List<Furlough> notifReqLeaveList);
+    }
+
+    public interface ResponseListenerNotifReqLeaveEmployee {
+
+        void onRevived(List<Furlough> notifReqLeaveEmployeeList);
+        void onMessage(String error);
+
+    }
+
+    public interface ResponseListenerArchiveReqLeaveEmployee {
+
+        void onRevived(List<FurloughArchive> archiveReqLeaveEmployeeList);
+        void onMessage(String error);
+
+    }
+
+    public interface ResponseListenerControlReqLeaveEmployee {
+
+        void onRevived(List<FurloughArchive> archiveReqLeaveEmployeeList);
+        void onMessage(String error);
+
     }
 
     public interface ResponseListenerLeaveArchive {
