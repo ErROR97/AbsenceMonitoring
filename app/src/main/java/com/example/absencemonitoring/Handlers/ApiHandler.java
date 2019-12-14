@@ -567,10 +567,11 @@ public class ApiHandler {
                                     sport.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
                                     sport.setCode(jsonArray.getJSONObject(i).get("code").toString());
                                     sport.setType(jsonArray.getJSONObject(i).get("type").toString());
-                                    sport.setDate((JSONObject) jsonArray.getJSONObject(i).get("date"));
-                                    sport.setPersonalIds((JSONObject) jsonArray.getJSONObject(i).get("personalid"));
-                                    sport.setCapacity((JSONObject) jsonArray.getJSONObject(i).get("capacity"));
-                                    sport.setStatus((JSONObject) jsonArray.getJSONObject(i).get("status"));
+                                    sport.setTime(jsonArray.getJSONObject(i).get("time").toString());
+                                    sport.setDate(new JSONObject(jsonArray.getJSONObject(i).get("date").toString()));
+                                    sport.setPersonalIds(new JSONObject(jsonArray.getJSONObject(i).get("personalid").toString()));
+                                    sport.setCapacity(new JSONObject(jsonArray.getJSONObject(i).get("capacity").toString()));
+                                    sport.setStatus(new JSONObject(jsonArray.getJSONObject(i).get("status").toString()));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
