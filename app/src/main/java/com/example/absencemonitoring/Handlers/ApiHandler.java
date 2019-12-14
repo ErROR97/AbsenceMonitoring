@@ -16,6 +16,7 @@ import com.example.absencemonitoring.instances.Furlough;
 import com.example.absencemonitoring.instances.FurloughArchive;
 import com.example.absencemonitoring.instances.Sport;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +43,7 @@ public class ApiHandler {
     private String urlArchiveReqLeaveEmployee = "http://matingrimes.ir/office/archiveReqLeaveEmployee.php";
     private String urlNotifReqEmployee = "http://matingrimes.ir/office/notifReqEmployee.php";
     private String urlControlReqLeaveEmployee = "http://matingrimes.ir/office/controlReqLeaveEmployee.php";
+
 
 
     public ApiHandler(Activity activity) {
@@ -580,7 +582,7 @@ public class ApiHandler {
                                 }
                                 sportList.add(sport);
                             }
-                            responseListenerGetSport.onRevived(sportList);
+                            responseListenerGetSport.onRecieved(sportList);
                             responseListenerGetSport.onMessage("success");
                         } else {
                             responseListenerGetSport.onMessage("error");
@@ -615,9 +617,9 @@ public class ApiHandler {
                     public void onResponse(final String response) {
 
                         if (response.trim().equals("success")) {
-                            responseListenerReqSport.onRecived("success");
+                            responseListenerReqSport.onRecieved("success");
                         } else {
-                            responseListenerReqSport.onRecived(response);
+                            responseListenerReqSport.onRecieved(response);
                         }
 
                     }
@@ -625,7 +627,7 @@ public class ApiHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 if (error instanceof NoConnectionError) {
-                    responseListenerReqSport.onRecived("NoConnectionError");
+                    responseListenerReqSport.onRecieved("NoConnectionError");
                 }
             }
 
@@ -656,9 +658,9 @@ public class ApiHandler {
                     public void onResponse(final String response) {
 
                         if (response.trim().equals("success")) {
-                            responseListenerInserTimeSport.onRecived("success");
+                            responseListenerInserTimeSport.onRecieved("success");
                         } else {
-                            responseListenerInserTimeSport.onRecived(response);
+                            responseListenerInserTimeSport.onRecieved(response);
                         }
 
                     }
@@ -666,7 +668,7 @@ public class ApiHandler {
             @Override
             public void onErrorResponse(VolleyError error) {
                 if (error instanceof NoConnectionError) {
-                    responseListenerInserTimeSport.onRecived("NoConnectionError");
+                    responseListenerInserTimeSport.onRecieved("NoConnectionError");
                 }
             }
 
@@ -689,7 +691,6 @@ public class ApiHandler {
         requestQueue.add(request);
 
     }
-
 
     public void updateStatusArchive(final int id, final ResponseListenerUpdateArchive responseListenerUpdateArchive) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlUpdateArchive,
@@ -728,6 +729,7 @@ public class ApiHandler {
     public interface ResponseListenerLogin {
         void onRecived(String response);
     }
+
 
     public interface ResponseListenerReqLeave {
         void onRecived(String response);
@@ -776,19 +778,21 @@ public class ApiHandler {
         void onRevived(List<Furlough> controlLeaveList);
     }
 
-    public interface ResponseListenerGetSport{
+    public interface ResponseListenerInserTimeSport {
+        void onRecieved(String response);
+    }
 
-        void onRevived(List<Sport> SportList);
-        void onMessage(String error);
+    public interface ResponseListenerGetSport {
+        void onRecieved(List<Sport> sportLIst);
+        void onMessage(String response);
     }
 
     public interface ResponseListenerReqSport {
-        void onRecived(String response);
+        void onRecieved(String response);
     }
 
-    public interface ResponseListenerInserTimeSport {
-        void onRecived(String response);
-    }
+
+
 
 }
 
