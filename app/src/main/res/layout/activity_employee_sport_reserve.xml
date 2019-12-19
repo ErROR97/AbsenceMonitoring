@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white"
-        android:elevation="10dp">
+        android:elevation="10dp"
+        >
 
         <ImageView
             android:id="@+id/img_back"
@@ -37,8 +38,9 @@
             />
 
         <TextView
-            android:layout_width="120dp"
-            android:layout_height="40dp"
+            android:id="@+id/txt_choose_date"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="24dp"
             android:text="شنبه ۹۸/۰۸/۰۱"
@@ -46,7 +48,7 @@
             android:background="@drawable/background_date_reserve_sport_form"
             android:fontFamily="@font/iransansmobile_medium"
             android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textSize="14dp"
             />
 
 
@@ -98,130 +100,22 @@
                         />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_reserve_sport_time"
+                        android:id="@+id/rv_reserve_sport_time_volleyball"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="8dp"
+                        android:layoutDirection="rtl"
+                        android:layout_marginBottom="8dp"
                         android:layout_below="@id/img_volleyball"/>
 
-<!--                    <RelativeLayout-->
-<!--                        android:id="@+id/chkbx_first_time_volleyball"-->
-<!--                        android:layout_width="110dp"-->
-<!--                        android:layout_height="44dp"-->
-<!--                        android:layout_centerHorizontal="true"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        android:background="@drawable/background_checkbox_container_on">-->
-
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/img_chkbx_first_time_volleyball"-->
-<!--                            android:layout_width="16dp"-->
-<!--                            android:layout_height="16dp"-->
-<!--                            android:background="@drawable/background_check_box_on"-->
-<!--                            android:src="@drawable/ic_tick"-->
-<!--                            android:padding="2dp"-->
-<!--                            android:layout_marginRight="12dp"-->
-<!--                            android:layout_alignParentRight="true"-->
-<!--                            android:layout_centerVertical="true"-->
-<!--                            />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/lbl_first_time_volleyball"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="۱۴ تا ۱۶"-->
-<!--                            android:layout_marginRight="12dp"-->
-<!--                            android:textSize="16dp"-->
-<!--                            android:gravity="center"-->
-<!--                            android:layout_marginTop="10dp"-->
-<!--                            android:fontFamily="@font/iransansmobile_medium"-->
-<!--                            android:layout_toLeftOf="@id/img_chkbx_first_time_volleyball"-->
-<!--                            android:textColor="@color/black"/>-->
-
-<!--                    </RelativeLayout>-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:id="@+id/chkbx_second_time_volleyball"-->
-<!--                        android:layout_width="110dp"-->
-<!--                        android:layout_height="44dp"-->
-<!--                        android:layout_below="@id/chkbx_first_time_volleyball"-->
-<!--                        android:layout_centerHorizontal="true"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        android:background="@drawable/background_checkbox_container_off">-->
-
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/img_chkbx_second_time_volleyball"-->
-<!--                            android:layout_width="16dp"-->
-<!--                            android:layout_height="16dp"-->
-<!--                            android:background="@drawable/background_check_box_off"-->
-<!--                            android:src="@drawable/ic_tick"-->
-<!--                            android:padding="2dp"-->
-<!--                            android:layout_marginRight="12dp"-->
-<!--                            android:layout_alignParentRight="true"-->
-<!--                            android:layout_centerVertical="true"-->
-<!--                            />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/lbl_second_time_volleyball"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="۱۶ تا ۱۸"-->
-<!--                            android:layout_marginRight="12dp"-->
-<!--                            android:textSize="16dp"-->
-<!--                            android:gravity="center"-->
-<!--                            android:layout_marginTop="10dp"-->
-<!--                            android:fontFamily="@font/iransansmobile_medium"-->
-<!--                            android:layout_toLeftOf="@id/img_chkbx_second_time_volleyball"-->
-<!--                            android:textColor="@color/black"/>-->
-
-<!--                    </RelativeLayout>-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:id="@+id/chkbx_third_time_volleyball"-->
-<!--                        android:layout_width="110dp"-->
-<!--                        android:layout_height="44dp"-->
-<!--                        android:layout_below="@id/chkbx_second_time_volleyball"-->
-<!--                        android:layout_centerHorizontal="true"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        android:layout_marginBottom="16dp"-->
-<!--                        android:background="@drawable/background_checkbox_container_off">-->
-
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/img_chkbx_third_time_volleyball"-->
-<!--                            android:layout_width="16dp"-->
-<!--                            android:layout_height="16dp"-->
-<!--                            android:background="@drawable/background_check_box_off"-->
-<!--                            android:src="@drawable/ic_tick"-->
-<!--                            android:padding="2dp"-->
-<!--                            android:layout_marginRight="12dp"-->
-<!--                            android:layout_alignParentRight="true"-->
-<!--                            android:layout_centerVertical="true"-->
-<!--                            />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/lbl_third_time_volleyball"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="۱۸ تا ۲۰"-->
-<!--                            android:layout_marginRight="12dp"-->
-<!--                            android:textSize="16dp"-->
-<!--                            android:gravity="center"-->
-<!--                            android:layout_marginTop="10dp"-->
-<!--                            android:fontFamily="@font/iransansmobile_medium"-->
-<!--                            android:layout_toLeftOf="@id/img_chkbx_third_time_volleyball"-->
-<!--                            android:textColor="@color/black"/>-->
-
-
-<!--                    </RelativeLayout>-->
 
                     <RelativeLayout
+                        android:id="@+id/container_capacity_volleyball"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="16dp"
                         android:layout_marginLeft="32dp">
 
                         <TextView
@@ -248,16 +142,19 @@
                     </RelativeLayout>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_send_volleyball_req"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_alignParentBottom="true"
                         app:cardCornerRadius="10dp"
+                        android:layout_below="@id/container_capacity_volleyball"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
                         android:backgroundTint="@color/black"
                         >
 
                         <TextView
+                            android:id="@+id/txt_send_volleyball_req"
                             android:layout_width="80dp"
                             android:layout_height="40dp"
                             android:text="ثبت"
@@ -266,6 +163,15 @@
                             android:textSize="18dp"
                             android:fontFamily="@font/iransansmobile_medium"
                             />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_send_volleyball_req"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@color/light_yellow"
+                            android:indeterminate="true"
+                            android:visibility="invisible"/>
 
 
                     </androidx.cardview.widget.CardView>
@@ -281,7 +187,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_football"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/container_volleyball"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/green"
@@ -296,10 +202,10 @@
                         android:id="@+id/img_football"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_centerVertical="true"
                         app:srcCompat="@drawable/ic_football"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
                         />
 
                     <TextView
@@ -310,127 +216,30 @@
                         android:textColor="@color/black"
                         android:fontFamily="@font/iransansmobile_medium"
                         android:layout_toLeftOf="@id/img_football"
-                        android:layout_centerVertical="true"
                         android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
                         android:gravity="center"
                         />
 
-                    <RelativeLayout
-                        android:id="@+id/chkbx_first_time_football"
-                        android:layout_width="110dp"
-                        android:layout_height="44dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/background_checkbox_container_on">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_reserve_sport_time_football"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@id/img_football"/>
 
 
-                        <ImageView
-                            android:id="@+id/img_chkbx_first_time_football"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:background="@drawable/background_check_box_on"
-                            android:src="@drawable/ic_tick"
-                            android:padding="2dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            />
 
-                        <TextView
-                            android:id="@+id/lbl_first_time_football"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="۱۴ تا ۱۶"
-                            android:layout_marginRight="12dp"
-                            android:textSize="16dp"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:layout_toLeftOf="@id/img_chkbx_first_time_football"
-                            android:textColor="@color/black"/>
-
-                    </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/chkbx_second_time_football"
-                        android:layout_width="110dp"
-                        android:layout_height="44dp"
-                        android:layout_below="@id/chkbx_first_time_football"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/background_checkbox_container_off">
-
-
-                        <ImageView
-                            android:id="@+id/img_chkbx_second_time_football"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:background="@drawable/background_check_box_off"
-                            android:src="@drawable/ic_tick"
-                            android:padding="2dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl_second_time_football"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="۱۶ تا ۱۸"
-                            android:layout_marginRight="12dp"
-                            android:textSize="16dp"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:layout_toLeftOf="@id/img_chkbx_second_time_football"
-                            android:textColor="@color/black"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/chkbx_third_time_football"
-                        android:layout_width="110dp"
-                        android:layout_height="44dp"
-                        android:layout_below="@id/chkbx_second_time_football"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/background_checkbox_container_off">
-
-
-                        <ImageView
-                            android:id="@+id/img_chkbx_third_time_football"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:background="@drawable/background_check_box_off"
-                            android:src="@drawable/ic_tick"
-                            android:padding="2dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl_third_time_football"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="۱۸ تا ۲۰"
-                            android:layout_marginRight="12dp"
-                            android:textSize="16dp"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:layout_toLeftOf="@id/img_chkbx_third_time_football"
-                            android:textColor="@color/black"/>
-
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                        android:id="@+id/container_capacity_football"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="16dp"
                         android:layout_marginLeft="32dp">
 
                         <TextView
@@ -457,16 +266,19 @@
                     </RelativeLayout>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_send_football_req"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
+                        android:layout_below="@id/container_capacity_football"
+                        android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_alignParentBottom="true"
                         app:cardCornerRadius="10dp"
                         android:backgroundTint="@color/black"
                         >
 
                         <TextView
+                            android:id="@+id/txt_send_football_req"
                             android:layout_width="80dp"
                             android:layout_height="40dp"
                             android:text="ثبت"
@@ -475,6 +287,16 @@
                             android:textSize="18dp"
                             android:fontFamily="@font/iransansmobile_medium"
                             />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_send_football_req"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@color/light_yellow"
+                            android:indeterminate="true"
+                            android:visibility="invisible"/>
+
 
 
                     </androidx.cardview.widget.CardView>
@@ -489,7 +311,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/container_swimming"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/container_football"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/light_blue"
@@ -504,10 +326,10 @@
                         android:id="@+id/img_swimming"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_centerVertical="true"
                         app:srcCompat="@drawable/ic_swimming"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
                         />
 
                     <TextView
@@ -518,127 +340,30 @@
                         android:textColor="@color/black"
                         android:fontFamily="@font/iransansmobile_medium"
                         android:layout_toLeftOf="@id/img_swimming"
-                        android:layout_centerVertical="true"
                         android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
                         android:gravity="center"
                         />
 
-                    <RelativeLayout
-                        android:id="@+id/chkbx_first_time_swimming"
-                        android:layout_width="110dp"
-                        android:layout_height="44dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/background_checkbox_container_on">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_reserve_sport_time_swimming"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@id/img_swimming"/>
 
 
-                        <ImageView
-                            android:id="@+id/img_chkbx_first_time_swimming"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:background="@drawable/background_check_box_on"
-                            android:src="@drawable/ic_tick"
-                            android:padding="2dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            />
 
-                        <TextView
-                            android:id="@+id/lbl_first_time_swimming"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="۱۴ تا ۱۶"
-                            android:layout_marginRight="12dp"
-                            android:textSize="16dp"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:layout_toLeftOf="@id/img_chkbx_first_time_swimming"
-                            android:textColor="@color/black"/>
 
-                    </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/chkbx_second_time_swimming"
-                        android:layout_width="110dp"
-                        android:layout_height="44dp"
-                        android:layout_below="@id/chkbx_first_time_swimming"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/background_checkbox_container_off">
-
-
-                        <ImageView
-                            android:id="@+id/img_chkbx_second_time_swimming"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:background="@drawable/background_check_box_off"
-                            android:src="@drawable/ic_tick"
-                            android:padding="2dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl_second_time_swimming"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="۱۶ تا ۱۸"
-                            android:layout_marginRight="12dp"
-                            android:textSize="16dp"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:layout_toLeftOf="@id/img_chkbx_second_time_swimming"
-                            android:textColor="@color/black"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/chkbx_third_time_swimming"
-                        android:layout_width="110dp"
-                        android:layout_height="44dp"
-                        android:layout_below="@id/chkbx_second_time_swimming"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/background_checkbox_container_off">
-
-
-                        <ImageView
-                            android:id="@+id/img_chkbx_third_time_swimming"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:background="@drawable/background_check_box_off"
-                            android:src="@drawable/ic_tick"
-                            android:padding="2dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            />
-
-                        <TextView
-                            android:id="@+id/lbl_third_time_swimming"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="۱۸ تا ۲۰"
-                            android:layout_marginRight="12dp"
-                            android:textSize="16dp"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/iransansmobile_medium"
-                            android:layout_toLeftOf="@id/img_chkbx_third_time_swimming"
-                            android:textColor="@color/black"/>
-
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                        android:id="@+id/container_capacity_swimming"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="16dp"
                         android:layout_marginLeft="32dp">
 
                         <TextView
@@ -666,16 +391,19 @@
 
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_send_swimming_req"
                         android:layout_width="80dp"
                         android:layout_height="40dp"
                         android:backgroundTint="@color/black"
                         android:layout_marginLeft="16dp"
+                        android:layout_below="@id/container_capacity_swimming"
+                        android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_alignParentBottom="true"
                         app:cardCornerRadius="10dp"
                         >
 
                         <TextView
+                            android:id="@+id/txt_send_swimming_req"
                             android:layout_width="80dp"
                             android:layout_height="40dp"
                             android:text="ثبت"
@@ -684,6 +412,16 @@
                             android:textSize="18dp"
                             android:fontFamily="@font/iransansmobile_medium"
                             />
+
+                        <ProgressBar
+                            android:id="@+id/progressbar_send_swimming_req"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@color/light_yellow"
+                            android:indeterminate="true"
+                            android:visibility="invisible"/>
+
 
 
                     </androidx.cardview.widget.CardView>
@@ -696,6 +434,143 @@
 
         </RelativeLayout>
     </ScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".5"
+        android:translationZ="100dp"
+        android:visibility="invisible"
+        android:backgroundTint="@color/black"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_week"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:backgroundTint="@color/black"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="8dp"
+        android:translationZ="150dp"
+        android:visibility="invisible"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/txt_saturday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="شنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="16dp"
+                />
+
+            <TextView
+                android:id="@+id/txt_sunday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="یکشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_saturday"
+                />
+
+            <TextView
+                android:id="@+id/txt_monday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="دوشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_below="@id/txt_sunday"
+                />
+
+            <TextView
+                android:id="@+id/txt_tuesday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="سه شنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_monday"
+                />
+
+            <TextView
+                android:id="@+id/txt_wednesday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="چهارشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_tuesday"
+                />
+
+            <TextView
+                android:id="@+id/txt_thursday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="پنجشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_wednesday"
+                />
+
+            <TextView
+                android:id="@+id/txt_friday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="جمعه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_thursday"
+                />
+
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
 
 
 

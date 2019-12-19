@@ -51,7 +51,7 @@
 
 
         <TextView
-            android:id="@+id/txt_time_start"
+            android:id="@+id/txt_start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="۱۷:۰۰"
@@ -72,14 +72,14 @@
             android:textSize="14dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="32dp"
-            android:layout_toLeftOf="@id/txt_time_start"
+            android:layout_toLeftOf="@id/txt_start_time"
             android:textColor="@color/black"
             android:layout_marginBottom="8dp"
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/iransansmobile_light" />
 
         <TextView
-            android:id="@+id/txt_time_end"
+            android:id="@+id/txt_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="۱۹:۰۰"
@@ -109,7 +109,7 @@
                 android:fontFamily="@font/iransansmobile_light" />
 
             <TextView
-                android:id="@+id/txt_number"
+                android:id="@+id/txt_capacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="۱۷"

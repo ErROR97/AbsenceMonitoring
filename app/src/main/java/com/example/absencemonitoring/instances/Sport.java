@@ -2,6 +2,7 @@ package com.example.absencemonitoring.instances;
 
 import org.json.JSONObject;
 
+
 public class Sport {
     private int id;
     private String code;

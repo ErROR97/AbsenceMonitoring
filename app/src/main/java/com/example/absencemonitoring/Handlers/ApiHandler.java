@@ -609,7 +609,7 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void reqSport(final String code, final String personalId, final String date, final ResponseListenerReqSport responseListenerReqSport) {
+    public void reqSport(final String personalId, final String fullName, final String jsonArray, final String date, final ResponseListenerReqSport responseListenerReqSport) {
 
         final StringRequest request = new StringRequest(Request.Method.POST, urlReqSport,
                 new Response.Listener<String>() {
@@ -637,7 +637,8 @@ public class ApiHandler {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("personalId", personalId.trim());
-                params.put("code", code.trim());
+                params.put("fullName", fullName.trim());
+                params.put("post", jsonArray.trim());
                 params.put("date", date.trim());
                 return params;
 

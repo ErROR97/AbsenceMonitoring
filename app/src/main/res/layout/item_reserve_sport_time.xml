@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="۱۶ تا ۱۸"
             android:layout_marginRight="12dp"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="8dp"

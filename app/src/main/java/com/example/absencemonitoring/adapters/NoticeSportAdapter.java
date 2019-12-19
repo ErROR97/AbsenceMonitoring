@@ -52,8 +52,8 @@ public class NoticeSportAdapter extends RecyclerView.Adapter<NoticeSportAdapter.
             super(itemView);
             typeTxt = itemView.findViewById(R.id.txt_type);
             dateTxt = itemView.findViewById(R.id.txt_date);
-            startTxt = itemView.findViewById(R.id.txt_time_start);
-            endTxt = itemView.findViewById(R.id.txt_time_end);
+            startTxt = itemView.findViewById(R.id.txt_start_time);
+            endTxt = itemView.findViewById(R.id.txt_end_time);
             numberTxt = itemView.findViewById(R.id.txt_number);
         }
     }
