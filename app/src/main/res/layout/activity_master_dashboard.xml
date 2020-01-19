@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="متین براهویی"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:textColor="@color/black"
             android:fontFamily="@font/iransansmobile_medium"
             android:layout_marginTop="8dp"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="مدیر کل"
-            android:textSize="14dp"
+            android:textSize="12dp"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
             android:layout_below="@id/txt_name"
@@ -80,86 +80,6 @@
         android:layout_toLeftOf="@id/container_menu"
         android:layout_below="@id/container_header"
         android:background="@color/white"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/container_notice_details"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
-        android:layout_marginRight="-10dp"
-        android:visibility="invisible"
-        app:cardCornerRadius="10dp"
-        android:layout_toLeftOf="@id/container_menu"
-        android:layout_below="@id/container_header"
-        android:layout_marginTop="203dp"
-        >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp">
-
-            <TextView
-                android:id="@+id/txt_notice_furough"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="مرخصی"
-                android:textSize="18dp"
-                android:textColor="@color/light_yellow"
-                android:fontFamily="@font/iransansmobile_medium"
-                android:gravity="center"
-                android:layout_centerHorizontal="true"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                />
-
-            <TextView
-                android:id="@+id/txt_number_of_furlough_notices"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                tools:text="۲۱"
-                android:visibility="invisible"
-                android:gravity="center"
-                android:textSize="12dp"
-                android:fontFamily="@font/iransansmobile_bold"
-                android:background="@drawable/background_number_of_notices"
-                android:textColor="@color/white"
-                android:layout_toLeftOf="@id/txt_notice_furough"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="12dp"
-                />
-
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_yellow"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_below="@id/txt_notice_furough"
-                />
-
-            <TextView
-                android:id="@+id/txt_notice_sport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="سالن ورزشی"
-                android:textSize="18dp"
-                android:textColor="@color/light_yellow"
-                android:fontFamily="@font/iransansmobile_medium"
-                android:gravity="center"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/txt_notice_furough"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                />
-
-
-        </RelativeLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
 
 
 
@@ -354,12 +274,13 @@
                         android:layout_height="20dp"
                         tools:text="۲۱"
                         android:gravity="center"
-                        android:visibility="invisible"
                         android:textSize="12dp"
+                        android:visibility="invisible"
                         android:fontFamily="@font/iransansmobile_bold"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="55dp"
                         android:background="@drawable/background_number_of_notices"
                         android:textColor="@color/white"
-                        android:layout_toLeftOf="@id/img_notice"
                         android:layout_marginTop="8dp"/>
 
                 </RelativeLayout>
@@ -570,27 +491,28 @@
     </androidx.cardview.widget.CardView>
 
 
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/container_archive_details"
+        android:id="@+id/container_notice_details"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
-        android:visibility="invisible"
         android:layout_marginRight="-10dp"
+        android:visibility="invisible"
         app:cardCornerRadius="10dp"
         android:layout_toLeftOf="@id/container_menu"
         android:layout_below="@id/container_header"
-        android:layout_marginTop="268dp"
+        android:layout_marginTop="203dp"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginRight="10dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp">
 
             <TextView
-                android:id="@+id/txt_archive_furlough"
-                android:layout_width="match_parent"
+                android:id="@+id/txt_notice_furough"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="مرخصی"
                 android:textSize="18dp"
@@ -602,10 +524,55 @@
                 android:paddingBottom="8dp"
                 />
 
+            <TextView
+                android:id="@+id/txt_number_of_furlough_notices"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                tools:text="۲۱"
+                android:visibility="invisible"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:fontFamily="@font/iransansmobile_bold"
+                android:background="@drawable/background_number_of_notices"
+                android:textColor="@color/white"
+                android:layout_toLeftOf="@id/txt_notice_furough"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="12dp"
+                />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_yellow"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/txt_notice_furough"
+                />
+
+            <TextView
+                android:id="@+id/txt_notice_sport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="سالن ورزشی"
+                android:textSize="18dp"
+                android:textColor="@color/light_yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_notice_furough"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+
         </RelativeLayout>
 
 
+
     </androidx.cardview.widget.CardView>
+
+
 
 
 

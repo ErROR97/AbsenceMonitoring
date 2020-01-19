@@ -234,6 +234,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
                 Log.i("khar", "onClick: "+furlough.getDescriptionLeave());
                 try {
                     apiHandler.acceptRejectReqLeave(true,
+                            1,
                             furlough.getPersonalIdemployee(),
                             userDetails.getUserInfo().getString("personalIdmaster"),
                             furlough.getLeaveType(),
@@ -269,6 +270,7 @@ public class MasterFurloughActivity extends AppCompatActivity {
 
                 try {
                     apiHandler.acceptRejectReqLeave(false,
+                            2,
                             furlough.getPersonalIdemployee(),
                             userDetails.getUserInfo().getString("personalIdmaster"),
                             furlough.getLeaveType(),

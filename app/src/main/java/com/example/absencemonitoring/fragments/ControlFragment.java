@@ -141,12 +141,12 @@ public class ControlFragment extends Fragment {
             }
         });
 
-
-
-
-
         return view;
     }
+
+
+
+
 
     private void updateListRemainingTime() {
 
@@ -165,6 +165,10 @@ public class ControlFragment extends Fragment {
         runnable.run();
     }
 
+
+
+
+
     View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -172,6 +176,10 @@ public class ControlFragment extends Fragment {
             return gestureDetector.onTouchEvent(event);
         }
     };
+
+
+
+
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 

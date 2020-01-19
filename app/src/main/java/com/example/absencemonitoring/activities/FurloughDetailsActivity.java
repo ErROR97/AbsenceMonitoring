@@ -86,7 +86,7 @@ public class FurloughDetailsActivity extends AppCompatActivity {
                     + ":" + String.format("%02d", Integer.parseInt(amountTime.split(":")[2]));
         } else {
             remaindTime = DateTime.calculatePassedTime(StartDate, StartTime, amountTime);
-            remainderContainer.setBackground(getResources().getDrawable(R.drawable.background_passed_time_furlough_details));
+            remainderContainer.setBackground(getResources().getDrawable(R.drawable.background_red_radius_10dp));
             remainderLbl.setText("زمان گذشته");
             daysTxt.setTextColor(getResources().getColor(R.color.yellow));
             hoursTxt.setTextColor(getResources().getColor(R.color.yellow));

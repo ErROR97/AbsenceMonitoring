@@ -36,6 +36,7 @@ public class ApiHandler {
     private String urlAcceptRejectReqLeave = "http://matingrimes.ir/office/acceptRejectReqLeave.php";
     private String urlAcceptControlReqLeave = "http://matingrimes.ir/office/controlReqLeave.php";
     private String urlUpdateArchive = "http://matingrimes.ir/office/updateArchive.php";
+    private String urlUpdateProgressArchive = "http://matingrimes.ir/office/updateProgressArchive.php";
     private String urlGetLeaveArchive = "http://matingrimes.ir/office/getLeaveArchive.php";
     private String urlGetSport = "http://matingrimes.ir/office/getSport.php";
     private String urlReqSport = "http://matingrimes.ir/office/sportReq.php";
@@ -102,9 +103,10 @@ public class ApiHandler {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("bozekohi", "onRecived: " + response);
                         if (response.trim().equals("success")) {
                             responseListenerReqLeave.onRecived("success");
+                        } else if (response.trim().equals("error_already")) {
+                            responseListenerReqLeave.onRecived("error_already");
                         } else {
                             responseListenerReqLeave.onRecived("error");
                         }
@@ -130,6 +132,7 @@ public class ApiHandler {
                 params.put("startDate", startDate.trim());
                 params.put("descriptionLeave", descriptionLeave.trim());
                 params.put("currentdate", currentDate.trim());
+                params.put("progressstatus", String.valueOf(0));
                 return params;
             }
         };
@@ -200,7 +203,7 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
-    public void acceptRejectReqLeave(final boolean status, final String personalIdemployee, final String personalIdmaster, final String leaveType,final String description,final String descriptionLeave, final String currentDate, final ResponseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
+    public void acceptRejectReqLeave(final boolean status, final int progressStatus, final String personalIdemployee, final String personalIdmaster, final String leaveType,final String description,final String descriptionLeave, final String currentDate, final ResponseListenerAcceptRejectReqLeave responseListenerAcceptRejectReqLeave) {
 
         final StringRequest request = new StringRequest(Request.Method.POST, urlAcceptRejectReqLeave,
                 new Response.Listener<String>() {
@@ -231,6 +234,7 @@ public class ApiHandler {
                 params.put("descriptionLeave", descriptionLeave.trim());
                 params.put("leaveType", leaveType.trim());
                 params.put("status",String.valueOf(status));
+                params.put("progressstatus", String.valueOf(progressStatus));
                 return params;
             }
         };
@@ -435,22 +439,22 @@ public class ApiHandler {
                                 e.printStackTrace();
                             }
 
-                            List<FurloughArchive> FurloughArchiveList = new ArrayList<>();
+                            List<Furlough> FurloughArchiveList = new ArrayList<>();
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                FurloughArchive furloughArchive = new FurloughArchive();
+                                Furlough furloughArchive = new Furlough();
                                 try {
                                     furloughArchive.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
-                                    furloughArchive.setFullName(jsonArray.getJSONObject(i).get("id").toString());
-                                    furloughArchive.setPersonalIdEmployee(jsonArray.getJSONObject(i).get("id").toString());
-                                    furloughArchive.setPersonalIdMaster(jsonArray.getJSONObject(i).get("id").toString());
+                                    furloughArchive.setName(jsonArray.getJSONObject(i).get("fullname").toString());
+                                    furloughArchive.setPersonalIdemployee(jsonArray.getJSONObject(i).get("personalIdemployee").toString());
+                                    furloughArchive.setPersonalIdMaster(jsonArray.getJSONObject(i).get("personalIdmaster").toString());
                                     furloughArchive.setLeaveType(jsonArray.getJSONObject(i).get("leavetype").toString());
                                     furloughArchive.setStartTime(jsonArray.getJSONObject(i).get("starttime").toString());
                                     furloughArchive.setTimeLeave(jsonArray.getJSONObject(i).get("timeleave").toString());
                                     furloughArchive.setStartDate(jsonArray.getJSONObject(i).get("startdate").toString());
                                     furloughArchive.setDescription(jsonArray.getJSONObject(i).get("description").toString());
-
                                     furloughArchive.setCurrentDate(jsonArray.getJSONObject(i).get("currentdate").toString());
                                     furloughArchive.setDescriptionLeave(jsonArray.getJSONObject(i).get("descriptionLeave").toString());
+                                    furloughArchive.setProgressStatus(jsonArray.getJSONObject(i).get("progressstatus").toString());
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -727,6 +731,43 @@ public class ApiHandler {
     }
 
 
+
+
+
+    public void updateProgressArchive(final int id, final ResponseListenerUpdateArchive responseListenerUpdateArchive) {
+        final StringRequest request = new StringRequest(Request.Method.POST, urlUpdateProgressArchive,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        if (response.trim().equals("success")) {
+                            responseListenerUpdateArchive.onRecived("success");
+                        } else {
+                            responseListenerUpdateArchive.onRecived("error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerUpdateArchive.onRecived("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("id", String.valueOf(id));
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+
     public interface ResponseListenerLogin {
         void onRecived(String response);
     }
@@ -757,7 +798,7 @@ public class ApiHandler {
 
     public interface ResponseListenerArchiveReqLeaveEmployee {
 
-        void onRevived(List<FurloughArchive> archiveReqLeaveEmployeeList);
+        void onRevived(List<Furlough> archiveReqLeaveEmployeeList);
         void onMessage(String error);
 
     }

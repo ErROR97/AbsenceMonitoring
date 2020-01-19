@@ -8,12 +8,9 @@ import androidx.core.view.ViewCompat;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -30,6 +27,7 @@ import com.example.absencemonitoring.fragments.ControlFragment;
 import com.example.absencemonitoring.fragments.NoticeFurloughFragment;
 import com.example.absencemonitoring.fragments.NoticeSportFragment;
 import com.example.absencemonitoring.instances.Furlough;
+import com.example.absencemonitoring.interfaces.RequestDeterminedListener;
 import com.example.absencemonitoring.interfaces.SwipeEndFragmentListener;
 import com.example.absencemonitoring.interfaces.SwipeFragmentListener;
 import com.example.absencemonitoring.utils.Formating;
@@ -41,95 +39,64 @@ import java.util.List;
 
 public class MasterDashboardActivity extends AppCompatActivity implements View.OnTouchListener, SwipeFragmentListener {
 
+    RelativeLayout root;
+    TextView nameTxt, roleTxt;
+
     CardView menuContainer;
     RelativeLayout homeContainer, requestContainer, profileContainer, noticeContainer, archiveContainer, controlingContainer, logoutContainer;
     TextView homeTxt, profileTxt, requestTxt, noticeTxt, archiveTxt, controlTxt, logoutTxt;
     ImageView homeImg, profileImg, requestImg, noticeImg, archiveImg, controlImg, logoutImg;
-    CardView requestDetailsContainer, noticeDetailsContainer, archiveDetailsContainer;
+
+    CardView requestDetailsContainer, noticeDetailsContainer;
     TextView requestFurlougTxt, requestSportTxt;
     TextView noticeFurloughTxt, noticeSportTxt;
-    TextView archiveFurloughTxt;
-    TextView nameTxt, roleTxt;
-    String checkFragment = "";
-    TextView previousSelectedTxt;
+
     TextView txtNumberOfNotices, txtNumberOfFurloughNotices;
+
+    FrameLayout fragmentContainer;
+
+
 
     RelativeLayout previousSelectedContainer;
     ImageView previousSelectedImg;
-    FrameLayout fragmentContainer;
+    TextView previousSelectedTxt;
 
-    RelativeLayout masterDashboardActivity, headerContainer;
+
 
     UserDetails userDetails;
-    Activity activity;
-    RequestDeterminedListener requestDeterminedListener;
     ApiHandler apiHandler;
+
+
+
+    RequestDeterminedListener requestDeterminedListener;
+
+
+
     int previousSelectedDrawable;
     int menuXdelta, iconXdelta;
     int oldX;
-
     boolean isMenuOpen = true;
+    boolean isMenuTxtFaded = false;
 
 
 
     @SuppressLint("ClickableViewAccessibility")
     public void init() {
-        userDetails = new UserDetails(activity);
-        apiHandler = new ApiHandler(activity);
 
-        masterDashboardActivity = findViewById(R.id.activity_master_dashboard);
-        masterDashboardActivity.setOnTouchListener(this);
+        root = findViewById(R.id.activity_master_dashboard);
 
-        fragmentContainer = findViewById(R.id.container_fragment);
-        fragmentContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        fragmentContainer.setOnTouchListener(this);
-
-        headerContainer = findViewById(R.id.container_header);
         nameTxt = findViewById(R.id.txt_name);
         roleTxt = findViewById(R.id.txt_role);
 
         menuContainer = findViewById(R.id.container_menu);
-        menuContainer.bringToFront();
-        menuContainer.setOnTouchListener(this);
-
         homeContainer = findViewById(R.id.container_home);
-        homeContainer.setOnTouchListener(this);
-
         profileContainer = findViewById(R.id.container_profile);
-        profileContainer.setOnTouchListener(this);
-
+        fragmentContainer = findViewById(R.id.container_fragment);
         requestContainer = findViewById(R.id.container_request);
-        requestContainer.setOnTouchListener(this);
-
         noticeContainer = findViewById(R.id.container_notice);
-        noticeContainer.setOnTouchListener(this);
-
         archiveContainer = findViewById(R.id.container_archive);
-        archiveContainer.setOnTouchListener(this);
-
         controlingContainer = findViewById(R.id.container_controling);
-        controlingContainer.setOnTouchListener(this);
-
         logoutContainer = findViewById(R.id.container_logout);
-        logoutContainer.setOnTouchListener(this);
-
-
-        requestDetailsContainer = findViewById(R.id.container_request_details);
-        noticeDetailsContainer = findViewById(R.id.container_notice_details);
-        archiveDetailsContainer = findViewById(R.id.container_archive_details);
-
-        requestFurlougTxt = findViewById(R.id.txt_request_furough);
-        requestSportTxt = findViewById(R.id.txt_request_sport);
-
-        noticeFurloughTxt = findViewById(R.id.txt_notice_furough);
-        noticeSportTxt = findViewById(R.id.txt_notice_sport);
-
-        archiveFurloughTxt = findViewById(R.id.txt_archive_furlough);
-
 
         homeTxt = findViewById(R.id.txt_home);
         profileTxt = findViewById(R.id.txt_profile);
@@ -147,93 +114,71 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         controlImg = findViewById(R.id.img_controling);
         logoutImg = findViewById(R.id.img_logout);
 
+        requestDetailsContainer = findViewById(R.id.container_request_details);
+        requestFurlougTxt = findViewById(R.id.txt_request_furough);
+        noticeFurloughTxt = findViewById(R.id.txt_notice_furough);
+
+        noticeDetailsContainer = findViewById(R.id.container_notice_details);
+        requestSportTxt = findViewById(R.id.txt_request_sport);
+        noticeSportTxt = findViewById(R.id.txt_notice_sport);
         txtNumberOfNotices = findViewById(R.id.txt_number_of_notices);
         txtNumberOfFurloughNotices = findViewById(R.id.txt_number_of_furlough_notices);
 
 
 
-        String role = null;
+        userDetails = new UserDetails(this);
+        apiHandler = new ApiHandler(this);
+
+
+
+        menuContainer.bringToFront();
+        root.setOnTouchListener(this);
+        fragmentContainer.setOnTouchListener(this);
+        menuContainer.setOnTouchListener(this);
+        homeContainer.setOnTouchListener(this);
+        profileContainer.setOnTouchListener(this);
+        noticeContainer.setOnTouchListener(this);
+        archiveContainer.setOnTouchListener(this);
+        controlingContainer.setOnTouchListener(this);
+        logoutContainer.setOnTouchListener(this);
+        requestContainer.setOnTouchListener(this);
+
         try {
-            role = userDetails.getUserInfo().getString("role");
             nameTxt.setText(userDetails.getUserInfo().getString("firstName") + " " + userDetails.getUserInfo().getString("lastName"));
+            if (userDetails.getUserInfo().getString("role").trim().equals("master")) {
+                roleTxt.setText("مدیر");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (role.trim().equals("master"))
-            roleTxt.setText("مدیر");
 
-        /*apiHandler.getUserInfo(userDetails.getUserDetails(), new ApiHandler.responseListenerGetInfo() {
-            @Override
-            public void onRecived(String response) {
-                if(response.trim().equals("Success")){
-                    try {
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });*/
+        getNumberOfNotice();
+        handleFragmentSelection(homeContainer, homeImg, homeTxt, R.drawable.ic_home_selected, R.drawable.ic_home);
+
     }
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_master_dashboard);
-        activity = this;
         init();
 
-        homeContainer.setBackground(getResources().getDrawable(R.drawable.background_home_container));
-        homeTxt.setTextColor(getResources().getColor(R.color.red));
-        homeImg.setImageResource(R.drawable.ic_home_selected);
-        previousSelectedContainer = homeContainer;
-        previousSelectedTxt = homeTxt;
-        previousSelectedImg = homeImg;
-        previousSelectedDrawable = R.drawable.ic_home;
 
-        apiHandler.getNotifReqLeave(userDetails.getUserDetails(), new ApiHandler.ResponseListenerNotifReqLeave() {
-            @Override
-            public void onRevived(List<Furlough> notifReqLeaveList) {
-                if (notifReqLeaveList.size() > 0) {
-                    txtNumberOfNotices.setVisibility(View.VISIBLE);
-                    txtNumberOfFurloughNotices.setVisibility(View.INVISIBLE);
-
-                    txtNumberOfNotices.setText(Formating.englishDigitsToPersian(String.valueOf(notifReqLeaveList.size())));
-                    txtNumberOfFurloughNotices.setText(Formating.englishDigitsToPersian(String.valueOf(notifReqLeaveList.size())));
-                }
-            }
-        });
 
 
 
         homeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkFragment.equals("homeFragment")) {
-                    checkFragment = "homeFragment";
-
-                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
-                    requestDetailsContainer.setVisibility(View.INVISIBLE);
-                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
-
-
-                    previousSelectedContainer.setBackground(null);
-                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
-                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
-                    previousSelectedImg.setImageResource(previousSelectedDrawable);
-
-                    homeContainer.setBackground(getResources().getDrawable(R.drawable.background_home_container));
-                    homeTxt.setTextColor(getResources().getColor(R.color.red));
-                    homeImg.setImageResource(R.drawable.ic_home_selected);
-
-                    previousSelectedContainer = homeContainer;
-                    previousSelectedTxt = homeTxt;
-                    previousSelectedImg = homeImg;
-                    previousSelectedDrawable = R.drawable.ic_home;
-                }
+                handleFragmentSelection(homeContainer, homeImg, homeTxt, R.drawable.ic_home_selected, R.drawable.ic_home);
             }
         });
+
+
 
         profileContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,18 +188,20 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         });
 
 
+
         requestContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (requestDetailsContainer.getVisibility() == View.INVISIBLE) {
                     requestDetailsContainer.setVisibility(View.VISIBLE);
                     noticeDetailsContainer.setVisibility(View.INVISIBLE);
-                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
                 } else {
                     requestDetailsContainer.setVisibility(View.INVISIBLE);
                 }
             }
         });
+
+
 
         noticeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,53 +209,32 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                 if (noticeDetailsContainer.getVisibility() == View.INVISIBLE) {
                     noticeDetailsContainer.setVisibility(View.VISIBLE);
                     requestDetailsContainer.setVisibility(View.INVISIBLE);
-                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
                 } else {
                     noticeDetailsContainer.setVisibility(View.INVISIBLE);
                 }
             }
         });
+
 
         archiveContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (archiveDetailsContainer.getVisibility() == View.INVISIBLE) {
-                    archiveDetailsContainer.setVisibility(View.VISIBLE);
-                    requestDetailsContainer.setVisibility(View.INVISIBLE);
-                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
-                } else {
-                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
-                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new ArchiveFurloughFragment()).commit();
+                handleFragmentSelection(archiveContainer, archiveImg, archiveTxt, R.drawable.ic_archive_selected, R.drawable.ic_archive);
             }
         });
+
+
 
         controlingContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!checkFragment.equals("control")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new ControlFragment()).commit();
-                    checkFragment = "control";
-
-                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
-                    requestDetailsContainer.setVisibility(View.INVISIBLE);
-                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
-
-                    previousSelectedContainer.setBackground(null);
-                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
-                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
-                    previousSelectedImg.setImageResource(previousSelectedDrawable);
-
-                    controlingContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
-                    controlTxt.setTextColor(getResources().getColor(R.color.red));
-                    controlImg.setImageResource(R.drawable.ic_control_selected);
-
-                    previousSelectedContainer = controlingContainer;
-                    previousSelectedTxt = controlTxt;
-                    previousSelectedImg = controlImg;
-                    previousSelectedDrawable = R.drawable.ic_control;
-                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new ControlFragment()).commit();
+                handleFragmentSelection(controlingContainer, controlImg, controlTxt, R.drawable.ic_control_selected, R.drawable.ic_control);
             }
         });
+
+
 
         logoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -320,6 +246,7 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         });
 
 
+
         requestFurlougTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,6 +254,7 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                 requestDetailsContainer.setVisibility(View.INVISIBLE);
             }
         });
+
 
 
         requestSportTxt.setOnClickListener(new View.OnClickListener() {
@@ -338,162 +266,60 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         });
 
 
+
         noticeFurloughTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkFragment.equals("noticeFurlough")) {
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeFurloughFragment()).commit();
-                    checkFragment = "noticeFurlough";
-//                    aminateMarginRight();
-
-                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
-
-                    previousSelectedContainer.setBackground(null);
-                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
-                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
-                    previousSelectedImg.setImageResource(previousSelectedDrawable);
-
-                    noticeContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
-                    noticeTxt.setTextColor(getResources().getColor(R.color.red));
-                    noticeImg.setImageResource(R.drawable.ic_notification_selected);
-
-                    previousSelectedContainer = noticeContainer;
-                    previousSelectedTxt = noticeTxt;
-                    previousSelectedImg = noticeImg;
-                    previousSelectedDrawable = R.drawable.ic_notification;
-
-                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeFurloughFragment()).commit();
+                handleFragmentSelection(noticeContainer, noticeImg, noticeTxt, R.drawable.ic_notification_selected, R.drawable.ic_notification);
             }
         });
+
 
 
         noticeSportTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkFragment.equals("noticeSport")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeSportFragment()).commit();
-                    checkFragment = "noticeSport";
-
-                    noticeDetailsContainer.setVisibility(View.INVISIBLE);
-
-                    previousSelectedContainer.setBackground(null);
-                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
-                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
-                    previousSelectedImg.setImageResource(previousSelectedDrawable);
-
-                    noticeContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
-                    noticeTxt.setTextColor(getResources().getColor(R.color.red));
-                    noticeImg.setImageResource(R.drawable.ic_notification_selected);
-
-                    previousSelectedContainer = noticeContainer;
-                    previousSelectedTxt = noticeTxt;
-                    previousSelectedImg = noticeImg;
-                    previousSelectedDrawable = R.drawable.ic_notification;
-                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new NoticeSportFragment()).commit();
+                handleFragmentSelection(noticeContainer, noticeImg, noticeTxt, R.drawable.ic_notification_selected, R.drawable.ic_notification);
             }
         });
-
-
-        archiveFurloughTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!checkFragment.equals("archiveFurlough")) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new ArchiveFurloughFragment()).commit();
-                    checkFragment = "archiveFurlough";
-
-                    archiveDetailsContainer.setVisibility(View.INVISIBLE);
-
-                    previousSelectedContainer.setBackground(null);
-                    previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
-                    previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
-                    previousSelectedImg.setImageResource(previousSelectedDrawable);
-
-                    archiveContainer.setBackgroundColor(getResources().getColor(R.color.blacker));
-                    archiveTxt.setTextColor(getResources().getColor(R.color.red));
-                    archiveImg.setImageResource(R.drawable.ic_archive_selected);
-
-                    previousSelectedContainer = archiveContainer;
-                    previousSelectedTxt = archiveTxt;
-                    previousSelectedImg = archiveImg;
-                    previousSelectedDrawable = R.drawable.ic_archive;
-                }
-            }
-        });
-
-
 
     }
+
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == 3) {
-
-            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "درخواست با موفقیت ارسال شد", Snackbar.LENGTH_LONG);
-
-            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
-
-            View snackbarView = snackbar.getView();
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.light_green));
-            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-            textView.setMaxLines(9);
-            textView.setTextSize(14);
-            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
-            textView.setTextColor(getResources().getColor(R.color.black));
-
-            snackbar.show();
-        } else if (resultCode == 4) {
-            requestDeterminedListener.onReqDetermined();
-
-            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "درخواست تائید شد", Snackbar.LENGTH_LONG);
-
-            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
-
-            View snackbarView = snackbar.getView();
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.light_green));
-            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-            textView.setMaxLines(9);
-            textView.setTextSize(14);
-            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
-            textView.setTextColor(getResources().getColor(R.color.black));
-
-            snackbar.show();
-        } else if (resultCode == 5) {
-            requestDeterminedListener.onReqDetermined();
-
-            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "درخواست رد شد", Snackbar.LENGTH_LONG);
-
-            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
-
-            View snackbarView = snackbar.getView();
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.red));
-            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-            textView.setMaxLines(9);
-            textView.setTextSize(14);
-            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
-            textView.setTextColor(getResources().getColor(R.color.black));
-
-            snackbar.show();
-        } else if (resultCode == 6) {
-            Snackbar snackbar = Snackbar.make(masterDashboardActivity, "اتمام مرخصی تائید شد", Snackbar.LENGTH_LONG);
-
-            ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
-
-            View snackbarView = snackbar.getView();
-            snackbarView.setBackgroundColor(getResources().getColor(R.color.light_green));
-            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
-            textView.setMaxLines(9);
-            textView.setTextSize(14);
-            textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
-            textView.setTextColor(getResources().getColor(R.color.black));
-
-            snackbar.show();
+        switch (resultCode) {
+            case 3:
+                showSnackbar("درخواست با موققیت ارسال شد");
+                getNumberOfNotice();
+                break;
+            case 4:
+                showSnackbar("درخواست تائید شد");
+                getNumberOfNotice();
+                requestDeterminedListener.onReqDetermined();
+                break;
+            case 5:
+                showSnackbar("درخواست رد شد");
+                getNumberOfNotice();
+                requestDeterminedListener.onReqDetermined();
+                break;
+            case 6:
+                showSnackbar("اتمام مرخصی به تایید رسید");
+                break;
         }
     }
 
-    public void aminateMarginRight(final View view, int amount) {
+
+
+
+
+    public void animateMarginRight(final View view, int amount) {
         final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
         ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.rightMargin, amount);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -507,6 +333,10 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         valueAnimator.start();
     }
 
+
+
+
+
     public void fadeAnimation(View view, float from, float to) {
         AlphaAnimation fadeAnimation = new AlphaAnimation(from, to);
         fadeAnimation.setDuration(300);
@@ -514,19 +344,101 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         view.startAnimation(fadeAnimation);
     }
 
-//    public void expandMenu() {
-//        final RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
-//        ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.rightMargin, amount);
-//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-//                layoutParams.rightMargin = (Integer) valueAnimator.getAnimatedValue();
-//                menuContainer.requestLayout();
-//            }
-//        });
-//        valueAnimator.setDuration(300);
-//        valueAnimator.start();
-//    }
+
+
+
+
+    public int getpixel(int dp) {
+        return dp * (int) getApplicationContext().getResources().getDisplayMetrics().density;
+    }
+
+
+
+
+
+    private void getNumberOfNotice() {
+        txtNumberOfNotices.setVisibility(View.INVISIBLE);
+        txtNumberOfFurloughNotices.setVisibility(View.INVISIBLE);
+
+        apiHandler.getNotifReqLeave(userDetails.getUserPersonalId(), new ApiHandler.ResponseListenerNotifReqLeave() {
+            @Override
+            public void onRevived(List<Furlough> notifReqLeaveList) {
+                if (notifReqLeaveList.size() > 0) {
+                    txtNumberOfNotices.setVisibility(View.VISIBLE);
+                    txtNumberOfFurloughNotices.setVisibility(View.VISIBLE);
+
+                    txtNumberOfNotices.setText(Formating.englishDigitsToPersian(String.valueOf(notifReqLeaveList.size())));
+                    txtNumberOfFurloughNotices.setText(Formating.englishDigitsToPersian(String.valueOf(notifReqLeaveList.size())));
+                }
+            }
+        });
+    }
+
+
+
+
+
+    private void handleFragmentSelection(RelativeLayout container, ImageView icon, TextView text, int newSource, int oldSource) {
+        if (previousSelectedContainer != null) {
+            previousSelectedContainer.setBackground(null);
+            previousSelectedContainer.setBackgroundColor(Color.TRANSPARENT);
+            previousSelectedTxt.setTextColor(getResources().getColor(R.color.light_yellow));
+            previousSelectedImg.setImageResource(previousSelectedDrawable);
+        }
+
+        container.setBackground(getResources().getDrawable(R.drawable.background_selected_menu_item));
+        text.setTextColor(getResources().getColor(R.color.red));
+        icon.setImageResource(newSource);
+
+        previousSelectedContainer = container;
+        previousSelectedTxt = text;
+        previousSelectedImg = icon;
+        previousSelectedDrawable = oldSource;
+
+        requestDetailsContainer.setVisibility(View.INVISIBLE);
+        noticeDetailsContainer.setVisibility(View.INVISIBLE);
+    }
+
+
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(root, message, Snackbar.LENGTH_LONG);
+        ViewCompat.setLayoutDirection(snackbar.getView(), ViewCompat.LAYOUT_DIRECTION_RTL);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(getResources().getColor(R.color.light_green));
+        TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setMaxLines(9);
+        textView.setTextSize(14);
+        textView.setTypeface(ResourcesCompat.getFont(getApplicationContext(), R.font.iransansmobile_medium));
+        textView.setTextColor(getResources().getColor(R.color.black));
+
+        snackbar.show();
+    }
+
+
+
+
+
+    @Override
+    public void onCloseMenu() {
+        animateMarginRight(menuContainer, - getpixel(150));
+        animateMarginRight(homeImg, getpixel(45));
+        animateMarginRight(profileImg, getpixel(45));
+        animateMarginRight(requestImg, getpixel(45));
+        animateMarginRight(noticeImg, getpixel(45));
+        animateMarginRight(archiveImg, getpixel(45));
+        animateMarginRight(controlImg, getpixel(45));
+        animateMarginRight(logoutImg, getpixel(45));
+    }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -539,29 +451,36 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                 menuXdelta = lParams.rightMargin;
                 iconXdelta = lParams1.rightMargin;
                 oldX = X;
-                if (isMenuOpen) {
-                    fadeAnimation(homeTxt, 1, 0);
-                    fadeAnimation(profileTxt, 1, 0);
-                    fadeAnimation(requestTxt, 1, 0);
-                    fadeAnimation(noticeTxt, 1, 0);
-                    fadeAnimation(archiveTxt, 1, 0);
-                    fadeAnimation(controlTxt, 1, 0);
-                    fadeAnimation(logoutTxt, 1, 0);
-                }
 
                 break;
             case MotionEvent.ACTION_UP:
                 RelativeLayout.LayoutParams layoutParams1 = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
                 if (layoutParams1.rightMargin > -getpixel(130)) {
-                    aminateMarginRight(menuContainer, - getpixel(110));
-                    aminateMarginRight(homeImg, getpixel(25));
-                    aminateMarginRight(profileImg, getpixel(25));
-                    aminateMarginRight(requestImg, getpixel(25));
-                    aminateMarginRight(noticeImg, getpixel(25));
-                    aminateMarginRight(archiveImg, getpixel(25));
-                    aminateMarginRight(controlImg, getpixel(25));
-                    aminateMarginRight(logoutImg, getpixel(25));
+                    animateMarginRight(menuContainer, - getpixel(110));
+                    animateMarginRight(homeImg, getpixel(25));
+                    animateMarginRight(profileImg, getpixel(25));
+                    animateMarginRight(requestImg, getpixel(25));
+                    animateMarginRight(noticeImg, getpixel(25));
+                    animateMarginRight(archiveImg, getpixel(25));
+                    animateMarginRight(controlImg, getpixel(25));
+                    animateMarginRight(logoutImg, getpixel(25));
 
+                    isMenuOpen = true;
+                } else {
+                    animateMarginRight(menuContainer, - getpixel(150));
+                    animateMarginRight(homeImg, getpixel(45));
+                    animateMarginRight(profileImg, getpixel(45));
+                    animateMarginRight(requestImg, getpixel(45));
+                    animateMarginRight(noticeImg, getpixel(45));
+                    animateMarginRight(archiveImg, getpixel(45));
+                    animateMarginRight(controlImg, getpixel(45));
+                    animateMarginRight(logoutImg, getpixel(45));
+
+                    isMenuOpen = false;
+                }
+
+                if (layoutParams1.rightMargin > -getpixel(130) && isMenuTxtFaded) {
+                    isMenuTxtFaded = false;
                     fadeAnimation(homeTxt, 0, 1);
                     fadeAnimation(profileTxt, 0, 1);
                     fadeAnimation(requestTxt, 0, 1);
@@ -569,17 +488,6 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                     fadeAnimation(archiveTxt, 0, 1);
                     fadeAnimation(controlTxt, 0, 1);
                     fadeAnimation(logoutTxt, 0, 1);
-                    isMenuOpen = true;
-                } else {
-                    aminateMarginRight(menuContainer, - getpixel(150));
-                    aminateMarginRight(homeImg, getpixel(45));
-                    aminateMarginRight(profileImg, getpixel(45));
-                    aminateMarginRight(requestImg, getpixel(45));
-                    aminateMarginRight(noticeImg, getpixel(45));
-                    aminateMarginRight(archiveImg, getpixel(45));
-                    aminateMarginRight(controlImg, getpixel(45));
-                    aminateMarginRight(logoutImg, getpixel(45));
-                    isMenuOpen = false;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -592,6 +500,17 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                 RelativeLayout.LayoutParams layoutParams7 = (RelativeLayout.LayoutParams) controlImg.getLayoutParams();
                 RelativeLayout.LayoutParams layoutParams8 = (RelativeLayout.LayoutParams) logoutImg.getLayoutParams();
 
+                if ((X > oldX + 50 || X < oldX - 50) && !isMenuTxtFaded) {
+                    isMenuTxtFaded = true;
+                    fadeAnimation(homeTxt, 1, 0);
+                    fadeAnimation(profileTxt, 1, 0);
+                    fadeAnimation(requestTxt, 1, 0);
+                    fadeAnimation(noticeTxt, 1, 0);
+                    fadeAnimation(archiveTxt, 1, 0);
+                    fadeAnimation(controlTxt, 1, 0);
+                    fadeAnimation(logoutTxt, 1, 0);
+                }
+
                 if ((layoutParams.rightMargin >= -getpixel(150) && X > oldX) || (layoutParams.rightMargin <= -getpixel(100) && X < oldX)) {
                     layoutParams.rightMargin = (((oldX - X ) / 2) + menuXdelta);
                     layoutParams2.rightMargin = (((X - oldX) / 4) + iconXdelta);
@@ -601,8 +520,6 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                     layoutParams6.rightMargin = (((X - oldX) / 4) + iconXdelta);
                     layoutParams7.rightMargin = (((X - oldX) / 4) + iconXdelta);
                     layoutParams8.rightMargin = (((X - oldX) / 4) + iconXdelta);
-
-                    Log.i("gaaav", "gaaav" + layoutParams.rightMargin);
 
                     menuContainer.setLayoutParams(layoutParams);
                     homeImg.setLayoutParams(layoutParams2);
@@ -616,14 +533,22 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
 
                 break;
         }
-        masterDashboardActivity.invalidate();
+        root.invalidate();
         return false;
     }
+
+
+
+
 
 
     public void setOnDataListener(RequestDeterminedListener requestDeterminedListener) {
         this.requestDeterminedListener = requestDeterminedListener;
     }
+
+
+
+
 
     @Override
     public void onSwipe(View view, MotionEvent event, SwipeEndFragmentListener swipeEndFragmentListener) {
@@ -636,30 +561,36 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                 menuXdelta = lParams.rightMargin;
                 iconXdelta = lParams1.rightMargin;
                 oldX = X;
-                if (isMenuOpen) {
-                    fadeAnimation(homeTxt, 1, 0);
-                    fadeAnimation(profileTxt, 1, 0);
-                    fadeAnimation(requestTxt, 1, 0);
-                    fadeAnimation(noticeTxt, 1, 0);
-                    fadeAnimation(archiveTxt, 1, 0);
-                    fadeAnimation(controlTxt, 1, 0);
-                    fadeAnimation(logoutTxt, 1, 0);
-                }
 
                 break;
             case MotionEvent.ACTION_UP:
                 RelativeLayout.LayoutParams layoutParams1 = (RelativeLayout.LayoutParams) menuContainer.getLayoutParams();
                 if (layoutParams1.rightMargin > -getpixel(130)) {
-                    swipeEndFragmentListener.onSwipe();
-                    aminateMarginRight(menuContainer, - getpixel(110));
-                    aminateMarginRight(homeImg, getpixel(25));
-                    aminateMarginRight(profileImg, getpixel(25));
-                    aminateMarginRight(requestImg, getpixel(25));
-                    aminateMarginRight(noticeImg, getpixel(25));
-                    aminateMarginRight(archiveImg, getpixel(25));
-                    aminateMarginRight(controlImg, getpixel(25));
-                    aminateMarginRight(logoutImg, getpixel(25));
+                    animateMarginRight(menuContainer, - getpixel(110));
+                    animateMarginRight(homeImg, getpixel(25));
+                    animateMarginRight(profileImg, getpixel(25));
+                    animateMarginRight(requestImg, getpixel(25));
+                    animateMarginRight(noticeImg, getpixel(25));
+                    animateMarginRight(archiveImg, getpixel(25));
+                    animateMarginRight(controlImg, getpixel(25));
+                    animateMarginRight(logoutImg, getpixel(25));
 
+                    isMenuOpen = true;
+                } else {
+                    animateMarginRight(menuContainer, - getpixel(150));
+                    animateMarginRight(homeImg, getpixel(45));
+                    animateMarginRight(profileImg, getpixel(45));
+                    animateMarginRight(requestImg, getpixel(45));
+                    animateMarginRight(noticeImg, getpixel(45));
+                    animateMarginRight(archiveImg, getpixel(45));
+                    animateMarginRight(controlImg, getpixel(45));
+                    animateMarginRight(logoutImg, getpixel(45));
+
+                    isMenuOpen = false;
+                }
+
+                if (layoutParams1.rightMargin > -getpixel(130) && isMenuTxtFaded) {
+                    isMenuTxtFaded = false;
                     fadeAnimation(homeTxt, 0, 1);
                     fadeAnimation(profileTxt, 0, 1);
                     fadeAnimation(requestTxt, 0, 1);
@@ -667,18 +598,6 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                     fadeAnimation(archiveTxt, 0, 1);
                     fadeAnimation(controlTxt, 0, 1);
                     fadeAnimation(logoutTxt, 0, 1);
-                    isMenuOpen = true;
-                } else {
-                    swipeEndFragmentListener.onSwipe();
-                    aminateMarginRight(menuContainer, - getpixel(150));
-                    aminateMarginRight(homeImg, getpixel(45));
-                    aminateMarginRight(profileImg, getpixel(45));
-                    aminateMarginRight(requestImg, getpixel(45));
-                    aminateMarginRight(noticeImg, getpixel(45));
-                    aminateMarginRight(archiveImg, getpixel(45));
-                    aminateMarginRight(controlImg, getpixel(45));
-                    aminateMarginRight(logoutImg, getpixel(45));
-                    isMenuOpen = false;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -691,6 +610,17 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                 RelativeLayout.LayoutParams layoutParams7 = (RelativeLayout.LayoutParams) controlImg.getLayoutParams();
                 RelativeLayout.LayoutParams layoutParams8 = (RelativeLayout.LayoutParams) logoutImg.getLayoutParams();
 
+                if ((X > oldX + 50 || X < oldX - 50) && !isMenuTxtFaded) {
+                    isMenuTxtFaded = true;
+                    fadeAnimation(homeTxt, 1, 0);
+                    fadeAnimation(profileTxt, 1, 0);
+                    fadeAnimation(requestTxt, 1, 0);
+                    fadeAnimation(noticeTxt, 1, 0);
+                    fadeAnimation(archiveTxt, 1, 0);
+                    fadeAnimation(controlTxt, 1, 0);
+                    fadeAnimation(logoutTxt, 1, 0);
+                }
+
                 if ((layoutParams.rightMargin >= -getpixel(150) && X > oldX) || (layoutParams.rightMargin <= -getpixel(100) && X < oldX)) {
                     layoutParams.rightMargin = (((oldX - X ) / 2) + menuXdelta);
                     layoutParams2.rightMargin = (((X - oldX) / 4) + iconXdelta);
@@ -700,8 +630,6 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
                     layoutParams6.rightMargin = (((X - oldX) / 4) + iconXdelta);
                     layoutParams7.rightMargin = (((X - oldX) / 4) + iconXdelta);
                     layoutParams8.rightMargin = (((X - oldX) / 4) + iconXdelta);
-
-                    Log.i("gaaav", "gaaav" + layoutParams.rightMargin);
 
                     menuContainer.setLayoutParams(layoutParams);
                     homeImg.setLayoutParams(layoutParams2);
@@ -715,35 +643,7 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
 
                 break;
         }
-        masterDashboardActivity.invalidate();
+        root.invalidate();
     }
-
-    @Override
-    public void onCloseMenu() {
-        aminateMarginRight(menuContainer, - getpixel(150));
-        aminateMarginRight(homeImg, getpixel(45));
-        aminateMarginRight(profileImg, getpixel(45));
-        aminateMarginRight(requestImg, getpixel(45));
-        aminateMarginRight(noticeImg, getpixel(45));
-        aminateMarginRight(archiveImg, getpixel(45));
-        aminateMarginRight(controlImg, getpixel(45));
-        aminateMarginRight(logoutImg, getpixel(45));
-
-    }
-
-
-
-    public interface RequestDeterminedListener {
-        void onReqDetermined();
-    }
-
-    public int getpixel(int dp) {
-        return dp * (int) getApplicationContext().getResources().getDisplayMetrics().density;
-    }
-
-    public int getdp(int pixel) {
-        return pixel / (int) getApplicationContext().getResources().getDisplayMetrics().density;
-    }
-
 
 }

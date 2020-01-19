@@ -55,9 +55,11 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
     ScaleAnimation hideAnimation, hideAnimation1, showAnimation, showAnimation1;
     SportmanTimingAdapter sportmanTimingAdapter;
     SportmanListAdapter sportmanListAdapter;
-    List<Sport> volleyballListTiming, swimmingListTiming, footballListTiming;
+    ArrayList volleyballListTiming;
+    ArrayList swimmingListTiming;
+    ArrayList footballListTiming;
     List<Sport> volleyballList, footballList, swimmingList;
-    TextView chooseDateTxt;
+    TextView chooseDateTxt, allDateTxt;
     TextView[] weekDayTxts;
     RelativeLayout nothingFoundContainer;
     ProgressBar progressBar;
@@ -89,6 +91,8 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
         weekDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         choosenWeekDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         weekDayTxts = new TextView[7];
+
+        allDateTxt = findViewById(R.id.txt_all_date);
 
         chooseDateTxt = findViewById(R.id.txt_choose_date);
         chooseDateTxt.setText(persianWeekDays[weekDay]
@@ -174,6 +178,7 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
         });
 
 
+
         txtTiming.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 isOnInsertRv = true;
@@ -190,6 +195,18 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
             }
         });
 
+
+        allDateTxt.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                allDateTxt.setAlpha(1);
+                getAllTimes();
+                chooseDateTxt.setAlpha(.5f);
+            }
+        });
+
+
+
         chooseDateTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,6 +216,8 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
                 }
             }
         });
+
+
 
         for (int i = 0; i < weekDayTxts.length; i++) {
             final int finalI = i;
@@ -217,6 +236,7 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
         }
 
 
+
         this.logoutBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(SportmanDashboardActivity.this, LoginActivity.class));
@@ -224,6 +244,7 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
                 userDetails.deleteUser();
             }
         });
+
 
 
         this.addTimeBtn.setOnClickListener(new OnClickListener() {
@@ -383,6 +404,10 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
         });
     }
 
+
+
+
+
     public void getTimes() {
         progressBar.setVisibility(View.VISIBLE);
         nothingFoundContainer.setVisibility(View.INVISIBLE);
@@ -488,6 +513,141 @@ public class SportmanDashboardActivity extends AppCompatActivity implements Dism
             }
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void getAllTimes() {
+        progressBar.setVisibility(View.VISIBLE);
+        nothingFoundContainer.setVisibility(View.INVISIBLE);
+
+        apiHandler.getSport(new ResponseListenerGetSport() {
+            @Override
+            public void onRecieved(List<Sport> SportList) {
+                progressBar.setVisibility(View.INVISIBLE);
+
+                volleyballList = new ArrayList<>();
+                footballList = new ArrayList<>();
+                swimmingList = new ArrayList<>();
+
+                volleyballListTiming = new ArrayList();
+                footballListTiming = new ArrayList();
+                swimmingListTiming = new ArrayList();
+
+                for (int i = 0; i < SportList.size(); i++) {
+                    try {
+                        if ((SportList.get(i)).getType().equals("volleyball") && !SportList.get(i).getPersonalIds().get(weekDays[choosenWeekDay]).equals("")) {
+                            volleyballList.add(SportList.get(i));
+                        } else if ((SportList.get(i)).getType().equals("football") && !SportList.get(i).getPersonalIds().get(weekDays[choosenWeekDay]).equals("")) {
+                            footballList.add(SportList.get(i));
+                        } else if ((SportList.get(i)).getType().equals("swimming") && !SportList.get(i).getPersonalIds().get(weekDays[choosenWeekDay]).equals("")){
+                            swimmingList.add(SportList.get(i));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+                for (int i = 0; i < SportList.size(); i++) {
+                    for (int j = 0; j < 7; j++) {
+                        if ((SportList.get(i)).getType().equals("volleyball") && SportList.get(i).getDate().toString().contains(weekDays[j])) {
+                            volleyballListTiming.add(SportList.get(i));
+                        } else if ((SportList.get(i)).getType().equals("football") && SportList.get(i).getDate().toString().contains(weekDays[j])) {
+                            footballListTiming.add(SportList.get(i));
+                        } else if ((SportList.get(i)).getType().equals("swimming") && SportList.get(i).getDate().toString().contains(weekDays[j])){
+                            swimmingListTiming.add(SportList.get(i));
+                        }
+                    }
+                }
+
+
+                if (!isOnInsertRv) {
+                    switch (type) {
+                        case "volleyball":
+                            sportmanListAdapter = new SportmanListAdapter(SportmanDashboardActivity.this, volleyballListTiming, choosenWeekDay);
+                            if (volleyballList.size() == 0)
+                                nothingFoundContainer.setVisibility(View.VISIBLE);
+                            else
+                                nothingFoundContainer.setVisibility(View.INVISIBLE);
+                            break;
+                        case "football":
+                            sportmanListAdapter = new SportmanListAdapter(SportmanDashboardActivity.this, footballListTiming, choosenWeekDay);
+                            if (footballList.size() == 0)
+                                nothingFoundContainer.setVisibility(View.VISIBLE);
+                            else
+                                nothingFoundContainer.setVisibility(View.INVISIBLE);
+                            break;
+                        case "swimming":
+                            sportmanListAdapter = new SportmanListAdapter(SportmanDashboardActivity.this, swimmingListTiming, choosenWeekDay);
+                            if (swimmingList.size() == 0)
+                                nothingFoundContainer.setVisibility(View.VISIBLE);
+                            else
+                                nothingFoundContainer.setVisibility(View.INVISIBLE);
+                            break;
+                    }
+                    sportmanListRv.setLayoutManager(new LinearLayoutManager(SportmanDashboardActivity.this));
+                    sportmanListRv.setAdapter(sportmanListAdapter);
+                } else {
+                    switch (type) {
+                        case "volleyball":
+                            sportmanTimingAdapter = new SportmanTimingAdapter(SportmanDashboardActivity.this, volleyballListTiming);
+                            if (volleyballListTiming.size() == 0) {
+                                nothingFoundContainer.setVisibility(View.VISIBLE);
+                            } else {
+                                nothingFoundContainer.setVisibility(View.INVISIBLE);
+                            }
+                            break;
+                        case "football":
+                            sportmanTimingAdapter = new SportmanTimingAdapter(SportmanDashboardActivity.this, footballListTiming);
+                            if (footballListTiming.size() == 0) {
+                                nothingFoundContainer.setVisibility(View.VISIBLE);
+                            } else {
+                                nothingFoundContainer.setVisibility(View.INVISIBLE);
+                            }
+                            break;
+                        case "swimming":
+                            sportmanTimingAdapter = new SportmanTimingAdapter(SportmanDashboardActivity.this, swimmingListTiming);
+                            if (swimmingListTiming.size() == 0) {
+                                nothingFoundContainer.setVisibility(View.VISIBLE);
+                            } else {
+                                nothingFoundContainer.setVisibility(View.INVISIBLE);
+                            }
+                            break;
+                    }
+                    sportmanTimingRv.setLayoutManager(new LinearLayoutManager(SportmanDashboardActivity.this));
+                    sportmanTimingRv.setAdapter(sportmanTimingAdapter);
+                }
+
+            }
+
+            @Override
+            public void onMessage(String response) {
+
+                if (response.equals("error")) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    nothingFoundContainer.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+
+
+
+
+
 
 
     @SuppressLint("SetTextI18n")

@@ -15,6 +15,7 @@ public class Furlough {
     private String descriptionLeave;
     private String statusArchive;
     private String statusLeave;
+    private String progressStatus;
     private int started;
 
     public String getPersonalIdemployee() {
@@ -127,5 +128,13 @@ public class Furlough {
 
     public void setStarted(int isStarted) {
         this.started = isStarted;
+    }
+
+    public String getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(String progressStatus) {
+        this.progressStatus = progressStatus;
     }
 }

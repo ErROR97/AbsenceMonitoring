@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.example.absencemonitoring.R;
+import com.example.absencemonitoring.adapters.HomeAdapter;
 import com.example.absencemonitoring.adapters.NoticeFurloughAdapter;
 import com.example.absencemonitoring.handlers.ApiHandler;
 import com.example.absencemonitoring.handlers.UserDetails;
@@ -27,16 +28,25 @@ import java.util.List;
 
 
 public class HomeFragment extends Fragment {
-    View view;
-    RecyclerView rv;
-    NoticeFurloughAdapter noticeFurloughAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
-    UserDetails userDetails;
-    ApiHandler apiHandler;
-    ProgressBar progressBar;
-    RelativeLayout nothingFoundContainer;
-    List<Furlough> list;
-    String firstname, lastname;
+    private View view;
+    private RecyclerView rv;
+    private HomeAdapter noticeFurloughAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressBar progressBar;
+    private RelativeLayout nothingFoundContainer;
+
+
+
+    private List<Furlough> list;
+
+
+
+    private UserDetails userDetails;
+    private ApiHandler apiHandler;
+
+
+    private String firstname, lastname;
+    private String personalIdMaster;
 
     void init() {
 
@@ -46,6 +56,7 @@ public class HomeFragment extends Fragment {
         try {
             firstname = userDetails.getUserInfo().getString("firstName");
             lastname = userDetails.getUserInfo().getString("lastName");
+            personalIdMaster = userDetails.getUserInfo().getString("personalIdmaster");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,31 +71,27 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.light_blue));
 
 
-
-        try {
-            apiHandler.getNotifReqLeave(userDetails.getUserInfo().getString("personalIdmaster"), new ApiHandler.ResponseListenerNotifReqLeave() {
-                @Override
-                public void onRevived(List<Furlough> notifReqLeaveList) {
-                    if (notifReqLeaveList.size() == 0) {
-                        nothingFoundContainer.setVisibility(View.VISIBLE);
-                    } else{
-                        nothingFoundContainer.setVisibility(View.INVISIBLE);}
-                        for (int i = 0; i < notifReqLeaveList.size(); i++) {
-                            if (notifReqLeaveList.get(i).getName().equals(firstname + " " + lastname)) {
-                                list.add(notifReqLeaveList.get(i));
-                            }
-                        }
-                        progressBar.setVisibility(View.INVISIBLE);
-
-
-                        noticeFurloughAdapter = new NoticeFurloughAdapter(getActivity(), list);
-                        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rv.setAdapter(noticeFurloughAdapter);
+        apiHandler.getNotifReqLeave(personalIdMaster, new ApiHandler.ResponseListenerNotifReqLeave() {
+            @Override
+            public void onRevived(List<Furlough> notifReqLeaveList) {
+                if (notifReqLeaveList.size() == 0) {
+                    nothingFoundContainer.setVisibility(View.VISIBLE);
+                } else {
+                    nothingFoundContainer.setVisibility(View.INVISIBLE);
                 }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                for (int i = 0; i < notifReqLeaveList.size(); i++) {
+                    if (notifReqLeaveList.get(i).getName().equals(firstname + " " + lastname)) {
+                        list.add(notifReqLeaveList.get(i));
+                    }
+                }
+                progressBar.setVisibility(View.INVISIBLE);
+
+
+                noticeFurloughAdapter = new HomeAdapter(getActivity(), list);
+                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                rv.setAdapter(noticeFurloughAdapter);
+            }
+        });
     }
 
 
@@ -115,7 +122,7 @@ public class HomeFragment extends Fragment {
                                     }
                                 }
 
-                                noticeFurloughAdapter = new NoticeFurloughAdapter(getActivity(), list);
+                                noticeFurloughAdapter = new HomeAdapter(getActivity(), list);
                                 rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                                 rv.setAdapter(noticeFurloughAdapter);
                                 noticeFurloughAdapter.notifyDataSetChanged();

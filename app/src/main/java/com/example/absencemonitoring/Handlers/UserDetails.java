@@ -7,12 +7,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserDetails {
+
     private SharedPreferences preference;
-    public static final  String preferenceName="UserData";
+    private static final  String preferenceName="UserData";
+
 
     public UserDetails(Context context) {
         preference=context.getSharedPreferences(preferenceName, context.MODE_PRIVATE);
     }
+
+
+
+
 
     public void saveUserInfo(JSONObject userInfo){
         SharedPreferences.Editor editor = preference.edit();
@@ -35,6 +41,10 @@ public class UserDetails {
         editor.apply();
     }
 
+
+
+
+
     public void saveUserDetails(String personalId,boolean login){
         SharedPreferences.Editor editor = preference.edit();
         editor.putString("personalId",personalId);
@@ -42,15 +52,27 @@ public class UserDetails {
         editor.apply();
     }
 
+
+
+
+
     public void saveUserRole(String userRole){
         SharedPreferences.Editor editor = preference.edit();
         editor.putString("role",userRole);
         editor.apply();
     }
 
-    public String getUserDetails() {
+
+
+
+
+    public String getUserPersonalId() {
         return preference.getString("personalId", "not found");
     }
+
+
+
+
 
     public JSONObject getUserInfo() {
         JSONObject jsonObject = new JSONObject();
@@ -72,11 +94,19 @@ public class UserDetails {
         return jsonObject;
     }
 
+
+
+
+
     public boolean getUserLogin() {
         return preference.getBoolean("flagLogin", false);
     }
 
-    public void deleteUser(){
+
+
+
+
+    public void deleteUser() {
         SharedPreferences.Editor editor = preference.edit();
         editor.clear();
         editor.apply();

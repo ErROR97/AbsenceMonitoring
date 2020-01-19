@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root"
     android:background="@color/white"
     tools:context=".activities.EmployeeSportReserveActivity">
 
@@ -110,6 +111,20 @@
                         android:layout_marginBottom="8dp"
                         android:layout_below="@id/img_volleyball"/>
 
+                    <TextView
+                        android:id="@+id/txt_empty_list_volleyball"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="چیزی برای نمایش وجود ندارد"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/black"
+                        android:visibility="invisible"
+                        android:gravity="center"
+                        android:layout_alignTop="@id/btn_send_volleyball_req"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        />
+
 
                     <RelativeLayout
                         android:id="@+id/container_capacity_volleyball"
@@ -129,9 +144,10 @@
                             android:layout_alignParentLeft="true"/>
 
                         <TextView
+                            android:id="@+id/txt_capacity_volleyball"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="۱۵"
+                            android:text="-"
                             android:textSize="24dp"
                             android:layout_below="@id/lbl_remainder_volleyball"
                             android:textColor="@color/black"
@@ -232,6 +248,21 @@
                         android:layout_marginBottom="8dp"
                         android:layout_below="@id/img_football"/>
 
+                    <TextView
+                        android:id="@+id/txt_empty_list_football"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="چیزی برای نمایش وجود ندارد"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/black"
+                        android:visibility="invisible"
+                        android:layout_alignTop="@id/btn_send_football_req"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        />
+
+
 
 
 
@@ -253,9 +284,10 @@
                             android:layout_alignParentLeft="true"/>
 
                         <TextView
+                            android:id="@+id/txt_capacity_football"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="۱۵"
+                            android:text="-"
                             android:textSize="24dp"
                             android:layout_below="@id/lbl_remainder_football"
                             android:textColor="@color/black"
@@ -355,6 +387,21 @@
                         android:layout_marginBottom="8dp"
                         android:layout_below="@id/img_swimming"/>
 
+                    <TextView
+                        android:id="@+id/txt_empty_list_swimming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="چیزی برای نمایش وجود ندارد"
+                        android:layout_alignTop="@id/btn_send_swimming_req"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:fontFamily="@font/iransansmobile_medium"
+                        android:textColor="@color/black"
+                        android:visibility="invisible"
+                        />
+
+
 
 
 
@@ -377,9 +424,10 @@
                             android:layout_alignParentLeft="true"/>
 
                         <TextView
+                            android:id="@+id/txt_capacity_swimming"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="۱۵"
+                            android:text="-"
                             android:textSize="24dp"
                             android:layout_below="@id/lbl_remainder_swimming"
                             android:textColor="@color/black"
@@ -429,10 +477,13 @@
 
                 </RelativeLayout>
 
+
             </androidx.cardview.widget.CardView>
 
 
         </RelativeLayout>
+
+
     </ScrollView>
 
     <androidx.cardview.widget.CardView
@@ -570,6 +621,17 @@
 
 
     </androidx.cardview.widget.CardView>
+
+
+    <ProgressBar
+        android:id="@+id/progressbar_main"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:translationZ="150dp"
+        android:visibility="invisible"
+        android:indeterminateTint="@color/yellow"/>
 
 
 

@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="۱۳۹۷/۰۵/۲۷"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:textColor="@color/dark_green"
             android:fontFamily="@font/iransansmobile_medium"
             android:layout_marginLeft="16dp"
@@ -350,6 +350,7 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/container_edit_start_time"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:backgroundTint="@color/blue"
@@ -359,31 +360,27 @@
                     app:cardCornerRadius="16dp">
 
 
-                    <RelativeLayout
-                        android:id="@+id/container_edit_start_time"
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_edit"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="8dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/txt_edit_start_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@drawable/ic_edit"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/txt_edit_start_time"/>
-
-                        <TextView
-                            android:id="@+id/txt_edit_start_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="تغییر"
-                            android:textSize="16dp"
-                            android:layout_centerVertical="true"
-                            android:fontFamily="@font/iransansmobile_light"
-                            android:textColor="@color/light_yellow" />
-
-
-                    </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        android:text="تغییر"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/iransansmobile_light"
+                        android:textColor="@color/light_yellow"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="16dp"
+                        />
 
 
                 </androidx.cardview.widget.CardView>
@@ -395,7 +392,6 @@
                     android:layout_marginRight="32dp"
                     android:background="@color/grey"
                     android:layout_alignParentBottom="true"/>
-
 
 
 
@@ -524,6 +520,7 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/container_edit_amount_time"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:backgroundTint="@color/blue"
@@ -533,31 +530,29 @@
                     app:cardCornerRadius="16dp">
 
 
-                    <RelativeLayout
-                        android:id="@+id/container_edit_amount_time"
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_edit"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="8dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/txt_edit_amount_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@drawable/ic_edit"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/txt_edit_amount_time"/>
-
-                        <TextView
-                            android:id="@+id/txt_edit_amount_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="تغییر"
-                            android:textSize="16dp"
-                            android:layout_centerVertical="true"
-                            android:fontFamily="@font/iransansmobile_light"
-                            android:textColor="@color/light_yellow" />
+                        android:layout_height="wrap_content"
+                        android:text="تغییر"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/iransansmobile_light"
+                        android:textColor="@color/light_yellow"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="16dp"
+                        />
 
 
-                    </RelativeLayout>
+
 
 
                 </androidx.cardview.widget.CardView>
@@ -709,6 +704,7 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/container_edit_start_date"
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:backgroundTint="@color/blue"
@@ -718,31 +714,29 @@
                     app:cardCornerRadius="16dp">
 
 
-                    <RelativeLayout
-                        android:id="@+id/container_edit_start_date"
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/ic_edit"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="8dp"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/txt_edit_start_date"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@drawable/ic_edit"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@id/txt_edit_start_date"/>
-
-                        <TextView
-                            android:id="@+id/txt_edit_start_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="تغییر"
-                            android:textSize="16dp"
-                            android:layout_centerVertical="true"
-                            android:fontFamily="@font/iransansmobile_light"
-                            android:textColor="@color/light_yellow" />
+                        android:layout_height="wrap_content"
+                        android:text="تغییر"
+                        android:textSize="16dp"
+                        android:fontFamily="@font/iransansmobile_light"
+                        android:textColor="@color/light_yellow"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="16dp"
+                        />
 
 
-                    </RelativeLayout>
 
 
                 </androidx.cardview.widget.CardView>

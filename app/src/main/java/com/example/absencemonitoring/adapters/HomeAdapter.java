@@ -10,10 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
-import com.example.absencemonitoring.handlers.ApiHandler;
-import com.example.absencemonitoring.utils.DateTime;
 import com.example.absencemonitoring.activities.MasterFurloughActivity;
+import com.example.absencemonitoring.handlers.ApiHandler;
 import com.example.absencemonitoring.instances.Furlough;
+import com.example.absencemonitoring.utils.DateTime;
 
 import java.util.List;
 
@@ -21,52 +21,28 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NoticeFurloughAdapter extends RecyclerView.Adapter<NoticeFurloughAdapter.MyViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
 
     Activity activity;
     List<Furlough> list;
 
-    ApiHandler apiHandler;
 
-    public NoticeFurloughAdapter(Activity activity, List<Furlough> list) {
+    public HomeAdapter(Activity activity, List<Furlough> list) {
         this.activity = activity;
         this.list = list;
-        apiHandler = new ApiHandler(activity);
     }
 
     @NonNull
     @Override
-    public NoticeFurloughAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NoticeFurloughAdapter.MyViewHolder(LayoutInflater.from(activity).inflate(R.layout.item_notice_furlough, parent, false));
+    public HomeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new HomeAdapter.MyViewHolder(LayoutInflater.from(activity).inflate(R.layout.item_notice_furlough, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NoticeFurloughAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final HomeAdapter.MyViewHolder holder, final int position) {
         holder.nameTxt.setText(list.get(position).getName());
         holder.typeTxt.setText(list.get(position).getLeaveType());
         holder.amountTxt.setText(DateTime.calculateAmountIsDayOrHour(list.get(position).getTimeLeave()));
-
-
-
-        if (list.get(position).getProgressStatus() != null && list.get(position).getProgressStatus().equals("1")) {
-            holder.statusTxt.setText("تایید شده");
-            holder.noticeFurlough.setBackground(activity.getResources().getDrawable(R.drawable.background_green_radius_10dp));
-            apiHandler.updateProgressArchive(list.get(position).getId(), new ApiHandler.ResponseListenerUpdateArchive() {
-                @Override
-                public void onRecived(String response) {
-                    Log.i("alright", "onRecived: " + response);
-                }
-            });
-        } else if (list.get(position).getProgressStatus() != null && list.get(position).getProgressStatus().equals("2")) {
-            holder.statusTxt.setText("رد شده");
-            holder.noticeFurlough.setBackground(activity.getResources().getDrawable(R.drawable.background_red_radius_10dp));
-            apiHandler.updateProgressArchive(list.get(position).getId(), new ApiHandler.ResponseListenerUpdateArchive() {
-                @Override
-                public void onRecived(String response) {
-                    Log.i("alright", "onRecived: " + response);
-                }
-            });
-        }
 
 
         holder.noticeFurlough.setOnClickListener(new View.OnClickListener() {

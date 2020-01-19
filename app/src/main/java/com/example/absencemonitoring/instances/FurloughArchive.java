@@ -12,6 +12,7 @@ public class FurloughArchive {
     private String description;
     private String descriptionLeave;
     private String currentDate;
+    private String status;
 
     public int getId() {
         return id;
@@ -99,5 +100,13 @@ public class FurloughArchive {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

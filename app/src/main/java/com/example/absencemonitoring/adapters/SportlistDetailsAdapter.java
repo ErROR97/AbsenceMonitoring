@@ -4,17 +4,14 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.instances.SportlistDetails;
-import com.example.absencemonitoring.instances.SportmanList;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SportlistDetailsAdapter extends RecyclerView.Adapter<SportlistDetailsAdapter.MyViewHolder> {

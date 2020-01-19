@@ -5,16 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.absencemonitoring.R;
 import com.example.absencemonitoring.adapters.SportlistDetailsAdapter;
-import com.example.absencemonitoring.instances.Sport;
 import com.example.absencemonitoring.instances.SportlistDetails;
-import com.example.absencemonitoring.instances.SportmanList;
 import com.example.absencemonitoring.utils.Formating;
 
 import java.util.ArrayList;
