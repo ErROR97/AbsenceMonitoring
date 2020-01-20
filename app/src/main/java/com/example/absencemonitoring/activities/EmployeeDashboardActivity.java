@@ -27,7 +27,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     CardView menuContainer;
     RelativeLayout homeContainer, requestContainer, profileContainer, noticeContainer, archiveContainer, logoutContainer;
     CardView requestDetailsContainer, noticeDetailsContainer, archiveDetailsContainer;
-    TextView requestFurlougTxt, requestSportTxt;
+    TextView requestFurlougTxt, requestSportTxt, requestTransportationTxt;
     TextView noticeFurloughTxt, noticeSportTxt;
     TextView archiveFurloughTxt;
     TextView homeTxt, noticeTxt, archiveTxt, controlTxt;
@@ -65,6 +65,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
 
         requestFurlougTxt = findViewById(R.id.txt_request_furough);
         requestSportTxt = findViewById(R.id.txt_request_sport);
+        requestTransportationTxt = findViewById(R.id.txt_request_transportation);
 
         noticeFurloughTxt = findViewById(R.id.txt_notice_furough);
         noticeSportTxt = findViewById(R.id.txt_notice_sport);
@@ -146,6 +147,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         });
 
 
+
         requestContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,6 +161,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
             }
         });
 
+
+
         noticeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +175,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
         archiveContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +192,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         });
 
 
+
         logoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +201,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
                 finish();
             }
         });
+
 
 
         requestFurlougTxt.setOnClickListener(new View.OnClickListener() {
@@ -205,10 +213,20 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         });
 
 
+
         requestSportTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EmployeeDashboardActivity.this, EmployeeSportReserveActivity.class));
+                startActivity(new Intent(EmployeeDashboardActivity.this, SportReserveActivity.class));
+                requestDetailsContainer.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+        requestTransportationTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EmployeeDashboardActivity.this, TransportReserveActivity.class));
                 requestDetailsContainer.setVisibility(View.INVISIBLE);
             }
         });

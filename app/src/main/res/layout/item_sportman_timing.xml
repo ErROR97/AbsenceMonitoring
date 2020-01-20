@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:backgroundTint="@color/honeydew"
     android:layout_marginRight="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginTop="12dp"
@@ -18,23 +18,25 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/txt_time"
+            android:id="@+id/txt_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="وقت اول"
-            android:textSize="18dp"
+            tools:text="شنبه ۰۹/۰۹/۰۹"
+            android:fontFamily="@font/iransansmobile_light"
             android:textColor="@color/black"
-            android:fontFamily="@font/iransansmobile_medium"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             />
+
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/txt_time"
             android:layout_marginTop="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
             android:layoutDirection="rtl">
 
             <TextView
@@ -42,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="از"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:fontFamily="@font/iransansmobile_light"
@@ -57,8 +59,7 @@
                 android:layout_height="40dp"
                 tools:text="۱۸:۰۰"
                 android:gravity="center"
-                android:textSize="22dp"
-                android:textColor="@color/light_blue"
+                android:textSize="20dp"
                 android:fontFamily="@font/iransansmobile_medium"
                 android:layout_toLeftOf="@id/lbl_start_time"
                 android:layout_marginRight="8dp"
@@ -69,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="تا"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:fontFamily="@font/iransansmobile_light"
@@ -84,35 +85,40 @@
                 android:layout_height="40dp"
                 tools:text="۲۰:۰۰"
                 android:gravity="center"
-                android:textSize="22dp"
-                android:textColor="@color/orange"
+                android:textSize="20dp"
                 android:fontFamily="@font/iransansmobile_medium"
                 android:layout_toLeftOf="@id/lbl_end_time"
                 android:layout_marginRight="8dp"
                 />
+
         </RelativeLayout>
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btn_delete"
             android:layout_width="80dp"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="16dp"
-            android:layout_below="@id/txt_time"
             android:backgroundTint="@color/red"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="حذف"
-                android:textSize="16dp"
+                android:textSize="14dp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/iransansmobile_medium"
+                android:fontFamily="@font/iransansmobile_light"
                 android:layout_gravity="center" />
 
         </androidx.cardview.widget.CardView>
+
+
 
 
     </RelativeLayout>

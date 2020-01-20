@@ -8,6 +8,7 @@ public class Sport {
     private String code;
     private String type;
     private String time;
+    private String actualDate;
     private JSONObject date;
     private JSONObject personalIds;
     private JSONObject capacity;
@@ -75,5 +76,13 @@ public class Sport {
 
     public void setDate(JSONObject date) {
         this.date = date;
+    }
+
+    public String getActualDate() {
+        return actualDate;
+    }
+
+    public void setActualDate(String actualDate) {
+        this.actualDate = actualDate;
     }
 }

@@ -427,6 +427,30 @@
                 />
 
 
+            <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_yellow"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@id/txt_request_sport" />
+
+            <TextView
+                android:id="@+id/txt_request_transportation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="سرویس"
+                android:textSize="18dp"
+                android:textColor="@color/light_yellow"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txt_request_sport"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                />
+
+
         </RelativeLayout>
 
 

@@ -23,6 +23,7 @@ public class SportlistDetailsActivity extends AppCompatActivity {
     SportlistDetailsAdapter sportlistDetailsAdapter;
     String persons, type, time, capacity;
     RelativeLayout headerContainer;
+    TextView dateTxt;
     ImageView iconImg;
     TextView startTimeTxt, endTimeTxt, capacityTxt;
 
@@ -33,6 +34,7 @@ public class SportlistDetailsActivity extends AppCompatActivity {
         startTimeTxt = findViewById(R.id.txt_start_time);
         endTimeTxt = findViewById(R.id.txt_end_time);
         capacityTxt = findViewById(R.id.txt_capacity);
+        dateTxt = findViewById(R.id.txt_date);
 
         list = new ArrayList<>();
 
@@ -41,6 +43,8 @@ public class SportlistDetailsActivity extends AppCompatActivity {
         type = getIntent().getStringExtra("type");
         time = getIntent().getStringExtra("time");
         capacity = getIntent().getStringExtra("capacity");
+
+        dateTxt.setText(getIntent().getStringExtra("date"));
 
         for (int i = 0; i < persons.split("-").length; i++) {
             list.add(new SportlistDetails(persons.split("-")[i].split(">")[1], persons.split("-")[i].split(">")[0]));

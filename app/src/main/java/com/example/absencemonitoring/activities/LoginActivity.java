@@ -69,6 +69,8 @@ public class LoginActivity extends AppCompatActivity implements RecoveryFragment
                 startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
             } else if (role.trim().equals("sportman")) {
                 startActivity(new Intent(LoginActivity.this, SportmanDashboardActivity.class));
+            } else if (role.trim().equals("driver")) {
+                startActivity(new Intent(LoginActivity.this, DriverDashboardActivity.class));
             }
 
             apiHandler = new ApiHandler(activity);
@@ -108,6 +110,8 @@ public class LoginActivity extends AppCompatActivity implements RecoveryFragment
                                     startActivity(new Intent(LoginActivity.this, GuardDashboardActivity.class));
                                 } else if (userDetails.getUserInfo().getString("role").equals("sportman")) {
                                     startActivity(new Intent(LoginActivity.this, SportmanDashboardActivity.class));
+                                } else if (userDetails.getUserInfo().getString("role").equals("driver")) {
+                                    startActivity(new Intent(LoginActivity.this, DriverDashboardActivity.class));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

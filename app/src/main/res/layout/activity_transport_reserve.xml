@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.TransportReserveActivity">
+
+    <RelativeLayout
+        android:id="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="10dp">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="16dp"
+            app:srcCompat="@drawable/ic_back_arrow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="درخواست سرویس"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/img_back"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/txt_open_weekdays_dialog"
+            android:layout_width="140dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:text="شنبه ۹۸/۰۸/۰۱"
+            android:gravity="center"
+            android:background="@drawable/background_date_reserve_sport_form"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            />
+
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_morning_trasnport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/light_blue"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/container_header">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="نوبت صبح"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/txt_morning_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="۰۶:۳۰"
+                android:textSize="24dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/iransansmobile_light"
+                />
+
+
+            <EditText
+                android:id="@+id/et_morning_address"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/txt_morning_time"
+                android:background="@drawable/background_et_start_time"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:hint="آدرس مبدا را وارد کنید"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_marginTop="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_morning_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_morning_address"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@color/black"
+                android:layout_marginBottom="16dp"
+                >
+
+                <TextView
+                    android:id="@+id/txt_morning_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="درخواست"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/iransansmobile_light"
+                    />
+
+                <ProgressBar
+                    android:id="@+id/progressbar_morning_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="true"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:indeterminateTint="@color/white"/>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_afternoon_trasnport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/light_orange"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/container_morning_trasnport">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="نوبت ظهر"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp" />
+
+            <TextView
+                android:id="@+id/txt_afternoon_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="۱۴:۳۰"
+                android:textSize="24dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/iransansmobile_light"
+                />
+
+
+
+
+            <EditText
+                android:id="@+id/et_afternoon_address"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/txt_afternoon_time"
+                android:background="@drawable/background_et_start_time"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:hint="آدرس مقصد را وارد کنید"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:fontFamily="@font/iransansmobile_medium"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_marginTop="16dp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_afternoon_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_afternoon_address"
+                android:layout_centerHorizontal="true"
+                app:cardBackgroundColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:id="@+id/txt_afternoon_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="درخواست"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/iransansmobile_light"
+                    />
+
+                <ProgressBar
+                    android:id="@+id/progressbar_afternoon_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="true"
+                    android:layout_gravity="center"
+                    android:visibility="invisible"
+                    android:indeterminateTint="@color/white"/>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_dialog_focus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".5"
+        android:translationZ="100dp"
+        android:visibility="invisible"
+        android:backgroundTint="@color/black"/>
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_weekdays_dialog"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:backgroundTint="@color/black"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="8dp"
+        android:translationZ="150dp"
+        android:visibility="invisible"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/txt_saturday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="شنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="16dp"
+                />
+
+            <TextView
+                android:id="@+id/txt_sunday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="یکشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_saturday"
+                />
+
+            <TextView
+                android:id="@+id/txt_monday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="دوشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_below="@id/txt_sunday"
+                />
+
+            <TextView
+                android:id="@+id/txt_tuesday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="سه شنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_monday"
+                />
+
+            <TextView
+                android:id="@+id/txt_wednesday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="چهارشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_tuesday"
+                />
+
+            <TextView
+                android:id="@+id/txt_thursday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="پنجشنبه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_wednesday"
+                />
+
+            <TextView
+                android:id="@+id/txt_friday"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="جمعه ۱۳۹۸/۰۸/۰۲"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/txt_thursday"
+                />
+
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

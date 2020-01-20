@@ -48,7 +48,7 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
     ImageView homeImg, profileImg, requestImg, noticeImg, archiveImg, controlImg, logoutImg;
 
     CardView requestDetailsContainer, noticeDetailsContainer;
-    TextView requestFurlougTxt, requestSportTxt;
+    TextView requestFurlougTxt, requestSportTxt, requestTransportationTxt;
     TextView noticeFurloughTxt, noticeSportTxt;
 
     TextView txtNumberOfNotices, txtNumberOfFurloughNotices;
@@ -117,6 +117,7 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         requestDetailsContainer = findViewById(R.id.container_request_details);
         requestFurlougTxt = findViewById(R.id.txt_request_furough);
         noticeFurloughTxt = findViewById(R.id.txt_notice_furough);
+        requestTransportationTxt = findViewById(R.id.txt_request_transportation);
 
         noticeDetailsContainer = findViewById(R.id.container_notice_details);
         requestSportTxt = findViewById(R.id.txt_request_sport);
@@ -260,7 +261,17 @@ public class MasterDashboardActivity extends AppCompatActivity implements View.O
         requestSportTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MasterDashboardActivity.this, EmployeeSportReserveActivity.class));
+                startActivity(new Intent(MasterDashboardActivity.this, SportReserveActivity.class));
+                requestDetailsContainer.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+
+        requestTransportationTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MasterDashboardActivity.this, TransportReserveActivity.class));
                 requestDetailsContainer.setVisibility(View.INVISIBLE);
             }
         });

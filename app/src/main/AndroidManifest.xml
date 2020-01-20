@@ -16,20 +16,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.SportlistDetailsActivity"></activity>
-        <activity android:name=".activities.SportmanDashboardActivity">
-
-
-        </activity>
+        <activity android:name=".activities.DriverDashboardActivity"></activity>
+        <activity android:name=".activities.TransportReserveActivity" />
+        <activity android:name=".activities.SportlistDetailsActivity" />
+        <activity android:name=".activities.SportmanDashboardActivity" />
         <activity android:name=".activities.EmployeeDashboardActivity" />
         <activity android:name=".activities.GuardDashboardActivity" />
         <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.EmployeeSportReserveActivity" />
+        <activity android:name=".activities.SportReserveActivity" />
         <activity android:name=".activities.MasterDashboardActivity" />
         <activity android:name=".activities.MasterFurloughActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

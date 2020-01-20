@@ -224,7 +224,7 @@ public class addReserveSportTimeFragment extends Fragment {
                             progressBar.setVisibility(View.INVISIBLE);
                             if (response.equals("success")) {
                                 getActivity().getSupportFragmentManager().beginTransaction().remove(addReserveSportTimeFragment.this).commit();
-                                dismissShadowListener.onShadowDismissed();
+                                dismissShadowListener.onShadowDismissed(true);
                             } else {
                                 Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
                             }
@@ -241,7 +241,7 @@ public class addReserveSportTimeFragment extends Fragment {
         this.cancelBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction().remove(addReserveSportTimeFragment.this).commit();
-                dismissShadowListener.onShadowDismissed();
+                dismissShadowListener.onShadowDismissed(false);
             }
         });
 

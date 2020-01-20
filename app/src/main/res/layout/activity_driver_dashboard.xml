@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.DriverDashboardActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="8dp"
+        >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            app:srcCompat="@drawable/ic_green_energy" />
+
+
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="متین براهویی"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="راننده"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/txt_name"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/iransansmobile_light" />
+
+        <TextView
+            android:id="@+id/lbl_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اداره کل برق"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="استان سیستان و بلوچستان"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:fontFamily="@font/iransansmobile_medium"
+            android:layout_below="@id/lbl_brand"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/container_shifts"
+        android:layout_width="316dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/container_header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_morning_shift"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            app:cardCornerRadius="4dp"
+            android:backgroundTint="@color/light_blue">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="شیفت صبح"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_toLeftOf="@id/img_icon"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_afternoon_shift"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            app:cardCornerRadius="4dp"
+            android:alpha=".5"
+            android:backgroundTint="@color/light_orange">
+
+
+            <TextView
+                android:id="@+id/txt_type"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="شیفت بعد از ظهر"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:fontFamily="@font/iransansmobile_light"
+                android:layout_toLeftOf="@id/img_icon"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_transport_reqs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_shifts"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_logout"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        app:cardCornerRadius="100dp"
+        android:layout_gravity="bottom|left"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/black"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp">
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="9dp"
+            android:paddingRight="7dp"
+            app:srcCompat="@drawable/ic_logout"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue"
+        android:layout_centerInParent="true"
+        />
+
+
+
+
+</RelativeLayout>

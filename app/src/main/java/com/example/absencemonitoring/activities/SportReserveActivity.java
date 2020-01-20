@@ -33,7 +33,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class EmployeeSportReserveActivity extends AppCompatActivity implements SendSelectedReserverSportTimeListener {
+public class SportReserveActivity extends AppCompatActivity implements SendSelectedReserverSportTimeListener {
 
     RelativeLayout root;
 
@@ -113,7 +113,7 @@ public class EmployeeSportReserveActivity extends AppCompatActivity implements S
         emptyListFootballTxt = findViewById(R.id.txt_empty_list_football);
         emptyListSwimmingTxt = findViewById(R.id.txt_empty_list_swimming);
 
-        DialogFocusContainer = findViewById(R.id.container_shadow);
+        DialogFocusContainer = findViewById(R.id.container_dialog_focus);
         DaysOfWeekDialog = findViewById(R.id.container_week);
 
         DayOfWeekTxts = new TextView[7];
@@ -166,7 +166,7 @@ public class EmployeeSportReserveActivity extends AppCompatActivity implements S
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employee_sport_reserve);
+        setContentView(R.layout.activity_sport_reserve);
 
         init();
 
@@ -405,13 +405,13 @@ public class EmployeeSportReserveActivity extends AppCompatActivity implements S
                 checkForEmptyList(swimmingList, emptyListSwimmingTxt, sendSwimmingReqBtn);
 
 
-                volleyballReserveSportTimeAdapter = new ReserveSportTimeAdapter(EmployeeSportReserveActivity.this, volleyballList, choosenWeekDay, "volleyball");
-                footballReserverSportTimeAdapter = new ReserveSportTimeAdapter(EmployeeSportReserveActivity.this, footballList, choosenWeekDay, "football");
-                swimmingReserverSportItemAdapter = new ReserveSportTimeAdapter(EmployeeSportReserveActivity.this, swimmingList, choosenWeekDay, "swimming");
+                volleyballReserveSportTimeAdapter = new ReserveSportTimeAdapter(SportReserveActivity.this, volleyballList, choosenWeekDay, "volleyball");
+                footballReserverSportTimeAdapter = new ReserveSportTimeAdapter(SportReserveActivity.this, footballList, choosenWeekDay, "football");
+                swimmingReserverSportItemAdapter = new ReserveSportTimeAdapter(SportReserveActivity.this, swimmingList, choosenWeekDay, "swimming");
 
-                volleyballReserveSportTimeRv.setLayoutManager(new LinearLayoutManager(EmployeeSportReserveActivity.this));
-                footballReserveSportTimeRv.setLayoutManager(new LinearLayoutManager(EmployeeSportReserveActivity.this));
-                swimmingReserveSportTimeRv.setLayoutManager(new LinearLayoutManager(EmployeeSportReserveActivity.this));
+                volleyballReserveSportTimeRv.setLayoutManager(new LinearLayoutManager(SportReserveActivity.this));
+                footballReserveSportTimeRv.setLayoutManager(new LinearLayoutManager(SportReserveActivity.this));
+                swimmingReserveSportTimeRv.setLayoutManager(new LinearLayoutManager(SportReserveActivity.this));
 
                 volleyballReserveSportTimeRv.setAdapter(volleyballReserveSportTimeAdapter);
                 footballReserveSportTimeRv.setAdapter(footballReserverSportTimeAdapter);

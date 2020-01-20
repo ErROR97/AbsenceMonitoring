@@ -35,6 +35,19 @@
             />
 
 
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="شنبه ۱/۱/۹۸"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:textSize="16dp"
+            android:layout_above="@id/txt_start_time"
+            android:textColor="@color/black"
+            android:fontFamily="@font/iransansmobile_light"
+            />
+
 
         <TextView
             android:id="@+id/lbl_time"
@@ -57,7 +70,6 @@
             android:text="۱۷:۰۰"
             android:textSize="16dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
             android:layout_toLeftOf="@id/lbl_time"
             android:textColor="@color/black"
             android:layout_alignParentBottom="true"
@@ -71,7 +83,6 @@
             android:text="تا"
             android:textSize="14dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
             android:layout_toLeftOf="@id/txt_start_time"
             android:textColor="@color/black"
             android:layout_marginBottom="8dp"
@@ -85,7 +96,6 @@
             android:text="۱۹:۰۰"
             android:textSize="16dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="32dp"
             android:layout_toLeftOf="@id/lbl_ta"
             android:textColor="@color/black"
             android:layout_marginBottom="8dp"

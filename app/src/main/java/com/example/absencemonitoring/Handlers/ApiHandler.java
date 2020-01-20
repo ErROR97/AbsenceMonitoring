@@ -15,12 +15,14 @@ import com.android.volley.toolbox.Volley;
 import com.example.absencemonitoring.instances.Furlough;
 import com.example.absencemonitoring.instances.FurloughArchive;
 import com.example.absencemonitoring.instances.Sport;
+import com.example.absencemonitoring.instances.Transport;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +46,9 @@ public class ApiHandler {
     private String urlArchiveReqLeaveEmployee = "http://matingrimes.ir/office/archiveReqLeaveEmployee.php";
     private String urlNotifReqEmployee = "http://matingrimes.ir/office/notifReqEmployee.php";
     private String urlControlReqLeaveEmployee = "http://matingrimes.ir/office/controlReqLeaveEmployee.php";
+    private String urlInsertTransport = "http://matingrimes.ir/office/reqTransport.php";
+    private String urlGetTransport = "http://matingrimes.ir/office/getTransport.php";
+    private String urlDeleteSportTime = "http://matingrimes.ir/office/updateTimeSport.php";
 
 
 
@@ -613,6 +618,8 @@ public class ApiHandler {
         requestQueue.add(request);
     }
 
+
+
     public void reqSport(final String personalId, final String fullName, final String jsonArray, final String date, final ResponseListenerReqSport responseListenerReqSport) {
 
         final StringRequest request = new StringRequest(Request.Method.POST, urlReqSport,
@@ -697,6 +704,53 @@ public class ApiHandler {
 
     }
 
+
+
+
+    public void deleteSportTime(final int id, final String date, final ResponseListenerDeleteSportTime responseListenerDeleteSportTime) {
+
+        final StringRequest request = new StringRequest(Request.Method.POST, urlDeleteSportTime,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+
+                        if (response.trim().equals("success")) {
+                            responseListenerDeleteSportTime.onRecieved("success");
+                        } else {
+                            responseListenerDeleteSportTime.onRecieved(response);
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerDeleteSportTime.onRecieved("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("id", String.valueOf(id));
+                params.put("date", date);
+                return params;
+
+
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+
+    }
+
+
+
+
+
     public void updateStatusArchive(final int id, final ResponseListenerUpdateArchive responseListenerUpdateArchive) {
         final StringRequest request = new StringRequest(Request.Method.POST, urlUpdateArchive,
                 new Response.Listener<String>() {
@@ -768,6 +822,105 @@ public class ApiHandler {
     }
 
 
+
+
+
+
+
+    public void insertTransportRequest(final Transport transport, final ResponseListenerReqTransport responseListenerReqTransport) {
+
+        final StringRequest request = new StringRequest(Request.Method.POST, urlInsertTransport,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        responseListenerReqTransport.onRecieved(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    responseListenerReqTransport.onRecieved("NoConnectionError");
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("personalId", transport.getPersonalId());
+                params.put("fullName", transport.getName());
+                params.put("date", transport.getDate());
+                params.put("address", transport.getAddress());
+                params.put("shift", transport.getShift());
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+
+    public void getTransport(final ResponseListenerGetTransport responseListenerGetTransport){
+        final StringRequest request = new StringRequest(Request.Method.POST, urlGetTransport,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONArray jsonArray = null;
+
+                        if (response.trim().split("_")[0].equals("success")) {
+                            try {
+                                jsonArray = new JSONArray(response.trim().split("_")[1]);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            List<Transport> transportList = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Transport transport = new Transport();
+                                try {
+                                    transport.setId(Integer.parseInt(jsonArray.getJSONObject(i).get("id").toString()));
+                                    transport.setPersonalId(jsonArray.getJSONObject(i).get("personalId").toString());
+                                    transport.setName(jsonArray.getJSONObject(i).get("fullname").toString());
+                                    transport.setShift(jsonArray.getJSONObject(i).get("shift").toString());
+                                    transport.setAddress(jsonArray.getJSONObject(i).get("address").toString());
+                                    transport.setDate(jsonArray.getJSONObject(i).get("date").toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                transportList.add(transport);
+                            }
+                            responseListenerGetTransport.onRecieved(transportList);
+                            responseListenerGetTransport.onMessage("success");
+                        } else {
+                            responseListenerGetTransport.onMessage("error");
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+
+                }
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(request);
+    }
+
+
+
+
+
     public interface ResponseListenerLogin {
         void onRecived(String response);
     }
@@ -833,6 +986,18 @@ public class ApiHandler {
         void onRecieved(String response);
     }
 
+    public interface ResponseListenerDeleteSportTime {
+        void onRecieved(String response);
+    }
+
+    public interface ResponseListenerReqTransport {
+        void onRecieved(String response);
+    }
+
+    public interface ResponseListenerGetTransport {
+        void onRecieved(List<Transport> transportList);
+        void onMessage(String response);
+    }
 
 
 
